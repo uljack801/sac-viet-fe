@@ -31,8 +31,8 @@ export function AppSidebar() {
         <SidebarGroupLabel>Quản lý trang bán hàng</SidebarGroupLabel>
         <SidebarMenu>
           <SidebarMenuButton onClick={() => route.push('/seller')}><AiOutlineHome />Trang chủ</SidebarMenuButton>
-          <SidebarMenuButton onClick={() => route.push('/seller')}><AiOutlineProduct />Danh sách sản phẩm</SidebarMenuButton>
-          <SidebarMenuButton onClick={() => route.push('/seller')}><BsBoxSeam />Quản lý đơn hàng</SidebarMenuButton>
+          <SidebarMenuButton onClick={() => route.push('/seller/manager-products')}><AiOutlineProduct />Danh sách sản phẩm</SidebarMenuButton>
+          <SidebarMenuButton onClick={() => route.push('/seller/manager-orders')}><BsBoxSeam />Quản lý đơn hàng</SidebarMenuButton>
           <SidebarMenuButton onClick={() => route.push('/seller')}><LuMessageSquareMore />Phản hồi khách hàng</SidebarMenuButton>
           <SidebarMenuButton onClick={() => route.push('/seller')}><IoSettingsOutline />Cài đặt shop</SidebarMenuButton>
         </SidebarMenu>

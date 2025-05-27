@@ -61,6 +61,7 @@ export async function POST(req: NextRequest) {
           taxNumber,
         },
       });
+      
     const response = NextResponse.json(
       {
         newSeller,
@@ -69,8 +70,9 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
     if (!findUser.role.includes("seller")) {
-      await findUser.role.push("seller");
-      findUser.save();
+       findUser.role.push("seller");
+       findUser.seller_id = newSeller._id
+     await findUser.save();
     }
 
     return response;

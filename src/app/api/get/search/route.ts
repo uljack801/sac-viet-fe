@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     const normalizedInput = normalizeVietnamese(resultSearch).toLowerCase();
     const keywords = normalizedInput.split(" ");
 
-    const products = await Product.find();
+    const products = await Product.find({ status: true });
 
     if (!products) {
       return NextResponse.json({ error: "Invalid!" }, { status: 401 });

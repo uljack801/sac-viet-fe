@@ -50,7 +50,7 @@ export const SidebarHeader = () => {
               <p className="text-neutral-400 text-xs" hidden={cart?.length === 0 || cart?.length === undefined}>{cart?.length} sản phẩm thêm vào giỏ hàng</p>
               <Button className="text-white bg-red-500 hover:bg-red-500/75" hidden={cart?.length === 0 || cart?.length === undefined} onClick={() => route.push('/cart')}>Xem giỏ hàng</Button>
             </div>
-            {cart?.map((value, idx) => {
+            {cart && cart?.map((value, idx) => {              
               return (
                 <div key={`product-in-cart-${value._id + idx}`} className="mt-2 flex cursor-pointer" onClick={() => route.push(`/product-details/${value._id}`)}>
                   <Image

@@ -3,7 +3,7 @@ import Product from "@/app/config/models/Product";
 
 export async function GET() {
   try {
-      const products = await Product.find()
+      const products = await Product.find({status: true})      
       if (!products) {
         return NextResponse.json({ error: "Invalid!" }, { status: 401 });
       }

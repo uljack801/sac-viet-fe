@@ -80,9 +80,8 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
     },
     status: {
-      type: String,
-      enum: ["active", "inactive"],
-      default: "active",
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true }

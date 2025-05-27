@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
         { status: 400 }
       );
     }
-    const findProduct = await Product.findOne({ _id: productId });
+    const findProduct = await Product.findOne({ _id: productId , status: true});
     
     if (!findProduct) {
       return NextResponse.json(

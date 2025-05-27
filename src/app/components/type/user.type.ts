@@ -8,6 +8,7 @@ export type UserData = {
     is_authenticated: boolean;
     fullname: string;
     phoneNumber: string;
+    seller_id?: string,
     avatar: string;
     date_of_birth: Date;
     gender: string;

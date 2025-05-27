@@ -35,7 +35,7 @@ export type DataType = {
             description: string;
             inventory: number;
             tags: string[];
-            status: string;
+            status: boolean;
         } | undefined;
     }[];
     order_at: Date;

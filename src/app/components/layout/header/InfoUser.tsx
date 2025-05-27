@@ -16,7 +16,7 @@ export const InfoUser = () => {
   const { accessToken, setAccessToken, setDataUser, dataUser } = useAuth();
   const [checkLogin, setCheckLogin] = useState(false);
   const route = useRouter();
-
+  
   const getData = async () => {
     const data = await FetchUser();
     if (data === null) {
@@ -49,6 +49,7 @@ export const InfoUser = () => {
       setTimeout(() => document.location.reload(), 1000)
     }
   };
+  
   return (
     <div className="flex items-center justify-center">
 
@@ -77,7 +78,7 @@ export const InfoUser = () => {
               <Button onClick={() => route.push('/cart')} className="w-full bg-inherit shadow-none text-[var(--color-text-root)] hover:bg-[#dadadaab]" >Danh sách giỏ hàng</Button>
               <br />
               {dataUser?.data.role.includes("seller") ? 
-                   (<Button className="w-full bg-inherit shadow-none text-[var(--color-text-root)] hover:bg-[#dadadaab]" onClick={()=> route.push('/seller')}>Quản lý cửa hàng</Button>)
+                   (<Button className="w-full bg-inherit shadow-none text-[var(--color-text-root)] hover:bg-[#dadadaab]" onClick={()=> route.push(`/seller`)}>Quản lý cửa hàng</Button>)
                 :
                (<Button className="w-full bg-inherit shadow-none text-[var(--color-text-root)] hover:bg-[#dadadaab]" onClick={()=> route.push('/seller-register')}>Đăng ký kênh bán hàng</Button>)
               }

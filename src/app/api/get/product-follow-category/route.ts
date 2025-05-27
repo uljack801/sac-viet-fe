@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
       sortCondition.discount_percentage = -1;
     }
     
-    const products = await Product.find({ category_id: category._id })
+    const products = await Product.find({ category_id: category._id, status: true })
       .sort(sortCondition)
       .skip(skip)
       .limit(limit);

@@ -2,10 +2,11 @@ import Seller from "@/app/config/models/Seller";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
+
   try {
     const { searchParams }  = new URL(req.url) ;
     const sellerID = searchParams.get("seller-id")
-    const findSeller = await Seller.findOne({_id : sellerID});
+    const findSeller = await Seller.findById(sellerID);
     if (!findSeller) {
       return NextResponse.json({ error: "Invalid!" }, { status: 401 });
     }

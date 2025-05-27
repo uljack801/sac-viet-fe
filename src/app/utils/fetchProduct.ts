@@ -25,7 +25,7 @@ export type ProductProps = {
       description: string;
       inventory: number;
       tags: string[];
-      status: string;
+      status: boolean;
       weight: number;
     }
   ];
@@ -54,7 +54,7 @@ export type ProductListProps = {
   description: string;
   inventory: number;
   tags: string[];
-  status: string;
+  status: boolean;
   quantity: number;
   weight: number;
 };

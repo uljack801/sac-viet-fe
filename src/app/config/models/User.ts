@@ -12,6 +12,7 @@ const userSchema  = new mongoose.Schema({
     avatar: {type: String},
     date_of_birth: {type: Date},
     gender: {type: String},
+    seller_id: {type: mongoose.Schema.Types.ObjectId , ref: "Seller"},
     role: { type: [String], enum: ["seller", "user", "admin"], default: ["user"] },
     user_address: { type: mongoose.Schema.Types.ObjectId, ref: "UserAddress" , required: false },
     ordered: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" , required: false }],
