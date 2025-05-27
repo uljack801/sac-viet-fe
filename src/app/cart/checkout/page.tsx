@@ -147,7 +147,7 @@ export default function Checkout() {
                                             </div>
                                         </div>
                                         <div className="col-span-1">
-                                            <div className=" mt-2">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(value.price)}</div>
+                                            <div className=" mt-2">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price - (value.price * (value.discount_percentage / 100))))}</div>
                                         </div>
                                         <div className="col-span-1">
                                             <div className="flex items-center mt-2 text-xl w-auto ">
@@ -156,7 +156,7 @@ export default function Checkout() {
                                         </div>
                                         <div className="col-span-1">
                                             <div className="mt-2">
-                                                <p className="">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.quantity * value.price))}</p>
+                                                <p className="">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.quantity * (value.price - (value.price * (value.discount_percentage / 100)))))}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@ export default function Checkout() {
                             <div className="flex justify-end pr-16">
                                 <p>Tổng số tiền<span className="ml-2">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
                                     (group.products?.reduce((sum, product) => {
-                                        return sum + product.price * product.quantity
+                                        return sum + (product.price - (product.price * (product .discount_percentage / 100))) * product.quantity
                                     }, 0) || 0)
                                 )
                                 }
@@ -204,7 +204,7 @@ export default function Checkout() {
                                         new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
                                             selectedProducts?.reduce((total, group) => {
                                                 return total + (group.products?.reduce((sum, product) => {
-                                                    return sum + product.price * product.quantity;
+                                                    return sum + (product.price - (product.price * (product .discount_percentage / 100))) * product.quantity;
                                                 }, 0) || 0);
                                             }, 0) || 0
                                         )
@@ -219,7 +219,7 @@ export default function Checkout() {
                                         new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
                                             totalMoneyShip + (selectedProducts?.reduce((total, group) => {
                                                 return total + (group.products?.reduce((sum, product) => {
-                                                    return sum + product.price * product.quantity;
+                                                    return sum + (product.price - (product.price * (product .discount_percentage / 100))) * product.quantity;
                                                 }, 0) || 0);
                                             }, 0) || 0)
                                         )

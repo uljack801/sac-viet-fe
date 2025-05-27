@@ -45,8 +45,7 @@ export function LoginForm() {
       const res = await fetchLogin({password: data.password, username: data.username})
       if (res.status === 200 && res.data?.access_token) {
         setAccessToken(res.data?.access_token);
-             
-       router.push("/");
+        router.push("/");
         router.refresh();
       } else if (res.status === 401) {
         setMessagePassword("Mật khẩu không đúng!");

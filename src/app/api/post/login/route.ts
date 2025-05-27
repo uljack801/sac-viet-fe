@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
     );
     response.headers.append(
       "Set-Cookie",
-      `refreshToken=${refreshToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`
+      `refreshToken=${refreshToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800; Secure`
     );
     return response;
   } catch (error) {

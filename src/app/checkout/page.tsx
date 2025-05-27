@@ -121,50 +121,6 @@ export default function Checkout() {
         }
     };
 
-    // const createOrder = async () => {
-    //     const order = {
-    //         order: {
-    //             id: infoSeller?.data._id,
-    //             pick_name: infoSeller?.data.nameShop,
-    //             pick_address: infoSeller?.data.address,
-    //             pick_province: infoSeller?.data.address.split(',')[3],
-    //             pick_district: infoSeller?.data.address.split(',')[2],
-    //             pick_tel: infoSeller?.data.phoneNumber,
-    //             name: addressShip?.name,
-    //             address: addressShip?.address,
-    //             province: addressShip?.address.split(',')[3],
-    //             district: addressShip?.address.split(',')[2],
-    //             ward: addressShip?.address.split(',')[1],
-    //             street: addressShip?.address.split(',')[0],
-    //             hamlet: "Khác",
-    //             tel: addressShip?.phone,
-    //             is_freeship: '0',
-    //             pick_money: 150000,
-    //             value: 150000,
-    //             items: [
-    //                 {
-    //                     name: product?.data[0].name,
-    //                     weight: product?.data[0].dimensions,
-    //                     quantity: quantity,
-    //                     product_code: productId,
-    //                     price: product?.data[0].price
-    //                 },
-    //             ],
-    //         },
-    //     };
-    //     // try {
-    //     //     const res = await axios.post('api/ghtk/create-order', order)
-    //     //     console.log(res.data);
-
-    //     // } catch (error) {
-    //     //     console.error('Lỗi khi tạo đơn:', error);
-
-    //     // }
-    //     console.log(order);
-
-    // }
-    // createOrder()
-
     return (
         <div className="w-full mt-2 2xl:mx-80 xl:mx-40">
             <div className="relative">

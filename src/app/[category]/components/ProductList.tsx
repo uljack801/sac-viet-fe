@@ -36,7 +36,7 @@ export const ProductListInCategory = ({ resultProducts }: { resultProducts: Prod
                   <span className={cn("bg-[#E2962B] text-xs text-white px-1", value.discount_percentage === 0 && "hidden")}>{value.discount_percentage}% giảm giá</span>
                   <div className="mt-6">
                     <div className="absolute bottom-1 ">
-                      <p className="text-[var(--color-text-root)] font-medium flex justify-center items-center">{((value.price / 100) * (100 - value.discount_percentage)).toLocaleString("vi-VN")}đ {value.discount_percentage > 0 && <FiTrendingDown className="text-red-400 ml-1" />}</p>
+                      <p className="text-[var(--color-text-root)] font-medium flex justify-center items-center">{((value.price)).toLocaleString("vi-VN")}đ {value.discount_percentage > 0 && <FiTrendingDown className="text-red-400 ml-1" />}</p>
                     </div>
                     <div className="absolute bottom-1 right-1">
                       <p className="text-xs flex justify-center items-center">đã bán {value.sold}</p>

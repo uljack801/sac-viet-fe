@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BsFillChatSquareTextFill } from "react-icons/bs";
+import { useEffect, useState } from "react";
 
 export type InfoSellerProps = {
   data: {
@@ -60,6 +61,7 @@ export default function ProductChoisePay({
   totalMoneyShip: number;
   handlePay: () => void;
 }) {
+  const [priceAfterDiscount , setPriceAfterDiscount] = useState<number>(0)
   const handleChoiseUp = () => {
     const inventory = product?.data[0].inventory;
     if (inventory) {
@@ -73,6 +75,12 @@ export default function ProductChoisePay({
       setQuantityChoise(quantityChoise - 1);
     }
   };
+  useEffect(() => {
+    if (product) {
+      const priceAfterDiscount = product.data[0].price - (product.data[0].price * (product.data[0].discount_percentage / 100))
+      setPriceAfterDiscount(priceAfterDiscount)
+    }
+  }, [product])
 
   return (
     product &&
@@ -81,7 +89,7 @@ export default function ProductChoisePay({
         <div className="grid grid-cols-6">
           <div className="col-span-3">
             <p className="text-xl font-medium xl:text-[16px]">Sản phẩm</p>
-          </div>  
+          </div>
           <div className="col-span-1 ">
             <p>Đơn giá</p>
           </div>
@@ -124,7 +132,7 @@ export default function ProductChoisePay({
               {new Intl.NumberFormat("vi-VN", {
                 style: "currency",
                 currency: "VND",
-              }).format(product.data[0].price)}
+              }).format(priceAfterDiscount)}
             </div>
           </div>
           <div className="col-span-1">
@@ -152,12 +160,12 @@ export default function ProductChoisePay({
                 {new Intl.NumberFormat("vi-VN", {
                   style: "currency",
                   currency: "VND",
-                }).format(quantityChoise * product.data[0].price)}
+                }).format(quantityChoise * priceAfterDiscount)}
               </p>
             </div>
           </div>
         </div>
-        <div className="flex justify-end pr-16  py-6 border-b">
+        <div className="flex justify-end items-center pr-16  py-6 border-b">
           <p className="text-xl font-medium xl:text-[16px]">
             Tổng tiền ({quantityChoise} sản phẩm):
           </p>
@@ -165,7 +173,7 @@ export default function ProductChoisePay({
             {new Intl.NumberFormat("vi-VN", {
               style: "currency",
               currency: "VND",
-            }).format(quantityChoise * product.data[0].price)}
+            }).format(quantityChoise * priceAfterDiscount)}
           </p>
         </div>
         <div className="flex justify-between items-center pr-16 border-b">
@@ -177,7 +185,7 @@ export default function ProductChoisePay({
             <SelectContent>
               <SelectGroup>
                 <SelectItem value="cod">Thanh toán khi nhận hàng</SelectItem>
-                <SelectItem value="bank-transfer">
+                <SelectItem value="bank-transfer" className="hidden">
                   Thanh toán chuyển khoản
                 </SelectItem>
               </SelectGroup>
@@ -192,7 +200,7 @@ export default function ProductChoisePay({
                 {new Intl.NumberFormat("vi-VN", {
                   style: "currency",
                   currency: "VND",
-                }).format(quantityChoise * product?.data[0].price)}
+                }).format(quantityChoise * priceAfterDiscount)}
               </span>
             </p>
             <p className="mb-4">
@@ -211,7 +219,7 @@ export default function ProductChoisePay({
                   style: "currency",
                   currency: "VND",
                 }).format(
-                  quantityChoise * product?.data[0].price + totalMoneyShip
+                  quantityChoise * priceAfterDiscount + totalMoneyShip
                 )}
               </span>
             </p>
