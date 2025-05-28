@@ -21,7 +21,7 @@ export default function Order() {
     }, [accessToken])
     
     return (
-        <div className="2xl:mx-80 xl:mx-40">
+        <div className="lg:mx-20 sm:mx-10 xl:mx-40">
             <div className="grid grid-cols-6 bg-white rounded-sm mt-28">
                 {tabs.map((label, index) => (
                     <p

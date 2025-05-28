@@ -112,7 +112,7 @@ export default function Checkout() {
         }
     };
     return (
-        <div className="mt-32 2xl:mx-80 xl:mx-40">
+        <div className="mt-32 lg:mx-20 sm:mx-10 xl:mx-40">
             <div className="relative">
                 <DeliveryAddress setUserAddress={setUserAddress} userAddress={userAddress} />
                 <div className="bg-white p-6 rounded-xl mt-4 mb-4 xl:text-sm">

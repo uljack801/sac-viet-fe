@@ -37,7 +37,7 @@ export default function Category() {
     return (
         <div>
             {resultProducts && notFound &&
-                <div className="lg:mx-24 xl:mx-48 2xl:mx-80 pt-28">
+                <div className="lg:mx-24 xl:mx-48 lg:mx-20 sm:mx-10 pt-28">
                     <ProductListInCategory resultProducts={resultProducts} />
                 </div>
             }

@@ -16,7 +16,7 @@ export const SidebarHeader = () => {
 
   return (
     <div className=" bg-white">
-    <div className="flex py-2 items-center justify-between text-[#8B5A2B] 2xl:mx-80 xl:mx-40  ">
+    <div className="flex py-2 items-center justify-between text-[#8B5A2B] lg:mx-20 sm:mx-10 xl:mx-40  ">
       <div className="flex items-center cursor-pointer" onClick={() => route.push('/')}>
         <Image src="/logo_.png" alt="logo1" width={60} height={60} />
         <span className="text-2xl xl:text-xl font-bold">SẮC VIỆT</span>
