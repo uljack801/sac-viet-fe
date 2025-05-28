@@ -94,9 +94,9 @@ export const AllOrder = ({ dataOrder }: { dataOrder: OrderProps | undefined }) =
             {mergedOrders?.map(orders => {
                 const totalOrderPrice = orders.products.reduce((acc, product) => {
                     if (product.product) {
-                        return acc + (product.quantity * product.product.price + orders.total_money_ship);
+                        return acc + (product.quantity * (product.product.price / 100) * (100 - product.product.discount_percentage)) ;
                     }
-                    return acc;
+                    return acc ;
                 }, 0);
 
                 return (
@@ -117,7 +117,7 @@ export const AllOrder = ({ dataOrder }: { dataOrder: OrderProps | undefined }) =
                                             </div>
                                         </div>
                                         <div className="col-span-1">
-                                            <div className=" mt-2 flex items-center justify-center">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(product.product.price)}</div>
+                                            <div className=" mt-2 flex items-center justify-center">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((product.product.price / 100) * (100 - product.product.discount_percentage))}</div>
                                         </div>
                                         <div className="col-span-1">
                                             <div className="flex items-center justify-center mt-2 text-xl w-auto ">
@@ -126,7 +126,7 @@ export const AllOrder = ({ dataOrder }: { dataOrder: OrderProps | undefined }) =
                                         </div>
                                         <div className="col-span-1">
                                             <div className="mt-2 flex items-center justify-center">
-                                                <p className="">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((product.quantity * product.product.price))}</p>
+                                                <p className="">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((product.product.price / 100) * (100 - product.product.discount_percentage) * product.quantity)}</p>
                                             </div>
                                         </div>
                                         <div className="col-span-1">
@@ -160,7 +160,7 @@ export const AllOrder = ({ dataOrder }: { dataOrder: OrderProps | undefined }) =
                             <p>
                                 Thành tiền:
                                 <span className="text-2xl ml-2 font-medium xl:text-xl">
-                                    {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(totalOrderPrice)}
+                                    {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(totalOrderPrice + orders.total_money_ship)}
                                 </span>
                             </p>
                         </div>

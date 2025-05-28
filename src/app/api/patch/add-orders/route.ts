@@ -26,15 +26,15 @@ export async function PATCH(req: NextRequest) {
         { status: 404 }
       );
     }
-    const { products, payment_method, address_ship, total_money_ship , shipping_fees } =
+    const { products, payment_method, address_ship, total_money_ship , shipping_fees, seller_id } =
       await req.json();
-
+    
     if (
       !Array.isArray(products) ||
       !payment_method ||
       !address_ship ||
       !shipping_fees ||
-      !total_money_ship === undefined
+      !total_money_ship === undefined || !seller_id
     ) {
       return NextResponse.json(
         { message: "Missing required fields" },
@@ -47,7 +47,8 @@ export async function PATCH(req: NextRequest) {
       address_ship: address_ship,
       total_money_ship: total_money_ship,
       payment_method: payment_method,
-      shipping_fees: shipping_fees
+      shipping_fees: shipping_fees,
+      seller_id: seller_id
     });
 
     await findOrder.save();

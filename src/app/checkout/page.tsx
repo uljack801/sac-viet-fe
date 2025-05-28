@@ -103,6 +103,7 @@ export default function Checkout() {
                 },
                 body: JSON.stringify({
                     products: productALL,
+                    seller_id: product?.data[0].seller_id,
                     payment_method: typePay,
                     address_ship: addressShip?._id,
                     total_money_ship: totalMoneyShip,

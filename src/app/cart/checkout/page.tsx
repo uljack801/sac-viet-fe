@@ -26,6 +26,7 @@ export default function Checkout() {
     const route = useRouter();
     const addressShip = userAddress?.list_address.find(value => value.is_default === true);
     const [shippingFees, setShippingFees] = useState<{ [sellerId: string]: number }>({});
+    const [isProcessing, setIsProcessing] = useState(false);
 
     useEffect(() => {
         const data = localStorage.getItem("selectedProducts");
@@ -72,45 +73,58 @@ export default function Checkout() {
         getShippingFee();
     }, [selectedProducts, addressShip]);
 
+    const handleAllOrders = async () => {
+        if (isProcessing) return; 
+        setIsProcessing(true);
 
-    const handlePay = async () => {
         try {
-            const allProducts = selectedProducts?.flatMap(value =>
-                value.products?.map(product => ({
-                    productID: product._id,
-                    quantity: product.quantity
-                }))
-            ) || [];
+            if (selectedProducts)
+                for (const value of selectedProducts) {
+                    const allProducts = value.products?.map(product => ({
+                        productID: product._id,
+                        quantity: product.quantity
+                    }));
+                    if (!allProducts) continue;
 
-            const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/patch/add-orders`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${accessToken}`
-                },
-                body: JSON.stringify({
-                    products: allProducts,
-                    payment_method: typePay,
-                    address_ship: addressShip?._id,
-                    total_money_ship: totalMoneyShip,
-                    shipping_fees: shippingFees
-                })
-            });
+                    const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/patch/add-orders`, {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${accessToken}`
+                        },
+                        body: JSON.stringify({
+                            products: allProducts,
+                            seller_id: value.seller?.data._id,
+                            payment_method: typePay,
+                            address_ship: addressShip?._id,
+                            total_money_ship: shippingFees[value.seller?.data._id || ""],
+                            shipping_fees: shippingFees
+                        })
+                    });
 
-            if (res.status === 200) {
-                setCheckPay(true);
-                setTimeout(() => {
-                    route.push(`/order?slug=1`);
-                }, 2000);
-                if (accessToken) {
-                    const dataCart = await getCart(accessToken)
-                    setCart(dataCart);
+                    if (res.status !== 200) {
+                        throw new Error("Lỗi gửi đơn hàng cho seller: " + value.seller?.data._id);
+                    }
+
+                    if (res.status === 200) {
+                        setCheckPay(true);
+                        setTimeout(() => {
+                            route.push(`/order?slug=1`);
+                        }, 2000);
+
+                        if (accessToken) {
+                            const dataCart = await getCart(accessToken);
+                            setCart(dataCart);
+                        }
+                    }
                 }
-            }
         } catch (error) {
-            console.error("Payment error:", error);
+            console.error(error);
+        } finally {
+            setIsProcessing(false);
         }
     };
+
     return (
         <div className="mt-32 lg:mx-20 sm:mx-10 xl:mx-40">
             <div className="relative">
@@ -131,11 +145,11 @@ export default function Checkout() {
                         </div>
                     </div>
                     {selectedProducts?.map((group) => (
-                        <div key={`seller-${group.seller?.data._id}`} className={cn('my-6 ' )}>
+                        <div key={`seller-${group.seller?.data._id}`} className={cn('mt-6 border-b ')}>
                             <div className="font-semibold text-lg mb-2 grid grid-cols-6 ">
                                 <label className="flex items-center col-span-6 xl:text-sm">{group.seller?.data.nameShop} | <span className="flex items-center text-sm xl:text-xs" ><BsFillChatSquareTextFill className="mr-1 ml-4" />chat ngay</span></label>
                             </div>
-                            {group.products?.map((value ) => (
+                            {group.products?.map((value) => (
                                 <div key={`product-${value._id}`}>
                                     <div className="grid grid-cols-6 ">
                                         <div className="col-span-3">
@@ -171,17 +185,31 @@ export default function Checkout() {
                                 </p>
                             </div>
                             <div className="flex justify-end pr-16">
-                                <p>Tổng số tiền<span className="ml-2">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
+                                <p>Tổng tiền hàng<span className="ml-2">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
                                     (group.products?.reduce((sum, product) => {
-                                        return sum + (product.price - (product.price * (product .discount_percentage / 100))) * product.quantity
+                                        return sum + ((product.price - (product.price * (product.discount_percentage / 100))) * product.quantity)
                                     }, 0) || 0)
                                 )
                                 }
                                 </span></p>
                             </div>
+                            <div className="flex justify-end pr-16">
+                                <p className="my-4">
+                                    Tổng thanh toán:
+                                    <span className="ml-2 text-xl">
+                                        {
+                                            new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
+                                                (group.products?.reduce((sum, product) => {
+                                                    return (sum + ((product.price - (product.price * (product.discount_percentage / 100))) * product.quantity));
+                                                }, 0) || 0) + (shippingFees[group.seller?.data._id || ""] || 0)
+                                            )
+                                        }
+                                    </span>
+                                </p>
+                            </div>
                         </div>
                     ))}
-                    <div className="flex justify-between items-center pr-16 border-y">
+                    <div className="flex justify-between items-center pr-16 border-b">
                         <p className="text-xl font-medium py-6 xl:text-[16px]">Phương thức thanh toán </p>
                         <Select defaultValue="cod" onValueChange={setTypePay}>
                             <SelectTrigger className="w-auto">
@@ -190,7 +218,7 @@ export default function Checkout() {
                             <SelectContent >
                                 <SelectGroup>
                                     <SelectItem value="cod" >Thanh toán khi nhận hàng</SelectItem>
-                                    <SelectItem value="bank-transfer">Thanh toán chuyển khoản</SelectItem>
+                                    <SelectItem value="bank-transfer" hidden>Thanh toán chuyển khoản</SelectItem>
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
@@ -204,7 +232,7 @@ export default function Checkout() {
                                         new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
                                             selectedProducts?.reduce((total, group) => {
                                                 return total + (group.products?.reduce((sum, product) => {
-                                                    return sum + (product.price - (product.price * (product .discount_percentage / 100))) * product.quantity;
+                                                    return sum + ((product.price - (product.price * (product.discount_percentage / 100))) * product.quantity);
                                                 }, 0) || 0);
                                             }, 0) || 0
                                         )
@@ -219,7 +247,7 @@ export default function Checkout() {
                                         new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
                                             totalMoneyShip + (selectedProducts?.reduce((total, group) => {
                                                 return total + (group.products?.reduce((sum, product) => {
-                                                    return sum + (product.price - (product.price * (product .discount_percentage / 100))) * product.quantity;
+                                                    return sum + (product.price - (product.price * (product.discount_percentage / 100))) * product.quantity;
                                                 }, 0) || 0);
                                             }, 0) || 0)
                                         )
@@ -232,12 +260,12 @@ export default function Checkout() {
 
                 <div className="flex justify-between items-center border-t sticky bottom-0 p-6 pr-16 mb-10 bg-white rounded-sm">
                     <p className="text-xs">Nhấn &quot;Đặt hàng&quot; đồng nghĩa với việc bạn đồng ý tuân theo Điều khoản Sắc Việt</p>
-                    <Button className="bg-[var(--color-button)] hover:bg-[var(--color-hover-button)] text-white w-32 rounded-sm" onClick={handlePay}>Đặt hàng</Button>
+                    <Button className="bg-[var(--color-button)] hover:bg-[var(--color-hover-button)] text-white w-32 rounded-sm" onClick={handleAllOrders}>Đặt hàng</Button>
                 </div>
                 {checkPay && <div className="absolute top-0 w-full h-full flex justify-center items-center bg-neutral-100/50">
                     <Image src="/logo_.png" alt="logo" width={120} height={120} />
                 </div>}
             </div>
-        </div>        
+        </div>
     )
 }

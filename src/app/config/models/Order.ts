@@ -10,9 +10,11 @@ export type OrderProps = {
         {
           productID: string;
           quantity: number;
-        }
+        },
+        
       ];
       shipping_fees: { [sellerId: string]: number };
+      seller_id :string,
       order_at: Date;
       address_ship: string;
       total_money_ship: number;
@@ -41,6 +43,7 @@ const OrderSchema = new mongoose.Schema(
             quantity: { type: Number, required: true },
           },
         ],
+        seller_id : { type: String },
         order_at: { type: Date, default: Date.now },
         address_ship: { type: String },
         total_money_ship: { type: Number },
