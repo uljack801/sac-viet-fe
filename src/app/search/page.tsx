@@ -36,7 +36,6 @@ export default function Search() {
       getProductSearch(search)
     }
   }, [search, setResultProducts, paramPage])
-  console.log(resultProducts);
   
   return (
     <div className="pt-28 lg:mx-20 sm:mx-10 xl:mx-40">

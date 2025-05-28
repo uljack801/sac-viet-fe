@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
       .limit(limit);
 
     const totalProducts = await Product.countDocuments({
-      category_id: category._id,
+      category_id: category._id, status: true
     });
     
     return NextResponse.json(
