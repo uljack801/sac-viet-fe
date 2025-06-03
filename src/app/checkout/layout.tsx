@@ -11,7 +11,7 @@ export default function LoginLayout({
   const roter = useRouter();
   return (
     <div className="flex flex-col min-h-screen text-[var(--color-text-root)] bg-white">
-      <div className="lg:mx-20 sm:mx-10 xl:mx-40">
+      <div className="2xl:mx-80 xl:mx-40 lg:mx-32 sm:mx-20">
         <div className="py-4 flex items-center justify-between text-[#8B5A2B] ">
           <div
             className="flex items-center cursor-pointer"

@@ -16,7 +16,7 @@ export const SidebarHeader = () => {
 
   return (
     <div className=" bg-white">
-    <div className="flex py-2 items-center justify-between text-[#8B5A2B] lg:mx-20 sm:mx-10 xl:mx-40  ">
+    <div className="flex py-2 items-center justify-between text-[#8B5A2B] 2xl:mx-80 xl:mx-40 lg:mx-32 sm:mx-20  ">
       <div className="flex items-center cursor-pointer" onClick={() => route.push('/')}>
         <Image src="/logo_.png" alt="logo1" width={60} height={60} />
         <span className="text-2xl xl:text-xl font-bold">SẮC VIỆT</span>
@@ -39,9 +39,9 @@ export const SidebarHeader = () => {
             <p className="absolute -top-2 text-xs -right-3 bg-red-500 text-white rounded-2xl px-1" hidden={cart?.length === 0 || cart?.length === undefined}>{cart?.length}</p>
           </div>
           <div className="absolute right-0 top-3 w-1/3 h-20 group-hover:block hidden"></div>
-          <div className="bg-neutral-50 p-2 shadow-md border rounded-sm absolute w-full h-96 top-10 left-0 overflow-y-scroll z-10 group-hover:block hidden">
+          <div className="bg-neutral-50 p-2 shadow-md border rounded-sm absolute w-full h-96 top-12 left-0 overflow-y-scroll z-10 group-hover:block hidden">
             {(cart?.length === 0 || cart?.length === undefined) && (
-              <div className="w-full h-full flex flex-col justify-center items-center">
+              <div className="w-full h-full flex flex-col justify-center items-center ">
                 <PiShoppingCartThin className="text-4xl text-neutral-400" />
                 <p className="text-neutral-400">Chưa có sản phẩm</p>
               </div>

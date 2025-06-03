@@ -124,7 +124,7 @@ export default function Checkout() {
     };
 
     return (
-        <div className="w-full mt-2 lg:mx-20 sm:mx-10 xl:mx-40">
+        <div className="w-full mt-2 2xl:mx-80 xl:mx-40 lg:mx-32 sm:mx-20">
             <div className="relative">
                 <DeliveryAddress
                     userAddress={userAddress}
