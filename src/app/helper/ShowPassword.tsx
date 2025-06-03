@@ -5,12 +5,12 @@ export const ShowPassword = ({showPassword , setShowPassword}: {showPassword: bo
     <div>
       {showPassword ? (
         <IoEyeOutline
-          className="absolute right-2 top-1/2 -translate-y-1/2"
+          className="absolute right-2 top-1/2 -translate-y-1/2 mt-1"
           onClick={() => setShowPassword(false)}
         />
       ) : (
         <IoEyeOffOutline
-          className="absolute right-2 top-1/2 -translate-y-1/2"
+          className="absolute right-2 top-1/2 -translate-y-1/2 mt-1"
           onClick={() => setShowPassword(true)}
         />
       )}

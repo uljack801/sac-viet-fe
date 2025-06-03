@@ -15,6 +15,7 @@ import { BsBoxSeam } from "react-icons/bs";
 import { IoSettingsOutline } from "react-icons/io5";
 import { LuMessageSquareMore } from "react-icons/lu";
 import { AiOutlineProduct } from "react-icons/ai";
+import { IoAddCircleOutline } from "react-icons/io5";
 
 export function AppSidebar() {
   const route = useRouter()
@@ -32,6 +33,7 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuButton onClick={() => route.push('/seller')}><AiOutlineHome />Trang chủ</SidebarMenuButton>
           <SidebarMenuButton onClick={() => route.push('/seller/manager-products')}><AiOutlineProduct />Danh sách sản phẩm</SidebarMenuButton>
+          <SidebarMenuButton onClick={() => route.push('/seller/add-product')}><IoAddCircleOutline  />Thêm sản phẩm</SidebarMenuButton>
           <SidebarMenuButton onClick={() => route.push('/seller/manager-orders')}><BsBoxSeam />Quản lý đơn hàng</SidebarMenuButton>
           <SidebarMenuButton onClick={() => route.push('/seller')}><LuMessageSquareMore />Phản hồi khách hàng</SidebarMenuButton>
           <SidebarMenuButton onClick={() => route.push('/seller')}><IoSettingsOutline />Cài đặt shop</SidebarMenuButton>

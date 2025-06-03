@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["localhost"],
+    domains: ["localhost" , "sacviet.nyc3.digitaloceanspaces.com"],
   },
 };
 

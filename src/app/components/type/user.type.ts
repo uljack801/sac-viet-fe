@@ -8,11 +8,11 @@ export type UserData = {
     is_authenticated: boolean;
     fullname: string;
     phoneNumber: string;
-    seller_id?: string,
     avatar: string;
     date_of_birth: Date;
     gender: string;
     role: string[];
+    isSellerApproved: boolean,
     user_address: UserAddressProps;
     ordered: Order;
     card: Card;

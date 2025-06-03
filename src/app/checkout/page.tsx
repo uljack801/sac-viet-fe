@@ -29,7 +29,7 @@ export default function Checkout() {
     const [checkPay, setCheckPay] = useState(false)
     const route = useRouter();
     const [shippingFees, setShippingFees] = useState<{ [sellerId: string]: number }>({});
-
+    const [ totalPay , setTotalPay ] = useState<number>(0)
    useEffect(() => {
         fetchAddress({ accessToken, setUserAddress })
 }, [accessToken, dataUser])
@@ -93,7 +93,7 @@ export default function Checkout() {
 
 
     const handlePay = async () => {
-        const productALL = [{ productID: product?.data[0]._id, quantity: quantityChoise }]
+        const productALL = [{ productID: product?.data[0]._id, quantity: quantityChoise, productName: product?.data[0].name , weight: product?.data[0].weight }]
         try {
             const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/patch/add-orders`, {
                 method: "PATCH",
@@ -107,7 +107,8 @@ export default function Checkout() {
                     payment_method: typePay,
                     address_ship: addressShip?._id,
                     total_money_ship: totalMoneyShip,
-                    shipping_fees: shippingFees
+                    shipping_fees: shippingFees,
+                    totalPay: totalPay
                 })
             })
             if (res.status === 200) {
@@ -137,6 +138,7 @@ export default function Checkout() {
                     setTypePay={setTypePay}
                     totalMoneyShip={totalMoneyShip}
                     handlePay={handlePay}
+                    setTotalPay={setTotalPay}
                 />
                 {checkPay && <div className="absolute top-0 w-full h-full flex justify-center items-center bg-neutral-100/50">
                     <Image src="/logo_.png" alt="logo" width={120} height={120} />

@@ -19,10 +19,10 @@ import { ShowPassword } from "@/app/helper/ShowPassword";
 
 const FormSchema = z
   .object({
-    username: z.string().min(2, "Tài khoản phải nhiều hơn 2 kí tự!"),
+    username: z.string().min(2, "Tài khoản phải nhiều hơn 2 kí tự!").regex(/^[a-zA-Z0-9_]+$/),
     email: z.string().trim().email(),
-    password: z.string().min(6, "Mật khẩu ít nhất 6 kí tự!"),
-    againPassword: z.string().min(6, "Mật khẩu ít nhất 6 kí tự!"),
+    password: z.string().min(6, "Mật khẩu ít nhất 6 kí tự!").regex(/^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/),
+    againPassword: z.string().min(6, "Mật khẩu ít nhất 6 kí tự!").regex(/^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/),
   })
   .refine((data) => data.password === data.againPassword, {
     message: "Mật khẩu nhập lại không khớp!",
@@ -39,7 +39,8 @@ export function RegisterForm({
   const [messageEmail, setMessageEmail] = useState("");
   const [messageAccount, setMessageAccount] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const [showPasswordAgain, setShowPasswordAgain] = useState(false);
+  const [isWait, setIsWait] = useState(false)
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -51,19 +52,28 @@ export function RegisterForm({
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const response = await fetchPostRegister(data);
-    if (response.status === 200) {
-      setConfiremAccess(response.data?.confirm_access);
-      setCheckRegistor(true);
-    } else if (response.status === 400) {
-      setMessageEmail("Email đã tồn tại.Vui lòng nhập lại!");
-    } else if (response.status === 401) {
-      setMessageAccount("Tài khoản đã tồn tại.Vui lòng nhập lại!");
+    try {
+      if (isWait) return
+      setIsWait(true)
+      const response = await fetchPostRegister(data);
+      if (response.status === 200) {
+        setConfiremAccess(response.data?.confirm_access);
+        setCheckRegistor(true);
+      } else if (response.status === 400) {
+        setMessageEmail("Email đã tồn tại.Vui lòng nhập lại!");
+      } else if (response.status === 401) {
+        setMessageAccount("Tài khoản đã tồn tại.Vui lòng nhập lại!");
+      }
+      setTimeout(() => {
+        setMessageAccount("");
+        setMessageEmail("");
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsWait(false)
     }
-    setTimeout(() => {
-      setMessageAccount("");
-      setMessageEmail("");
-    }, 2000);
+
   }
 
   return (
@@ -147,15 +157,15 @@ export function RegisterForm({
                 <FormControl>
                   <Input
                     placeholder="Nhập lại mật khẩu"
-                    type={!showPassword ? "password" : "text"}
+                    type={!showPasswordAgain ? "password" : "text"}
                     {...field}
                     className="h-10"
                     autoComplete="current-password"
                   />
                 </FormControl>
                 <ShowPassword
-                  setShowPassword={setShowPassword}
-                  showPassword={showPassword}
+                  setShowPassword={setShowPasswordAgain}
+                  showPassword={showPasswordAgain}
                 />
               </div>
               <div className="h-1">

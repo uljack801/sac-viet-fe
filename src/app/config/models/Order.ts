@@ -10,11 +10,13 @@ export type OrderProps = {
         {
           productID: string;
           quantity: number;
-        },
-        
+          productName: string;
+          weight: number;
+        }
       ];
       shipping_fees: { [sellerId: string]: number };
-      seller_id :string,
+      totalPay: number;
+      seller_id: string;
       order_at: Date;
       address_ship: string;
       total_money_ship: number;
@@ -24,6 +26,7 @@ export type OrderProps = {
       paid_at: Date;
       is_review: boolean;
       cancelled_at: Date;
+      note: string;
     }
   ];
 };
@@ -40,19 +43,21 @@ const OrderSchema = new mongoose.Schema(
               ref: "Product",
               required: true,
             },
+            productName: { type: String },
+            weight: { type: Number },
             quantity: { type: Number, required: true },
           },
         ],
-        seller_id : { type: String },
+        seller_id: { type: String },
         order_at: { type: Date, default: Date.now },
         address_ship: { type: String },
         total_money_ship: { type: Number },
         shipping_fees: {
-            type: Map,
-            of: Number,
-            default: {},
-          },     
-         status: {
+          type: Map,
+          of: Number,
+          default: {},
+        },
+        status: {
           type: String,
           enum: ["pending", "shipped", "delivered", "cancelled", "returned"],
           default: "pending",
@@ -66,6 +71,8 @@ const OrderSchema = new mongoose.Schema(
         paid_at: { type: Date },
         is_review: { type: Boolean, default: false },
         cancelled_at: { type: Date },
+        note: { type: String },
+        totalPay: { type: Number },
       },
     ],
   },

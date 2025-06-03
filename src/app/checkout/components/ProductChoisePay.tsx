@@ -52,6 +52,7 @@ export default function ProductChoisePay({
   totalMoneyShip,
   setTypePay,
   handlePay,
+  setTotalPay,
 }: {
   setQuantityChoise: React.Dispatch<React.SetStateAction<number>>;
   setTypePay: React.Dispatch<React.SetStateAction<string>>;
@@ -59,6 +60,7 @@ export default function ProductChoisePay({
   product: ProductProps | undefined;
   infoSeller: InfoSellerProps | undefined;
   totalMoneyShip: number;
+  setTotalPay: React.Dispatch<React.SetStateAction<number>>;
   handlePay: () => void;
 }) {
   const [priceAfterDiscount , setPriceAfterDiscount] = useState<number>(0)
@@ -82,6 +84,9 @@ export default function ProductChoisePay({
     }
   }, [product])
 
+  useEffect(() => {
+    setTotalPay(quantityChoise * priceAfterDiscount )
+  }, [priceAfterDiscount, quantityChoise, setTotalPay])
   return (
     product &&
     infoSeller && (
@@ -115,7 +120,7 @@ export default function ProductChoisePay({
           <div className="col-span-3">
             <div className="flex my-2">
               <Image
-                src={`/do-tho/${product.data[0].img[0]}`}
+                src={`${product.data[0].img[0]}`}
                 alt={`${product.data[0].name}`}
                 width={48}
                 height={48}

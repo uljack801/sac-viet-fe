@@ -110,7 +110,7 @@ export const AllOrder = ({ dataOrder }: { dataOrder: OrderProps | undefined }) =
                                     <div className="grid grid-cols-7 border p-2 m-1 rounded-xs items-center">
                                         <div className="col-span-3">
                                             <div className="flex my-2">
-                                                <Image src={`/do-tho/${product.product?.img[0]}`} alt={`${product.product?.name}`} width={48} height={48} />
+                                                <Image src={`${product.product?.img[0]}`} alt={`${product.product?.name}`} width={48} height={48} />
                                                 <div className="flex items-center">
                                                     <p className="text-ellipsis line-clamp-1 mx-2 ">{product.product?.name}</p>
                                                 </div>

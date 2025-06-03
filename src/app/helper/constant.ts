@@ -8,6 +8,7 @@ export const CLIENT_ID = process.env.CLIENT_ID
 export const CLIENT_SECRET = process.env.CLIENT_SECRET
 export const GHTK_TOKEN = process.env.NEXT_PUBLIC_GHTK_TOKEN;
 
+
 export const phoneRegex = /^(0[3|5|7|8|9][0-9]{8}|(\+84)[3|5|7|8|9][0-9]{8})$/;
 export const normalizeVietnamese = (str: string) => {
   return str

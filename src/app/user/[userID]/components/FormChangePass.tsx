@@ -24,7 +24,7 @@ const FormSchema = z
   .object({
     password: z.string(),
     newPassword: z.string().min(6, 'mật khẩu phải dài 6 ký tự trở lên.'),
-    newPasswordAgain: z.string().min(6 , 'mật khẩu phải dài 6 ký tự trở lên.'),
+    newPasswordAgain: z.string().min(6, 'mật khẩu phải dài 6 ký tự trở lên.'),
   })
   .refine((data) => data.newPassword === data.newPasswordAgain, {
     message: "Mật khẩu nhập lại không khớp!",
@@ -35,9 +35,10 @@ export function InputFormChangePass() {
   const { accessToken } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordOLD, setShowPasswordOLD] = useState(false);
+  const [showPasswordNew, setShowPassworNew] = useState(false);
   const [showMess, setShowMess] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-
+  const [isWait, setIsWait] = useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -48,24 +49,32 @@ export function InputFormChangePass() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/patch/update-password`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({
-        password: data.password,
-        newPassword: data.newPassword,
-      }),
-    });
-    if (res.status === 401) {
-      setShowMess("Mật khẩu cũ không đúng!");
-    } else if (res.status === 200) {
-      setShowAlert(true);
-      setTimeout(() => setShowAlert(false), 2000);
-    } else {
-      setShowMess("Lỗi hệ thống!");
+    try {
+      if (isWait) return
+      setIsWait(true)
+      const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/patch/update-password`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          password: data.password,
+          newPassword: data.newPassword,
+        }),
+      });
+      if (res.status === 401) {
+        setShowMess("Mật khẩu cũ không đúng!");
+      } else if (res.status === 200) {
+        setShowAlert(true);
+        setTimeout(() => setShowAlert(false), 2000);
+      } else {
+        setShowMess("Lỗi hệ thống!");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsWait(false)
     }
   }
 
@@ -78,7 +87,6 @@ export function InputFormChangePass() {
           className="w-2/3"
         >
           <FormField
-          
             control={form.control}
             name="password"
             render={({ field }) => (
@@ -89,7 +97,7 @@ export function InputFormChangePass() {
                     <Input
                       type={!showPasswordOLD ? "password" : "text"}
                       placeholder="mật khẩu cũ"
-                      autoComplete="old-password" 
+                      autoComplete="old-password"
 
                       {...field}
                     />
@@ -100,7 +108,7 @@ export function InputFormChangePass() {
                   />
                 </div>
                 <div className="h-2 mb-2">
-                <FormMessage />
+                  <FormMessage />
                 </div>
               </FormItem>
             )}
@@ -117,7 +125,7 @@ export function InputFormChangePass() {
                       type={!showPassword ? "password" : "text"}
                       placeholder="nhập mật khẩu mới"
                       {...field}
-                      autoComplete="new-password" 
+                      autoComplete="new-password"
                     />
                   </FormControl>
                   <ShowPassword
@@ -126,9 +134,9 @@ export function InputFormChangePass() {
                   />
                 </div>
                 <div className="h-2 mb-2">
-                <FormMessage />
+                  <FormMessage />
                 </div>
-                </FormItem>
+              </FormItem>
             )}
           />
           <FormField
@@ -140,35 +148,35 @@ export function InputFormChangePass() {
                 <div className="relative">
                   <FormControl>
                     <Input
-                      type={!showPassword ? "password" : "text"}
+                      type={!showPasswordNew ? "password" : "text"}
                       placeholder="nhập lại mật khẩu"
-                      autoComplete="new-password-again" 
+                      autoComplete="new-password-again"
                       {...field}
                     />
                   </FormControl>
                   <ShowPassword
-                    setShowPassword={setShowPassword}
-                    showPassword={showPassword}
+                    setShowPassword={setShowPassworNew}
+                    showPassword={showPasswordNew}
                   />
                 </div>
                 <div className="h-2">
-                <FormMessage />
+                  <FormMessage />
                 </div>
               </FormItem>
             )}
           />
           <p className="text-red-500 text-xs h-5 m-0">{showMess}</p>
           <div className="w-full flex justify-end">
-          <Button
-            type="submit"
-            className="bg-[var(--color-button)] hover:bg-[var(--color-hover-button)"
-          >
-            Thay đổi
-          </Button>
+            <Button
+              type="submit"
+              className="bg-[var(--color-button)] hover:bg-[var(--color-hover-button)"
+            >
+              Thay đổi
+            </Button>
           </div>
-          {showAlert && ShowAlert("Đổi mật khẩu thành công!") }
+          {showAlert && ShowAlert("Đổi mật khẩu thành công!")}
         </form>
-      </Form> 
+      </Form>
     </div>
   );
 }

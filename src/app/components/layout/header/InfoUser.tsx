@@ -77,7 +77,7 @@ export const InfoUser = () => {
               <br />
               <Button onClick={() => route.push('/cart')} className="w-full bg-inherit shadow-none text-[var(--color-text-root)] hover:bg-[#dadadaab]" >Danh sách giỏ hàng</Button>
               <br />
-              {dataUser?.data.role.includes("seller") ? 
+              {dataUser?.data.role.includes("seller") && dataUser.data.isSellerApproved? 
                    (<Button className="w-full bg-inherit shadow-none text-[var(--color-text-root)] hover:bg-[#dadadaab]" onClick={()=> route.push(`/seller`)}>Quản lý cửa hàng</Button>)
                 :
                (<Button className="w-full bg-inherit shadow-none text-[var(--color-text-root)] hover:bg-[#dadadaab]" onClick={()=> route.push('/seller-register')}>Đăng ký kênh bán hàng</Button>)

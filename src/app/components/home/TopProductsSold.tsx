@@ -37,7 +37,7 @@ export const TopProductsSold = ({ listProducts }: { listProducts: ProductProps |
                             }
 
                             <Image
-                                src={"/do-tho/" + value.img[0]}
+                                src={`${value.img[0]}`}
                                 alt={value.name}
                                 width={300}
                                 height={300}

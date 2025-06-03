@@ -33,7 +33,7 @@ export const OtherProductsOfShop = ({ sellerID }: { sellerID: string | undefined
                                 <CardContent className="p-0">
                                     <div className="relative p-1 rounded-sm shadow bg-white cursor-pointer" >
                                         <div>
-                                            <Image src={'/do-tho/' + value.img[0]} alt={value.name} width={300}
+                                            <Image src={value.img[0]} alt={value.name} width={300}
                                                 height={300}
                                                 className="object-cover w-full h-full rounded-xs" />
                                         </div>

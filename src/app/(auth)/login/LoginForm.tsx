@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,8 +20,8 @@ import { ShowPassword } from "@/app/helper/ShowPassword";
 
 
 const FormSchema = z.object({
-  username: z.string(),
-  password: z.string(),
+  username: z.string().regex(/^[a-zA-Z0-9_]+$/, "Tài khoản không được chứa khoảng trắng hoặc ký tự có dấu!"),
+  password: z.string().regex(/^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/, "Mật khẩu không chứa khoảng trắng hoặc ký tự có dấu!")  ,
 });
 
 export function LoginForm() {
@@ -31,7 +30,7 @@ export function LoginForm() {
   const [messagePassword, setMessagePassword] = useState("");
   const [messageAccount, setMessageAccount] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const [isWait , setIsWait] = useState(false)
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -42,6 +41,8 @@ export function LoginForm() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
+      if(isWait) return
+       setIsWait(true);
       const res = await fetchLogin({password: data.password, username: data.username})
       if (res.status === 200 && res.data?.access_token) {
         setAccessToken(res.data?.access_token);
@@ -50,7 +51,7 @@ export function LoginForm() {
       } else if (res.status === 401) {
         setMessagePassword("Mật khẩu không đúng!");
       } else if (res.status === 404) {
-        setMessageAccount("Tài khoảng không đúng!");
+        setMessageAccount("Tài khoảng không đúng hoặc không tồn tại!");
       }
       setTimeout(() => {
         setMessageAccount("");
@@ -58,6 +59,8 @@ export function LoginForm() {
       }, 2000);
     } catch (error) {
       console.error("Error during fetch:", error);
+    } finally {
+      setIsWait(false)
     }
   }
 

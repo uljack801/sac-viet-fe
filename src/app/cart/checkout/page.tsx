@@ -27,7 +27,7 @@ export default function Checkout() {
     const addressShip = userAddress?.list_address.find(value => value.is_default === true);
     const [shippingFees, setShippingFees] = useState<{ [sellerId: string]: number }>({});
     const [isProcessing, setIsProcessing] = useState(false);
-
+    const [totalPay, setTotalPay] = useState(0)
     useEffect(() => {
         const data = localStorage.getItem("selectedProducts");
         if (data) {
@@ -73,8 +73,17 @@ export default function Checkout() {
         getShippingFee();
     }, [selectedProducts, addressShip]);
 
+    useEffect(() => {
+        const total = selectedProducts?.reduce((total, group) => {
+            return total + (group.products?.reduce((sum, product) => {
+                return sum + (product.price - (product.price * (product.discount_percentage / 100))) * product.quantity;
+            }, 0) || 0);
+        }, 0)
+        if (total) setTotalPay(total)
+    }, [selectedProducts])
+
     const handleAllOrders = async () => {
-        if (isProcessing) return; 
+        if (isProcessing) return;
         setIsProcessing(true);
 
         try {
@@ -82,7 +91,9 @@ export default function Checkout() {
                 for (const value of selectedProducts) {
                     const allProducts = value.products?.map(product => ({
                         productID: product._id,
-                        quantity: product.quantity
+                        quantity: product.quantity,
+                        productName: product.name,
+                        weight: product.weight
                     }));
                     if (!allProducts) continue;
 
@@ -98,7 +109,8 @@ export default function Checkout() {
                             payment_method: typePay,
                             address_ship: addressShip?._id,
                             total_money_ship: shippingFees[value.seller?.data._id || ""],
-                            shipping_fees: shippingFees
+                            shipping_fees: shippingFees,
+                            totalPay: totalPay
                         })
                     });
 
@@ -154,7 +166,7 @@ export default function Checkout() {
                                     <div className="grid grid-cols-6 ">
                                         <div className="col-span-3">
                                             <div className="flex my-2">
-                                                <Image src={`/do-tho/${value.img[0]}`} alt={`${value.name}`} width={48} height={48} />
+                                                <Image src={`${value.img[0]}`} alt={`${value.name}`} width={48} height={48} />
                                                 <div>
                                                     <p className="text-ellipsis line-clamp-1 mx-2">{value.name}</p>
                                                 </div>

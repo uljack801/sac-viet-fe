@@ -1,8 +1,8 @@
 import { SECRET_KEY } from "@/app/helper/constant";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import User from "@/app/config/models/User";
 import Product from "@/app/config/models/Product";
+import Seller from "@/app/config/models/Seller";
 
 export async function PATCH(req: NextRequest) {
   try {
@@ -19,16 +19,16 @@ export async function PATCH(req: NextRequest) {
     }
 
     const { productID, sellerID } = await req.json();
+    
     if (!productID || !sellerID) {
       return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
     }
 
-    const findUser = await User.findById(decoded.id).select('-password -token');
+    const findUser = await Seller.findOne({user : decoded.id})
     if (!findUser) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
-
-    if (findUser.seller_id.toString() !== sellerID) {
+    if (findUser._id.toString() !== sellerID) {
       return NextResponse.json({ message: "Permission denied" }, { status: 403 });
     }
     const findProduct = await Product.findById(productID);    

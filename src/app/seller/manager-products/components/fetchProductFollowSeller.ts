@@ -1,11 +1,11 @@
 import { NEXT_PUBLIC_LOCAL } from "@/app/helper/constant";
 import { ProductProps } from "@/app/utils/fetchProduct";
 
-export const fetchProductFollowSeller = async ( accessToken: string | null, page: string , setListProducts: React.Dispatch<React.SetStateAction<ProductProps | undefined>>) => {
+export const fetchProductFollowSeller = async ( accessToken: string | null, sellerID: string, page: string , setListProducts: React.Dispatch<React.SetStateAction<ProductProps | undefined>>) => {
   try {
     if (accessToken) {
       const res = await fetch(
-        `${NEXT_PUBLIC_LOCAL}/api/get/product-follow-seller?page=${page}`,
+        `${NEXT_PUBLIC_LOCAL}/api/get/product-follow-seller?page=${page}&seller-id=${sellerID}`,
         {
           method: "GET",
           headers: {

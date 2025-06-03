@@ -40,7 +40,7 @@ const FormSchema = z.object({
         required_error: "You need to select a notification type.",
     }),
     emailToReceive: z.string().email(),
-    taxNumber: z.string(),
+    taxNumber: z.string().regex(/^(?:\d{10}|\d{14})$/, "Mã số thuế phải gồm 10 hoặc 14 chữ số!"),
     nameCompany: z.string().optional()
 })
 import { useAuth } from "@/app/AuthContext"
@@ -97,9 +97,13 @@ export default function FormRegisterSeller() {
         if (res.status === 200) {
             setCheckRegisterSeller(true)
         }
+        if (res.status === 400) {
+            alert("Tên cửa hàng đã bị trùng")
+        }
 
 
     }
+
     useEffect(() => {
         if (dataUser?.data.email) {
             form.setValue('email', dataUser.data.email);
@@ -130,16 +134,16 @@ export default function FormRegisterSeller() {
                     </div>
                     <div className="flex justify-around ">
                         <div className="flex flex-col items-center">
-                        <p><BsCircleFill className={cn("text-orange-500", checkTax && "text-orange-500")} /></p>
-                        <p>Thông tin Shop</p>
+                            <p><BsCircleFill className={cn("text-orange-500", checkTax && "text-orange-500")} /></p>
+                            <p>Thông tin Shop</p>
                         </div>
                         <div className="flex flex-col items-center">
-                        <p><BsCircleFill className={cn(checkTax && "text-orange-500")} /></p>
-                        <p>Thông tin Thuế</p>
+                            <p><BsCircleFill className={cn(checkTax && "text-orange-500")} /></p>
+                            <p>Thông tin Thuế</p>
                         </div>
                         <div className="flex flex-col items-center">
-                        <p><BsCircleFill className={cn((checkTax && checkRegisterSeller) && "text-orange-500")} /></p>
-                        <p>Hoàn tất</p>
+                            <p><BsCircleFill className={cn((checkTax && checkRegisterSeller) && "text-orange-500")} /></p>
+                            <p>Hoàn tất</p>
                         </div>
 
                     </div>
@@ -232,7 +236,7 @@ export default function FormRegisterSeller() {
                                                 </DialogTrigger>
                                                 <DialogContent >
                                                     <DialogHeader>
-                                                        <DialogTitle>Thêm địa chỉ mới</DialogTitle>
+                                                        <DialogTitle className="mb-10">Cập nhật địa chỉ lấy hàng</DialogTitle>
                                                     </DialogHeader>
                                                     <FormAddressSeller setValueAddress={setValueAddress} />
                                                     <DialogFooter className="absolute bottom-6 right-24 ">
@@ -385,7 +389,7 @@ export default function FormRegisterSeller() {
                                                         <div className="grid grid-cols-3 items-center ">
                                                             <FormLabel className="justify-end mr-2">Mã số thuế:</FormLabel>
                                                             <FormControl>
-                                                                <Input  {...field} className="col-span-2" />
+                                                                <Input  {...field} maxLength={14} className="col-span-2" />
                                                             </FormControl>
                                                         </div>
                                                         <FormDescription>
@@ -403,10 +407,10 @@ export default function FormRegisterSeller() {
                                 </div>
                             </div>
                     ) :
-                    <div className="px-20 flex text-center items-center flex-col">
-                        <Button onClick={() => route.push('/')} className="bg-[var(--color-button)] hover:bg-[var(--color-hover-button)] mb-10">Trang chủ</Button>
-                        <h1 className="text-3xl font-bold text-center text-gray-800">Gửi yêu cầu thành công!</h1>
-                        <p className="mt-6 text-center text-gray-700">
+                    <div className="p-20 flex text-center items-center flex-col">
+                        <Button onClick={() => route.push('/')} className="bg-[var(--color-button)] hover:bg-[var(--color-hover-button)] mb-10">Quay lại Trang chủ</Button>
+                        <h1 className="text-3xl font-bold text-center text-neutral-400">Gửi yêu cầu thành công!</h1>
+                        <p className="mt-6 text-center text-neutral-300">
                             Cảm ơn bạn đã đăng ký trở thành Người bán trên <strong>Sắc Việt</strong>.
                             Hồ sơ của bạn đang được xem xét và chúng tôi sẽ phản hồi trong vòng <strong>1–2 ngày làm việc</strong>.Vui lòng kiểm tra email để cập nhật trạng thái xác minh.
                         </p>

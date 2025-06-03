@@ -62,7 +62,7 @@ export function SubscribeEmail() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="text-white absolute top-0 right-0 bg-[var(--color-button)] hover:bg-[var(--color-hover-button)] ">Đăng ký</Button>
+        <Button type="submit" className="text-white absolute top-0 right-0 bg-[var(--color-button)] hover:bg-[var(--color-hover-button)] mt-2">Đăng ký</Button>
       </form>
       {showAlert && ShowAlert('Đăng ký thành công!')}
 

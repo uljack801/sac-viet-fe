@@ -19,7 +19,8 @@ export default function Order() {
     useEffect(() => {
         getOrder({ accessToken, setDataOrder })
     }, [accessToken])
-    
+
+
     return (
         <div className="lg:mx-20 sm:mx-10 xl:mx-40">
             <div className="grid grid-cols-6 bg-white rounded-sm mt-28">

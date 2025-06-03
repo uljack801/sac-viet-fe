@@ -23,16 +23,16 @@ export default function ManagerProducts() {
     const searchParam = useSearchParams()
     const page = searchParam.get("page") || "1"
     useEffect(() => {
-        if (accessToken) {
-            fetchProductFollowSeller(accessToken, page, setListProducts)
+        if (accessToken && infoSeller) {
+            fetchProductFollowSeller(accessToken, infoSeller?.data._id, page, setListProducts)
         }
-    }, [accessToken, page])
+    }, [accessToken ,infoSeller, page])
 
     const handleChange = async (productID: string) => {
         if (accessToken && infoSeller) {
             const status = await fetchChangeStatus(productID, infoSeller?.data._id, accessToken)
             if (status === 200) {
-                await fetchProductFollowSeller(accessToken, page, setListProducts)
+                await fetchProductFollowSeller(accessToken, infoSeller?.data._id, page, setListProducts)
                 setCheckChangeStatus(true)
                 setTimeout(() => setCheckChangeStatus(false), 2000)
             }
@@ -57,7 +57,7 @@ export default function ManagerProducts() {
                         return (
                             <div key={product._id} className={cn("grid grid-cols-12 items-center ", idx !== listProducts.data.length - 1 && "border-b")} >
                                 <div className="col-span-6 flex  border-r p-1">
-                                    <Image src={'/do-tho/' + product.img[0]} alt={product.name} width={48}
+                                    <Image src={product.img[0]} alt={product.name} width={48}
                                         height={48}
                                         className="object-cover" />
                                     <p className="text-xs ml-1 mr-2 line-clamp-2">{product.name}</p>

@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 import { SECRET_KEY } from "@/app/helper/constant";
 import Seller from "@/app/config/models/Seller";
+import sendEmail from "@/app/utils/sendEmail";
 
 export async function POST(req: NextRequest) {
   try {
@@ -40,28 +41,46 @@ export async function POST(req: NextRequest) {
       nameCompany,
     } = await req.json();
 
-    if (!nameShop || !email || !phoneNumber || !address) {
+    if (!email || !phoneNumber || !address) {
       return NextResponse.json(
         { message: "Missing required fields" },
         { status: 400 }
       );
     }
-    
+    const existingShop = await Seller.findOne({ nameShop: nameShop });
+    if (existingShop) {
+      return NextResponse.json(
+        { message: "Tên shop đã tồn tại!" },
+        { status: 400 }
+      );
+    }
+
     const newSeller = await Seller.create({
-        user: decoded.id,
-        nameShop,
-        email,
-        phoneNumber,
-        address,
-        typeBusiness,
-        addressRegisterBusiness,
-        emailToReceive,
-        nameCompany,
-        businessRegistrationCertificate: {
-          taxNumber,
-        },
-      });
-      
+      user: decoded.id,
+      nameShop,
+      email,
+      phoneNumber,
+      address,
+      typeBusiness,
+      addressRegisterBusiness,
+      emailToReceive,
+      nameCompany,
+      businessRegistrationCertificate: {
+        taxNumber,
+      },
+    });
+    await sendEmail(
+      emailToReceive,
+      "Xác nhận đăng ký tài khoản Seller",
+      `
+    Xin chào ${nameShop},
+    Cảm ơn bạn đã đăng ký tài khoản Seller trên nền tảng của chúng tôi.
+    Yêu cầu của bạn đang được xử lý và sẽ được phê duyệt trong vòng 1 - 2 ngày làm việc.
+    Chúng tôi sẽ gửi email thông báo ngay khi tài khoản của bạn được duyệt.
+    Trân trọng,
+    Đội ngũ hỗ trợ Sàn Thương mại<
+  `
+    );
     const response = NextResponse.json(
       {
         newSeller,
@@ -69,11 +88,8 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 }
     );
-    if (!findUser.role.includes("seller")) {
-       findUser.role.push("seller");
-       findUser.seller_id = newSeller._id
-     await findUser.save();
-    }
+    findUser.isSellerApproved = true;
+    await findUser.save();
 
     return response;
   } catch (error) {

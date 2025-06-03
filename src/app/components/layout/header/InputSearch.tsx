@@ -46,7 +46,7 @@ export function InputSearch() {
             </FormItem>
           )}
         />
-        <Button className="absolute top-0 right-0 bg-inherit hover:bg-inherit shadow-none" type="submit" ><IoSearch className="text-[var(--color-text-root)] "/></Button>
+        <Button className="absolute top-0 right-0 bg-inherit hover:bg-inherit shadow-none mt-2" type="submit" ><IoSearch className="text-[var(--color-text-root)] "/></Button>
       </form>
     </Form>
   )

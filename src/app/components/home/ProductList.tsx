@@ -18,7 +18,7 @@ export const ProductList = ({ listProducts }: { listProducts: ProductProps | nul
           return (
             <div onClick={() => route.push(`/product-details/${value._id}`)} key={`product-${value._id}`} className="relative col-span-1 p-1 rounded-sm shadow bg-white cursor-pointer" >
               <div>
-                <Image src={'/do-tho/' + value.img[0]} alt={value.name} width={300}
+                <Image src={value.img[0]} alt={value.name} width={300}
                   height={300}
                   className="object-cover w-full h-full rounded-xs" />
               </div>

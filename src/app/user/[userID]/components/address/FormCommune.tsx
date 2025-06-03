@@ -75,11 +75,11 @@ export function FormCommune({setValueCommnune, valueDistrict , checkDistrict}: {
           name="commune"
           render={({ field }) => (
             <FormItem >
-              <FormLabel className="">Xã/Phường</FormLabel>
+              <FormLabel className="mb-2">Xã/Phường</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value} disabled={!checkDistrict}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Chọn thành phố" className="w-full" />
+                    <SelectValue placeholder="Chọn phường/xã" className="w-full" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>

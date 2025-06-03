@@ -20,14 +20,9 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { phoneRegex } from "@/app/helper/constant"
 
 const FormSchema = z.object({
     detail: z.string().min(1),
-    phone: z.string().regex(
-        phoneRegex, "Số điện thoại không hợp lệ"
-    ),
-    name: z.string().min(1),
 })
 
 export function FormAddressSeller({setValueAddress } : {setValueAddress: React.Dispatch<SetStateAction<string | undefined>>}) {
@@ -50,8 +45,6 @@ export function FormAddressSeller({setValueAddress } : {setValueAddress: React.D
         resolver: zodResolver(FormSchema),
         defaultValues: {
             detail: "",
-            phone: "",
-            name: "",
         },
     })
     function handleSave() {
@@ -59,7 +52,7 @@ export function FormAddressSeller({setValueAddress } : {setValueAddress: React.D
         const isValid = form.trigger(); 
         isValid.then(valid => {
             if (valid) {
-                const fullAddress = `${data.name}\n${data.phone}\n${data.detail}, ${valueCommune}`;
+                const fullAddress = `${data.detail}, ${valueCommune}`;
                 setValueAddress(fullAddress);
             }
         });
@@ -91,38 +84,6 @@ export function FormAddressSeller({setValueAddress } : {setValueAddress: React.D
                                 </FormItem>
                             )}
                         />
-                        <div className="flex justify-between">
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({ field }) => (
-                                    <FormItem className="mt-2 w-1/2 mr-10">
-                                        <FormLabel>Tên người nhận</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="nhập tên người nhận" {...field} disabled={valueCommune === ''} />
-                                        </FormControl>
-                                        <FormDescription>
-                                        </FormDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="phone"
-                                render={({ field }) => (
-                                    <FormItem className="mt-2 w-1/2">
-                                        <FormLabel>Số điện thoại</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="nhập số điện thoại" {...field} disabled={valueCommune === ''} />
-                                        </FormControl>
-                                        <FormDescription>
-                                        </FormDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
                         <div className="flex justify-end">
                             <Button className="bg-[#C95050] text-white hover:bg-[#c9505098] mt-10" disabled={valueCommune === ''} type="button" onClick={(handleSave)}>Lưu</Button>
                         </div>

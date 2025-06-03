@@ -9,10 +9,9 @@ export default function LoginLayout({
 }) {
   const route = useRouter();
   return (
-    <div className="items-start h-screen">
-      <div className="">
+      <div className="h-screen flex flex-col justify-between">
       <div className="bg-white">
-        <div className="py-4 flex items-center justify-between lg:mx-24  xl:mx-48 lg:mx-20 sm:mx-10  text-[#8B5A2B] ">
+        <div className="py-4 flex items-center justify-between lg:mx-24  xl:mx-48  sm:mx-10  text-[#8B5A2B] ">
           <div className="flex  items-center cursor-pointer" onClick={() => route.push('/')} title="Về trang chủ">
             <Image src={'/logo_.png'} width={60} height={60} alt="logo" />
             <span className="font-bold text-3xl">SẮC VIỆT</span>
@@ -22,9 +21,8 @@ export default function LoginLayout({
           </div>
         </div>
       </div>
-     <div className="py-10 bg-[#EAE0C8] "> {children}</div>
+     <div className="py-10 bg-[#EAE0C8] h-full"> {children}</div>
       <div><Footer /></div> 
       </div>
-    </div>
   );
 }

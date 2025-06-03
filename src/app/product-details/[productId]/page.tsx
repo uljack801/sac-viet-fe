@@ -139,7 +139,7 @@ export default function ProductID() {
               <div className="grid grid-cols-3 p-4 bg-white rounded-sm">
                 <div className="col-span-1">
                   <Image
-                    src={`/do-tho/${value.img[changeImg]}`}
+                    src={`${value.img[changeImg]}`}
                     alt="anh-san-pham"
                     width={300}
                     height={300}
@@ -159,7 +159,7 @@ export default function ProductID() {
                               <Card className="p-0">
                                 <CardContent className="flex aspect-square items-center justify-center p-0 cursor-pointer">
                                   <Image
-                                    src={`/do-tho/${valueImg}`}
+                                    src={`${valueImg}`}
                                     alt="anh-san-pham"
                                     width={48}
                                     height={48}
@@ -252,7 +252,7 @@ export default function ProductID() {
                       <p>{value.comment}</p>
                       <div className="flex">
                         {value.images.map((value, idx) => (
-                          <Image key={`anh-review-${idx}`} src={`/do-tho/${value}`} alt={value} width={60} height={60} className="mx-2" />
+                          <Image key={`anh-review-${idx}`} src={`${value}`} alt={value} width={60} height={60} className="mx-2" />
                         ))}
                       </div>
                     </div>

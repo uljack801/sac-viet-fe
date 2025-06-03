@@ -53,7 +53,7 @@ const ProductSchema = new mongoose.Schema(
     },
     handmade: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     warranty: {
       type: String,

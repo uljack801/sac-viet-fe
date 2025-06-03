@@ -71,11 +71,11 @@ export function FormDistrict({setValueDistrict, valueCapital , checkCapital}: {s
           name="district"
           render={({ field }) => (
             <FormItem >
-              <FormLabel>Quận/Huyện</FormLabel>
+              <FormLabel className="mb-2">Quận/Huyện</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value} disabled={!checkCapital}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Chọn thành phố" className="w-full " />
+                    <SelectValue placeholder="Chọn quận/huyện" className="w-full " />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>

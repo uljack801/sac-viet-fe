@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 export function HeaderSeller () {
     const { infoSeller } = useAuthSeller()
     const route = useRouter()
+    
     return(
         <div className="bg-[#fafafa] w-full py-6 border-b">
             <div className="flex justify-between">

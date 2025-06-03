@@ -10,11 +10,10 @@ const authHeader = req.headers.get("authorization");
   }  
   try {
     const token = authHeader.split(" ")[1];
-    
     const decoded = jwt.verify(token, SECRET_KEY as string) as {id: string, email: string , account: string};
-
     if (decoded) {
       const findUserAdd = await UserAddress.findOne({ user: decoded.id})
+      
       if (!findUserAdd) {
         return NextResponse.json({ error: "Invalid token" }, { status: 401 });
       }

@@ -51,6 +51,10 @@ export function InputFormDetail({ valueCommune, setOpen}: { valueCommune: string
       },
       body: JSON.stringify({
         address: data.detail + ", " + valueCommune,
+        commune: valueCommune.split(',')[0],
+        district: valueCommune.split(',')[1],
+        capital: valueCommune.split(',')[2],
+        deatails: data.detail,
         phone: data.phone,
         name: data.name
       }),

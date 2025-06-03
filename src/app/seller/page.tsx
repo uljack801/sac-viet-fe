@@ -6,26 +6,28 @@ import { useAuthSeller } from "./AuthContext"
 import { useAuth } from "../AuthContext"
 
 export default function HomeSeller() {
-    const { dataUser } = useAuth()
-    const sellerID = dataUser?.data.seller_id
+    const { accessToken } = useAuth();
     const { setInfoSeller , infoSeller} = useAuthSeller()
     useEffect(() => {
         const getInfoSeller  = async () => {
             try {
-                const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/get/info-seller?seller-id=${sellerID}`,{
+                if(accessToken){
+                const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/get/info-page-seller`,{
                     method: "GET",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        Authorization : `Bearer ${accessToken}`
                     }
                 })
                 const data = await res.json();
                 if(res.status === 200) setInfoSeller(data)
+                }
             } catch (error) {
                 console.log(error);
             }
         }
         getInfoSeller()
-    },[ sellerID ,setInfoSeller])
+    },[accessToken  ,setInfoSeller])
     console.log(infoSeller);
   return (
     <div className="">

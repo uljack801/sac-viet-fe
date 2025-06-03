@@ -19,24 +19,34 @@ const FormSchema = z.object({
   email: z.string().email("Email không hợp lệ!"),
 })
 
-export function ForgetPassword({setConfirmToken, setCheckForget} : {setConfirmToken: React.Dispatch<React.SetStateAction<string>>, setCheckForget: React.Dispatch<React.SetStateAction<boolean>>}) {
+export function ForgetPassword({ setConfirmToken, setCheckForget }: { setConfirmToken: React.Dispatch<React.SetStateAction<string>>, setCheckForget: React.Dispatch<React.SetStateAction<boolean>> }) {
   const [messageFG, setMessageFG] = useState('')
+  const [isWait, setIsWait] = useState(false)
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-        email: "",
+      email: "",
     },
   })
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const res = await fetchForgetPassword(data);    
-    if(res?.status === 200){
-      setConfirmToken(res.accessToken.confirm_access)
-      setCheckForget(true)
-    }else if(res?.status === 400){
-      setMessageFG("Email không tồn tại!")
-      setTimeout(() => setMessageFG(""),1000 )
+    try {
+      if (isWait) return
+      setIsWait(true)
+      const res = await fetchForgetPassword(data);
+      if (res?.status === 200) {
+        setConfirmToken(res.accessToken.confirm_access)
+        setCheckForget(true)
+      } else if (res?.status === 400) {
+        setMessageFG("Email không tồn tại!")
+        setTimeout(() => setMessageFG(""), 1000)
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsWait(false)
     }
+
   }
 
   return (
@@ -51,12 +61,12 @@ export function ForgetPassword({setConfirmToken, setCheckForget} : {setConfirmTo
                 <Input placeholder="Nhập địa chỉ email" {...field} />
               </FormControl>
               <div className="h-1">
-              <FormMessage />
+                <FormMessage />
               </div>
               <div className="h-1">
-              <p className="text-red-500 text-xs">
-              {messageFG}
-              </p>
+                <p className="text-red-500 text-xs">
+                  {messageFG}
+                </p>
               </div>
             </FormItem>
           )}

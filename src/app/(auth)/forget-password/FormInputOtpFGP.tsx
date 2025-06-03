@@ -30,7 +30,7 @@ export function InputOTPFormForget({ setCheckConfirmForget, confirmToken }: { se
   const [isResendDisabled, setIsResendDisabled] = useState(true);
   const [checkSatusOtp, setCheckSatusOtp] = useState(false);
   const [messageOTP, setMessageOTP] = useState("");
-
+  const [isWait, setIsWait] = useState(false)
   useEffect(() => {
     if (counter > 0) {
       const timer = setTimeout(() => setCounter(counter - 1), 1000);
@@ -54,6 +54,8 @@ export function InputOTPFormForget({ setCheckConfirmForget, confirmToken }: { se
     }, 300000);
 
     try {
+      if (isWait) return
+      setIsWait(true)
       if (confirmToken) {
         const res = await fetchConfirmForPass({ data, confirmToken, controller });
         if (res === 200) {
@@ -65,6 +67,8 @@ export function InputOTPFormForget({ setCheckConfirmForget, confirmToken }: { se
       }
     } catch (error) {
       console.error("Lỗi xác nhận email:", error);
+    } finally {
+      setIsWait(false)
     }
   }
 

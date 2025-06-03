@@ -54,7 +54,7 @@ export const SidebarHeader = () => {
               return (
                 <div key={`product-in-cart-${value._id + idx}`} className="mt-2 flex cursor-pointer" onClick={() => route.push(`/product-details/${value._id}`)}>
                   <Image
-                    src={`/do-tho/${value.img[0]}`}
+                    src={`${value.img[0]}`}
                     alt="anh-san-pham"
                     width={60}
                     height={60}

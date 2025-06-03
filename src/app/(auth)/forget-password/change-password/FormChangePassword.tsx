@@ -32,6 +32,8 @@ const FormSchema = z
 export function FormChangePassword({ confirmToken }: { confirmToken: string }) {
   const route = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordAgain, setShowPasswordAgain] = useState(false);
+  const [isWait, setIsWait] = useState(false)
   const [checkForget, setCheckForget] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -43,12 +45,21 @@ export function FormChangePassword({ confirmToken }: { confirmToken: string }) {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const res = await fetchChangePassword({ newPassword: data.newPassword, confirmToken })
-    if (res === 200) {
-      route.push("/login");
-      setCheckForget(true)
-      setTimeout(() => setCheckForget(false), 2000);
+    try {
+      if (isWait) return
+      setIsWait(true)
+      const res = await fetchChangePassword({ newPassword: data.newPassword, confirmToken })
+      if (res === 200) {
+        route.push("/login");
+        setCheckForget(true)
+        setTimeout(() => setCheckForget(false), 2000);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsWait(false)
     }
+
   }
 
   return (
@@ -90,15 +101,15 @@ export function FormChangePassword({ confirmToken }: { confirmToken: string }) {
                 <div className="relative">
                   <FormControl>
                     <Input
-                      type={!showPassword ? "password" : "text"}
+                      type={!showPasswordAgain ? "password" : "text"}
                       placeholder="nhập lại mật khẩu mới"
                       {...field}
                       autoComplete="new-again-password-1"
                     />
                   </FormControl>
                   <ShowPassword
-                    setShowPassword={setShowPassword}
-                    showPassword={showPassword}
+                    setShowPassword={setShowPasswordAgain}
+                    showPassword={showPasswordAgain}
                   />
                 </div>
                 <div className="h-1">

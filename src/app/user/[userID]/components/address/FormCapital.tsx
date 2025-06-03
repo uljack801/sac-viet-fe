@@ -68,7 +68,7 @@ export function FormCapital({setValueCapital}: {setValueCapital: React.Dispatch<
               name="city"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel >Thành phố</FormLabel>
+                  <FormLabel className="mb-2">Thành phố</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}

@@ -10,7 +10,7 @@ export default function SellerRegisterLayout({
   const roter = useRouter();
   return (
     <div className="items-start h-screen">
-      <div className="bg-white">
+      <div className="bg-white px-20">
         <div className="py-4 grid grid-cols-4 items-center   text-[#8B5A2B] ">
           <div className="col-span-1 flex items-center cursor-pointer" onClick={() => roter.push('/')} title="Về trang chủ">
             <Image src={'/logo_.png'} width={60} height={60} alt="logo" />

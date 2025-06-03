@@ -6,6 +6,10 @@ const UserAddressSchema = new mongoose.Schema({
         phone: { type: String, required: true },
         name: { type: String, required: true },
         address: { type: String, required: true },
+        capital: {type: String},
+        district: {type: String},
+        commune: {type: String},
+        deatails : {type: String},
         is_default: { type: Boolean, default: false }
     }]
 }, { timestamps: true})

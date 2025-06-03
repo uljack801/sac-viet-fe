@@ -26,14 +26,15 @@ const FormSchema = z.object({
   }),
 });
 
-export function InputOTPForm({confirmAccess}: {confirmAccess: string|undefined}) {
+export function InputOTPForm({ confirmAccess }: { confirmAccess: string | undefined }) {
   const route = useRouter();
   const [counter, setCounter] = useState(60);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
   const [checkSatusOtp, setCheckSatusOtp] = useState(false);
   const [messageOTP, setMessageOTP] = useState("");
   const { setAccessToken } = useAuth();
-
+  const [isWait, setIsWait] = useState(false)
+  
   useEffect(() => {
     if (counter > 0) {
       const timer = setTimeout(() => setCounter(counter - 1), 1000);
@@ -53,40 +54,44 @@ export function InputOTPForm({confirmAccess}: {confirmAccess: string|undefined})
     const controller = new AbortController();
     const timeoutId = setTimeout(async () => {
       controller.abort();
-      if(confirmAccess){
+      if (confirmAccess) {
         await fetchDeleteUser(confirmAccess);
       }
       setCheckSatusOtp(true);
     }, 300000);
     try {
-      if(confirmAccess){
-        const res = await fetchConfirmEmail({inputOtp: data.pin, confirmAccess, controller})
+      if (isWait) return
+      setIsWait(true)
+      if (confirmAccess) {
+        const res = await fetchConfirmEmail({ inputOtp: data.pin, confirmAccess, controller })
         if (res.status === 200 && res.data?.access_token) {
           setAccessToken(res.data?.access_token)
           clearTimeout(timeoutId);
           route.push("/");
           route.refresh();
-        } else if (res.status  === 400) {
+        } else if (res.status === 400) {
           setMessageOTP("OTP không đúng hoặc đã hết hạn");
         }
       }
     } catch (error) {
       console.error("Lỗi xác nhận email:", error);
+    } finally {
+      setIsWait(false)
     }
   }
-  
+
   const handleResendOtp = async () => {
     setCounter(60);
     setIsResendDisabled(true);
-    if(confirmAccess){      
+    if (confirmAccess) {
       await fetchResendOTP(confirmAccess);
     }
   };
   return (
-    <div className="flex items-center justify-center h-full my-36">
+    <div className="flex items-center justify-center h-full ">
       {!checkSatusOtp ? (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="">
+          <form onSubmit={form.handleSubmit(onSubmit)} >
             <FormField
               control={form.control}
               name="pin"

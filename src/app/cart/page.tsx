@@ -176,7 +176,7 @@ export default function Card() {
     }
 
     return (
-        <div className="min-h-screen mt-28 mb-10 lg:mx-20 sm:mx-10 xl:mx-40">
+        <div className=" mt-28 mb-10 lg:mx-20 sm:mx-10 xl:mx-40">
             <div className="grid grid-cols-2 bg-white p-6 items-center rounded-sm ">
                 <p className="2xl:text-2xl font-medium xl:text-xl">Danh sách giỏ hàng</p>
                 <div className="grid grid-cols-4 text-neutral-400 text-center">
@@ -204,7 +204,7 @@ export default function Card() {
                                         <div className="grid grid-cols-2 items-center mt-4 border rounded-sm py-1 w-full">
                                             <div className="flex items-center">
                                                 <Image
-                                                    src={`/do-tho/${value.img[0]}`}
+                                                    src={`${value.img[0]}`}
                                                     alt="anh-san-pham"
                                                     width={90}
                                                     height={90}
@@ -256,7 +256,7 @@ export default function Card() {
                     </div>
                 </div>
             ) : (
-                <div className="bg-white min-h-screen p-6 mt-2 rounded-sm flex justify-center items-center ">
+                <div className="bg-white min-h-96 p-6 mt-2 rounded-sm flex justify-center items-center ">
                     <div className="flex flex-col items-center">
                         <GiCardboardBox className="text-6xl" />
                         <p>Chưa có sản phẩm nào trong giỏ hàng</p>
