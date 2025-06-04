@@ -18,6 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useAuthSeller } from "../AuthContext";
 import { NEXT_PUBLIC_LOCAL } from "@/app/helper/constant";
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 export default function AddProduct() {
   const { listCategory, accessToken } = useAuth();
@@ -40,7 +41,7 @@ export default function AddProduct() {
   const [tags, setTags] = useState<string[]>([]);
   const [heft, setHeft] = useState<number>(0)
   const [selectCategory, setSelectCategory] = useState('')
-
+  const [alertAddDone, setAlertAddDone] = useState(false)
 
   const handleAddLength = () => {
     if (lengthArrayImg.length < 10) {
@@ -118,15 +119,8 @@ export default function AddProduct() {
       selectCategory &&
       nameProduct &&
       listImg.length > 0 &&
-      discount !== undefined &&
       price &&
-      colors.length > 0 &&
       material &&
-      length &&
-      weight &&
-      height &&
-      origin &&
-      warranty &&
       careInstructions &&
       description &&
       inventory &&
@@ -181,13 +175,29 @@ export default function AddProduct() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`
           },
-          body: JSON.stringify({dataProduct: dataProduct})
+          body: JSON.stringify({ dataProduct: dataProduct })
         })
-        if(res.status === 200){
-          alert("Thêm sản phẩm thành công")
-
-        }        
-        console.log("Dữ liệu sản phẩm:", dataProduct);
+        if (res.status === 200) {
+          setNameProduct('')
+          setListImg([])
+          setDiscount(0)
+          setPrice(0)
+          setColors([])
+          setMaterial([])
+          setWeight('')
+          setHeight('')
+          setLength('')
+          setOrigin('')
+          setCareInstructions('')
+          setDescription('')
+          setInventory(0)
+          setTags([])
+          setHeft(0)
+          setSelectCategory('')
+          setWarranty('')
+          setAlertAddDone(true)
+          setTimeout(() => setAlertAddDone(false), 2000)
+        }
       }
 
     } catch (error) {
@@ -196,18 +206,18 @@ export default function AddProduct() {
   };
 
   return (
-    <div className="mb-28 2xl:p-10 xl:p-4  ">
+    <div className="mb-28 2xl:p-10 2xl:mx-32 xl:mx-20 lg:mx-16 sm:mx-6 xl:p-4">
       <div className="flex justify-between">
         <p className="text-2xl font-medium">Thêm sản phẩm mới</p>
         <Button className=" bg-[var(--color-button)] hover:bg-[var(--color-hover-button)]" onClick={addproduct}><IoAddCircleOutline />Thêm sản phẩm</Button>
       </div>
       <div className="bg-white rounded-sm min-h-96 mt-4 p-10 shadow">
         <div className="grid grid-cols-6">
-          <Label>Tên sản phẩm: </Label>
+          <Label>Tên sản phẩm: *</Label>
           <Input className="col-span-2" onChange={(e) => setNameProduct(e.target.value)} />
         </div>
         <div className="grid grid-cols-6 mt-2">
-          <Label>Thêm ảnh:</Label>
+          <Label>Thêm ảnh: *</Label>
           <div className="flex border rounded-sm items-center justify-center cursor-pointer col-span-2 h-full py-2">
             <IoAddCircleOutline
               onClick={handleAddLength}
@@ -236,7 +246,7 @@ export default function AddProduct() {
           <Slider defaultValue={[discount]} onValueChange={(value) => { setDiscount(value[0]) }} max={100} step={1} className="col-span-2" />
         </div>
         <div className="grid grid-cols-6">
-          <Label>Giá bán: </Label>
+          <Label>Giá bán: *</Label>
           <Input type="number" min={0} className="col-span-2" onChange={(e) => setPrice(Number(e.target.value))} />
         </div>
         <div className="grid grid-cols-6 mt-2">
@@ -270,7 +280,7 @@ export default function AddProduct() {
           </div>
         ))}
         <div className="grid grid-cols-6 mt-2">
-          <Label>Vật liệu:</Label>
+          <Label>Vật liệu: *</Label>
           <div className="flex border rounded-sm items-center justify-center cursor-pointer col-span-2 h-full py-2">
             <IoAddCircleOutline
               onClick={handleAddMaterial}
@@ -321,21 +331,21 @@ export default function AddProduct() {
           <Input className="col-span-2" onChange={(e) => setWarranty(e.target.value)} />
         </div>
         <div className="grid grid-cols-6 mt-2">
-          <Label>Hướng dẫn bảo quản: </Label>
+          <Label>Hướng dẫn bảo quản: *</Label>
           <Textarea className="col-span-4" onChange={(e) => setCareInstructions(e.target.value)} />
           <p className="text-xs flex items-center h-ful ml-1">(Nhớ chấm khi hết một ý)</p>
         </div>
         <div className="grid grid-cols-6 mt-2">
-          <Label>Mô tả: </Label>
+          <Label>Mô tả: *</Label>
           <Textarea className="col-span-4" onChange={(e) => setDescription(e.target.value)} />
           <p className="text-xs flex items-center h-ful ml-1">(Nhớ chấm khi hết một ý)</p>
         </div>
         <div className="grid grid-cols-6 mt-2">
-          <Label>Hàng tồn kho: </Label>
+          <Label>Hàng tồn kho: *</Label>
           <Input type="number" min={0} className="col-span-2" onChange={(e) => setInventory(Number(e.target.value))} />
         </div>
         <div className="grid grid-cols-6 mt-2">
-          <Label>Thẻ tìm kiếm:</Label>
+          <Label>Thẻ tìm kiếm: *</Label>
           <div className="flex border rounded-sm items-center justify-center cursor-pointer col-span-2 h-full py-2">
             <IoAddCircleOutline
               onClick={handleAddTags}
@@ -364,12 +374,12 @@ export default function AddProduct() {
           </div>
         ))}
         <div className="grid grid-cols-6 mt-2">
-          <Label>Trọng lượng: </Label>
+          <Label>Trọng lượng: *</Label>
           <Input type="number" min={0} className="col-span-2" onChange={(e) => setHeft(Number(e.target.value))} />
           <p className="flex h-full items-center text-xs ml-2">(quy đổi theo gram)</p>
         </div>
         <div className="grid grid-cols-6 mt-2">
-          <Label>Danh mục: </Label>
+          <Label>Danh mục: * </Label>
           <Select onValueChange={setSelectCategory}>
             <SelectTrigger className="col-span-2">
               <SelectValue placeholder="Chọn danh mục" />
@@ -382,6 +392,13 @@ export default function AddProduct() {
           </Select>
         </div>
       </div>
+      {alertAddDone &&
+        <Alert className="absolute top-36 w-72 right-0 py-4 bg-green-200/30">
+          <AlertDescription className="text-green-600/50 ">
+            Thêm sản phẩm thành công!
+          </AlertDescription>
+        </Alert>
+      }
     </div>
   );
 }

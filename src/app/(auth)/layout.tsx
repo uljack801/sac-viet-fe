@@ -11,7 +11,7 @@ export default function LoginLayout({
   return (
       <div className="h-screen flex flex-col justify-between">
       <div className="bg-white">
-        <div className="py-4 flex items-center justify-between 2xl:mx-80 xl:mx-40 lg:mx-32 sm:mx-20  text-[#8B5A2B] ">
+        <div className="py-4 flex items-center justify-between 2xl:mx-72 xl:mx-40 lg:mx-32 sm:mx-20  text-[#8B5A2B] ">
           <div className="flex  items-center cursor-pointer" onClick={() => route.push('/')} title="Về trang chủ">
             <Image src={'/logo_.png'} width={60} height={60} alt="logo" />
             <span className="font-bold text-3xl">SẮC VIỆT</span>

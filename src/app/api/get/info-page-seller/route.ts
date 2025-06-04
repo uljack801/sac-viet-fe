@@ -2,8 +2,10 @@ import Seller from "@/app/config/models/Seller";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { SECRET_KEY } from "@/app/helper/constant";
+import { connectDB } from "@/app/config/mongoose";
 
 export async function GET(req: NextRequest) {
+  await connectDB()
   try {
     const auth = req.headers.get("authorization");
     if (!auth || !auth.startsWith("Bearer")) {

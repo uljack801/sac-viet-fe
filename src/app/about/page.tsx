@@ -2,7 +2,7 @@
 import Image from "next/image";
 export default function About() {
   return (
-    <div className="text-[var(--color-text-root)] py-28 2xl:mx-80 xl:mx-40 lg:mx-32 sm:mx-20">
+    <div className="text-[var(--color-text-root)] py-28 2xl:mx-72 xl:mx-40 lg:mx-32 sm:mx-20">
       <p className="flex justify-center items-center text-4xl font-bold mb-10 xl:text-3xl">Ý nghĩa về logo Sắc Việt</p>
       <div className="flex justify-center items-center pb-4">
         <div>

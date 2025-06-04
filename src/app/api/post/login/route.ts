@@ -17,14 +17,17 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    const checkUser = await User.findOne({ account: username });
-    if (!checkUser) {
-      return NextResponse.json(
+    
+    const checkUser = await User.findOne({ account: username  })
+
+    if (!checkUser || !checkUser.authenticated) {
+      return NextResponse.json( 
         { message: "Invalid credentials!" },
         { status: 404  }
       );
     }
     const isMatch = await bcrypt.compare(password, checkUser.password);
+
     if (!isMatch) {
       return NextResponse.json(
         { message: "Invalid credentials!" },
