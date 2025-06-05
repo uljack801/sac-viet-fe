@@ -93,7 +93,7 @@ export const AllOrder = ({ dataOrder }: { dataOrder: OrderProps | undefined }) =
             </div>
             {mergedOrders?.map(orders => {
                 const totalOrderPrice = orders.products.reduce((acc, product) => {
-                    if (product.product) {
+                    if (product.product) {                        
                         return acc + (product.quantity * (product.product.price / 100) * (100 - product.product.discount_percentage)) ;
                     }
                     return acc ;

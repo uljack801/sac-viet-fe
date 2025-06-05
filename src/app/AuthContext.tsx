@@ -4,7 +4,8 @@ import { UserData } from "./components/type/user.type";
 import { Footer } from "./components/layout/footer/Footer";
 import { Header } from "./components/layout/header/Header";
 import { usePathname } from "next/navigation";
-import { ArticleProps, CategoryProps, ProductListProps, ProductProps } from "./utils/fetchProduct";
+import { CategoryProps, ProductListProps, ProductProps } from "./utils/fetchProduct";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 interface AuthContextType {
   accessToken: string | null;
@@ -15,8 +16,6 @@ interface AuthContextType {
   setListProducts: React.Dispatch<React.SetStateAction<ProductProps | null>>;
   listCategory: CategoryProps | null
   listProducts: ProductProps | null
-  setArticle: React.Dispatch<React.SetStateAction<ArticleProps | null>>;
-  article: ArticleProps | null
   setCart: React.Dispatch<React.SetStateAction<ProductListProps[] | null>>;
   cart: ProductListProps[] | null
 }
@@ -28,19 +27,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [dataUser, setDataUser] = useState<UserData | null>(null);
   const [listCategory, setListCategory] = useState<CategoryProps | null>(null);
   const [listProducts, setListProducts] = useState<ProductProps | null>(null);
-  const [article, setArticle] = useState<ArticleProps | null>(null);
   const [cart, setCart] = useState<ProductListProps[] | null>(null);
-  
+  const [queryClient] = useState(() => new QueryClient());
+
   const pathname = usePathname();
-  const hideHeaderFooter =pathname.startsWith('/checkout') || pathname.startsWith("/login") || pathname.startsWith("/register") || pathname.startsWith("/forget-password") || pathname.startsWith("/seller-register") || pathname.startsWith("/seller")  || pathname.startsWith("/dashboard");
+  const hideHeaderFooter = pathname.startsWith('/checkout') || pathname.startsWith("/login") || pathname.startsWith("/register") || pathname.startsWith("/forget-password") || pathname.startsWith("/seller-register") || pathname.startsWith("/seller") || pathname.startsWith("/dashboard");
   return (
-    <AuthContext.Provider value={{ accessToken, setAccessToken, dataUser, setDataUser, setListCategory, setListProducts, listCategory, listProducts, setArticle, article , setCart ,cart}}>
+    <AuthContext.Provider value={{ accessToken, setAccessToken, dataUser, setDataUser, setListCategory, setListProducts, listCategory, listProducts, setCart, cart }}>
       <div className="flex flex-col min-h-screen text-[var(--color-text-root)]">
         <div>
-          {!hideHeaderFooter  && <Header />}
+          {!hideHeaderFooter && <Header />}
         </div>
         <div className="flex-1 flex items-center bg-[var(--color-bg-body)] ">
-          {children}
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
         </div>
         <div >
           {!hideHeaderFooter && <Footer />}

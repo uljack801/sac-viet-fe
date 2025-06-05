@@ -103,7 +103,7 @@ export type ReviewProps = {
   message: string;
 };
 export const FetchProducts = () => {
-  const { setListProducts, setListCategory, setArticle } = useAuth();
+  const { setListProducts, setListCategory } = useAuth();
   useEffect(() => {
     const getCategory = async () => {
       try {
@@ -123,26 +123,7 @@ export const FetchProducts = () => {
         console.log(error);
       }
     };
-    const getArticle = async () => {
-      try {
-        const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/get/article`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-
-        const data: ArticleProps = await res.json();
-        return setArticle(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     getCategory();
     getProducts({ setListProducts });
-    getArticle();
-  }, [setListCategory, setListProducts, setArticle]);
+  }, [setListCategory, setListProducts]);
 };

@@ -16,14 +16,14 @@ export const SidebarHeader = () => {
 
   return (
     <div className=" bg-white">
-    <div className="flex py-2 items-center justify-between text-[#8B5A2B] 2xl:mx-72 xl:mx-40 lg:mx-32 sm:mx-20  ">
+    <div className="flex py-2 items-center justify-between text-[#8B5A2B] 2xl:mx-52 xl:mx-40 lg:mx-32 sm:mx-20  ">
       <div className="flex items-center cursor-pointer" onClick={() => route.push('/')}>
         <Image src="/logo_.png" alt="logo1" width={60} height={60} />
         <span className="text-2xl xl:text-xl font-bold">SẮC VIỆT</span>
       </div>
       <div className="flex justify-center items-center">
         <Button onClick={() => route.replace('/')} className={cn("bg-inherit hover:bg-inherit shadow-none text-[var(--color-text-root)]" )}>Trang chủ</Button>
-        <Button onClick={() => route.replace('/news')} className="bg-inherit hover:bg-inherit shadow-none  text-[var(--color-text-root)]">
+        <Button onClick={() => route.replace('/conversation')} className="bg-inherit hover:bg-inherit shadow-none  text-[var(--color-text-root)]">
           Tin tức
         </Button>
         <Button onClick={() => route.replace('/contact')} className="bg-inherit hover:bg-inherit shadow-none text-[var(--color-text-root)] ">

@@ -18,10 +18,7 @@ export function CarouselMain() {
   )
 
   const dataImg = [
-    "/do-tho/do-tho-men-3.webp",
-    "/do-tho/do-tho-men-1.webp",
-    "/do-tho/do-tho-men-2.webp",
-    "/do-tho/bat-chen.webp" ,
+    "/BWeb.png",
   ]
   
   return (

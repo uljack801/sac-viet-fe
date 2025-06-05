@@ -139,6 +139,7 @@ export default function AddProduct() {
     const data = await res.json();
     return data.url;
   };
+  
   const addproduct = async () => {
     if (!isDataProductValid()) {
       alert("Vui lòng nhập đầy đủ thông tin sản phẩm.");

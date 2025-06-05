@@ -131,7 +131,7 @@ export default function ProductID() {
     route.push(`/checkout?product-id=${productId}&quantity-product=${quantityChoise}`)
   }
   return (
-    <div className="mt-28 mb-10 2xl:mx-72 xl:mx-40 lg:mx-32 sm:mx-20">
+    <div className="mt-28 mb-10 2xl:mx-52 xl:mx-40 lg:mx-32 sm:mx-20">
       {checkProductDetail ?
         (product?.data.map((value) => {
           return (
@@ -143,7 +143,7 @@ export default function ProductID() {
                     alt="anh-san-pham"
                     width={300}
                     height={300}
-                    className="w-full"
+                    className="w-full rounded-sm"
                   />
                   <div className="flex mt-1 ">
                     <Carousel
@@ -154,16 +154,16 @@ export default function ProductID() {
                     >
                       <CarouselContent className="pl-4">
                         {value.img.map((valueImg, idx) => (
-                          <CarouselItem key={idx} className="basis-1/5 pl-0">
+                          <CarouselItem key={idx} className="basis-1/5 pl-0 ">
                             <div className="p-1">
-                              <Card className="p-0">
-                                <CardContent className="flex aspect-square items-center justify-center p-0 cursor-pointer">
+                              <Card className="p-0 rounded-sm">
+                                <CardContent className="flex aspect-square items-center justify-center p-0 cursor-pointer border rounded-sm">
                                   <Image
                                     src={`${valueImg}`}
                                     alt="anh-san-pham"
                                     width={48}
                                     height={48}
-                                    className="mx-1 w-full h-full"
+                                    className="mx-1 w-full h-full rounded-sm"
                                     onClick={() => setChangeImg(idx)}
                                   />
                                 </CardContent>
@@ -189,9 +189,14 @@ export default function ProductID() {
                     <div className="flex justify-center items-center"><p className="border-b-1 mr-1">{value.sold}</p> <span className="text-sm text-neutral-600">Lượt bán</span></div>
                   </div>
                   <div>
-                    <p className="text-sm mt-4 line-through">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(value.price)}</p>
-                    <p className="text-3xl mt-1 text-red-500">{new Intl.NumberFormat("vi-Vn", { style: "currency", currency: "VND" }).format((value.price / 100) * (100 - value.discount_percentage))} <span className="text-sm">-{value.discount_percentage}%</span>
-                    </p>
+                   {value.discount_percentage > 0 && <p className="text-sm mt-4 line-through">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(value.price)}</p>}
+                    {value.discount_percentage > 0 ? <div>
+                      <p className="text-3xl mt-1 text-red-500">{new Intl.NumberFormat("vi-Vn", { style: "currency", currency: "VND" }).format((value.price / 100) * (100 - value.discount_percentage))}
+                        <span className="text-sm">-{value.discount_percentage}%</span>
+                      </p>
+                    </div>
+                      : <p className="text-3xl mt-10">{new Intl.NumberFormat("vi-Vn", { style: "currency", currency: "VND" }).format((value.price ))}</p>
+                      }
                   </div>
                   <div >
                     <p className="mt-4 text-sm text-neutral-400">An tâm mua sắm cùng Sắc Việt</p>
@@ -260,7 +265,7 @@ export default function ProductID() {
                 }) :
                   <div className="flex justify-center items-center mt-20 text-neutral-200">
                     <p>Chưa có đánh giá nào.</p>
-                  </div>  
+                  </div>
                 }
               </div>
               <OtherProductsOfShop sellerID={product?.data[0].seller_id} />

@@ -7,7 +7,7 @@ import { BreadCrumb } from "./components/BreadCrumb";
 
 export default function Contact() {
   return ( 
-    <div className="pt-20 flex flex-col justify-center 2xl:mx-72 xl:mx-40 lg:mx-32 sm:mx-20">
+    <div className="pt-20 flex flex-col justify-center 2xl:mx-52 xl:mx-40 lg:mx-32 sm:mx-20">
       <div className="mt-10">
        <BreadCrumb />
       </div>
@@ -19,7 +19,7 @@ export default function Contact() {
               <p className="font-medium text-2xl xl:text-[18px] ml-2">Liên hệ với chúng tôi</p>
             </div>
             <p className="my-4">Chúng tôi luôn sẵn sàng 24/7</p>
-            <p>Hotline: 086.668.9999</p>
+            <p>Hotline: 0379.636.362</p>
           </div>
           <div className="mt-10">
             <div className="text-xs">

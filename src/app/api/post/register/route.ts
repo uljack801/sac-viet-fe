@@ -14,9 +14,9 @@ export async function POST(req: NextRequest) {
   const otp = generateOtp();
   const { account, password, email } = await req.json();
   try {
-    const existingAccount = await User.findOne({ account });
-    const existingEmail = await User.findOne({ email });
-
+    const existingAccount = await User.findOne({ account});
+    const existingEmail = await User.findOne({ email});
+    
     if (existingEmail) {
       return NextResponse.json(
         { message: "Email already exists!" },
@@ -42,6 +42,7 @@ export async function POST(req: NextRequest) {
       password,
       email,
       authenticated: false,
+      authenticationExpiresAt: new Date(Date.now() +  5 * 60 * 1000)
     });
     await sendEmail(
       email,

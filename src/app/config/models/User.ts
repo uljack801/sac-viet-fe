@@ -17,7 +17,8 @@ const userSchema  = new mongoose.Schema({
     user_address: { type: mongoose.Schema.Types.ObjectId, ref: "UserAddress" , required: false },
     ordered: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" , required: false }],
     card: { type: mongoose.Schema.Types.ObjectId, ref: "Card" , required: false  },
-    authenticated: {type: Boolean}
+    authenticated: {type: Boolean},
+    authenticationExpiresAt: { type: Date, default: null, index: { expireAfterSeconds: 0 } } 
 }, {timestamps: true})
 
 userSchema.pre('save' , async function (next) {

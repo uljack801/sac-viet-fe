@@ -72,6 +72,7 @@ export async function POST(req: NextRequest) {
 
     findUser.token = refreshToken;
     findUser.authenticated = true;
+    findUser.authenticationExpiresAt = null;
     await findUser.save();
     await Otp.findOneAndDelete({ email: decoded.email });
     const response = NextResponse.json(

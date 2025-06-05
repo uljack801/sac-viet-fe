@@ -57,7 +57,7 @@ export const OrderFollowStatus = ({ dataOrder, status }: { dataOrder: OrderProps
             {mergedOrders?.map(orders => {
                 const totalOrderPrice = orders.products.reduce((acc, product) => {
                     if (product.product) {
-                        return acc + (product.quantity * product.product.price + orders.total_money_ship);
+                        return acc + (product.quantity * (product.product.price / 100) * (100 - product.product.discount_percentage));
                     }
                     return acc;
                 }, 0);
@@ -80,8 +80,8 @@ export const OrderFollowStatus = ({ dataOrder, status }: { dataOrder: OrderProps
                                             </div>
                                         </div>
                                         <div className="col-span-1">
-                                            <div className=" mt-2 flex items-center justify-center">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(product.product.price)}</div>
-                                        </div>
+                                            <div className=" mt-2 flex items-center justify-center">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((product.product.price / 100) * (100 - product.product.discount_percentage))}</div>
+                                            </div>
                                         <div className="col-span-1">
                                             <div className="flex items-center justify-center mt-2 text-xl w-auto ">
                                                 <span className="flex justify-center items-center w-6 text-sm"> {product.quantity}</span>
@@ -89,7 +89,7 @@ export const OrderFollowStatus = ({ dataOrder, status }: { dataOrder: OrderProps
                                         </div>
                                         <div className="col-span-1">
                                             <div className="mt-2 flex items-center justify-center">
-                                                <p className="">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((product.quantity * product.product.price))}</p>
+                                                <p className="">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((product.product.price / 100) * (100 - product.product.discount_percentage) * product.quantity)}</p>
                                             </div>
                                         </div>
                                         <div className="col-span-1">
@@ -123,7 +123,7 @@ export const OrderFollowStatus = ({ dataOrder, status }: { dataOrder: OrderProps
                             <p>
                                 Thành tiền:
                                 <span className="text-2xl ml-2 font-medium xl:text-xl">
-                                    {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(totalOrderPrice)}
+                                    {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(totalOrderPrice + orders.total_money_ship)}
                                 </span>
                             </p>
                         </div>
