@@ -18,7 +18,7 @@ export const ProductList = ({ listProducts }: { listProducts: ProductProps | nul
               onClick={() =>
                 route.push(`/product-details/${value._id}`)
               }
-              className="relative col-span-1 p-1 rounded-sm shadow bg-white cursor-pointer"
+              className="relative col-span-1 p-1 rounded-sm shadow bg-white cursor-pointer hover:scale-[1.03]"
             >
               <div className="h-2/3 w-full">
                 <Image

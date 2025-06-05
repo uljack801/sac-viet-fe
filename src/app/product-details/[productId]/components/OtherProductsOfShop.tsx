@@ -26,7 +26,7 @@ export const OtherProductsOfShop = ({ sellerID }: { sellerID: string | undefined
             <Carousel >
                 <CarouselContent >
                     {otherProduct?.map((value) => (
-                        <CarouselItem key={`product -${value._id}`} className=" lg:basis-1/6" onClick={() => route.push(`/product-details/${value._id}`)}>
+                        <CarouselItem key={`product -${value._id}`} className=" lg:basis-1/6 hover:scale-[1.03]" onClick={() => route.push(`/product-details/${value._id}`)}>
                             <Card className="p-0 rounded-sm  h-full ">
                                 <CardContent className="p-0 h-full">
                                     <div className="relative p-1 h-full" >
