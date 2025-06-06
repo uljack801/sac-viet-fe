@@ -8,7 +8,7 @@ export function middleware(req: NextRequest) {
   if (pathname === "/confirm-email"  &&  !cookieConfirm ) {
     return NextResponse.redirect(new URL('/not-found', req.url));
   }
-  if(pathname.startsWith("/user") && !cookieCheckUser ){
+  if(pathname.startsWith("/user") || pathname.startsWith('/seller') || pathname.startsWith('/seller-register')&& !cookieCheckUser ){
     return NextResponse.redirect(new URL('/not-found', req.url));
   }
   if ((pathname === "/checkout" || pathname === "/cart" || pathname === "/cart/checkout" ) && !cookieCheckUser) {
@@ -22,5 +22,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/confirm-email", "/login", "/register", '/forget-password', "/user/:path*" ,"/checkout" , "/cart" ,"/cart/checkout"], 
+  matcher: ["/confirm-email", "/login", "/register", '/forget-password', "/user/:path*" ,"/checkout" , "/cart" ,"/cart/checkout", "/seller", "/seller-register"], 
 };
