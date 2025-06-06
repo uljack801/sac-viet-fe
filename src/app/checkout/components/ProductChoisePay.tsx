@@ -1,5 +1,4 @@
 "use client";
-import { ProductProps } from "@/app/utils/fetchProduct";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { IoAddOutline, IoRemoveOutline } from "react-icons/io5";
@@ -13,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { BsFillChatSquareTextFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
+import { ProductProps } from "@/app/utils/fetchCategory";
 
 export type InfoSellerProps = {
   data: {

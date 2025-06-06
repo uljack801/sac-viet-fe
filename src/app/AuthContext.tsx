@@ -1,11 +1,15 @@
 "use client";
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useCallback, useEffect } from "react";
 import { UserData } from "./components/type/user.type";
 import { Footer } from "./components/layout/footer/Footer";
 import { Header } from "./components/layout/header/Header";
 import { usePathname } from "next/navigation";
-import { CategoryProps, ProductListProps, ProductProps } from "./utils/fetchProduct";
+import { CategoryProps, getCategory, ProductListProps, ProductProps } from "./utils/fetchCategory";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { getNewAccessToken } from "./utils/getNewAccessToken";
+import { getProducts } from "./utils/fetchProducts";
+import { getCart } from "./utils/fetchCart";
+import { getUser } from "./utils/fetchUser";
 
 interface AuthContextType {
   accessToken: string | null;
@@ -29,6 +33,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [listProducts, setListProducts] = useState<ProductProps | null>(null);
   const [cart, setCart] = useState<ProductListProps[] | null>(null);
   const [queryClient] = useState(() => new QueryClient());
+
+  const updateAccessToken = useCallback(async () => {
+    const newToken = await getNewAccessToken();
+    if (newToken) {
+      setAccessToken(newToken.data.accessToken);
+      setTimeout(updateAccessToken, 14 * 60 * 1000);
+    }
+  }, [setAccessToken]);
+
+  useEffect(() => {
+    if (accessToken === null) {
+      updateAccessToken()
+    } else {
+      getProducts({ setListProducts });
+      getUser(accessToken, setDataUser);
+      getCart(accessToken, setCart);
+      getCategory(setListCategory)
+    }
+  }, [accessToken, updateAccessToken])
+
 
   const pathname = usePathname();
   const hideHeaderFooter = pathname.startsWith('/checkout') || pathname.startsWith("/login") || pathname.startsWith("/register") || pathname.startsWith("/forget-password") || pathname.startsWith("/seller-register") || pathname.startsWith("/seller") || pathname.startsWith("/dashboard");
@@ -56,3 +80,4 @@ export function useAuth() {
   if (!context) throw new Error("useAuth phải được dùng trong AuthProvider");
   return context;
 }
+

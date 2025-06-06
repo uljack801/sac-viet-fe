@@ -1,5 +1,5 @@
 import { NEXT_PUBLIC_LOCAL } from "@/app/helper/constant"
-import { ProductProps } from "@/app/utils/fetchProduct";
+import { ProductProps } from "@/app/utils/fetchCategory";
 
 export const fetchProductDetail = async (productId: string) => {
     try {

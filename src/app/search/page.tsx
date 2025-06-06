@@ -2,7 +2,7 @@
 
 import { ParamValue } from "next/dist/server/request/params";
 import { NEXT_PUBLIC_LOCAL } from "../helper/constant";
-import { ProductProps } from "../utils/fetchProduct";
+import { ProductProps } from "../utils/fetchCategory";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ResultProductsSearch } from "./components/ResultProductsSearch";

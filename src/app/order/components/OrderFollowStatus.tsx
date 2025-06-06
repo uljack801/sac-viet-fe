@@ -99,7 +99,7 @@ export const OrderFollowStatus = ({ dataOrder, status }: { dataOrder: OrderProps
                                         </div>
                                     </div>
                                     <div className="absolute bottom-0 right-0 mr-10 mb-6 flex gap-4">
-                                        {orders.status === "cancelled" && orders.is_review !== true && (
+                                        {orders.status === "delivered" && orders.is_review !== true && (
                                             <ReviewDialog mergedOrders={mergedOrders} ordersID={orders._id} />
                                         )}
                                         {orders.is_review === true &&

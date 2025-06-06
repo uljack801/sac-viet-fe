@@ -3,9 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import Product from "@/app/config/models/Product";
 import User from "@/app/config/models/User";
-import Seller from "@/app/config/models/Seller";
 
-export async function POST(req: NextRequest) {
+export async function PATCH(req: NextRequest) {
   try {
     const authHeader = req.headers.get("authorization");
 
@@ -26,13 +25,10 @@ export async function POST(req: NextRequest) {
     }
 
     const { dataProduct } = await req.json();
-    
-    const newProduct = new Product(dataProduct);
-    await newProduct.save();
-    await Seller.findOneAndUpdate(
-      { user: decoded.id },
-      { $inc: { totalProducts: 1 } }
-);    return NextResponse.json({ message: "Success!" }, { status: 200 });
+        
+    await Product.findOneAndUpdate({ _id: dataProduct.productID }, dataProduct, { new: true })
+
+    return NextResponse.json({ message: "Success!" }, { status: 200 });
 
   } catch (error) {
     console.error("Lỗi xác thực:", error);

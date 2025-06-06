@@ -3,7 +3,7 @@
 import { FormCapital } from "@/app/user/[userID]/components/address/FormCapital"
 import { FormDistrict } from "@/app/user/[userID]/components/address/FormDistrict"
 import { FormCommune } from "@/app/user/[userID]/components/address/FormCommune"
-import React, { SetStateAction, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -25,7 +25,13 @@ const FormSchema = z.object({
     detail: z.string().min(1),
 })
 
-export function FormAddressSeller({setValueAddress } : {setValueAddress: React.Dispatch<SetStateAction<string | undefined>>}) {
+export function FormAddressSeller({
+    setValueAddress,
+    setCheckUpdateAdd,
+}: {
+    setValueAddress: React.Dispatch<React.SetStateAction<string | undefined>>;
+    setCheckUpdateAdd?: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
     const [valueCapital, setValueCapital] = useState('')
     const [checkCapital, setCheckCapital] = useState(false)
     const [valueDistrict, setValueDistrict] = useState('')
@@ -49,15 +55,16 @@ export function FormAddressSeller({setValueAddress } : {setValueAddress: React.D
     })
     function handleSave() {
         const data = form.getValues();
-        const isValid = form.trigger(); 
+        const isValid = form.trigger();
         isValid.then(valid => {
             if (valid) {
                 const fullAddress = `${data.detail}, ${valueCommune}`;
                 setValueAddress(fullAddress);
+                if (setCheckUpdateAdd) setCheckUpdateAdd(true);
             }
         });
     }
-    
+
 
     return (
         <div>

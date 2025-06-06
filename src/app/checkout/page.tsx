@@ -8,7 +8,7 @@ import { useAuth } from "../AuthContext";
 import { UserAddressProps } from "../components/type/user.type";
 import { NEXT_PUBLIC_LOCAL } from "../helper/constant";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ProductProps } from "../utils/fetchProduct";
+import { ProductProps } from "../utils/fetchCategory";
 import { fetchProductDetail } from "../product-details/[productId]/components/fetchProductDetail";
 import Image from "next/image"
 import { fetchAddress } from "./components/fetchAddress";

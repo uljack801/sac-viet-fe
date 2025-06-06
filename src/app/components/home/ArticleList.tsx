@@ -1,5 +1,5 @@
 "use client"
-import { ArticleProps } from "@/app/utils/fetchProduct"
+import { ArticleProps } from "@/app/utils/fetchCategory"
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 

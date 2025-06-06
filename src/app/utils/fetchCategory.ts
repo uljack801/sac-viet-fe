@@ -1,7 +1,5 @@
-import { useEffect } from "react";
-import { useAuth } from "../AuthContext";
+
 import { NEXT_PUBLIC_LOCAL } from "../helper/constant";
-import { getProducts } from "./fetchProducts";
 
 export type ProductProps = {
   data: [
@@ -29,6 +27,7 @@ export type ProductProps = {
       weight: number;
     }
   ];
+  totalProducts?: number;
   currentPage: number;
   totalPages: number;
   message: string;
@@ -56,6 +55,31 @@ export type ProductListProps = {
   tags: string[];
   status: boolean;
   quantity: number;
+  weight: number;
+};
+
+
+export type ProductPropsSingle = {
+  _id: string;
+  seller_id: string;
+  category_id: string;
+  name: string;
+  img: string[];
+  video: string;
+  sold: number;
+  discount_percentage: number;
+  price: number;
+  color: string[];
+  material: string[];
+  dimensions: string;
+  origin: string;
+  handmade: boolean;
+  warranty: string;
+  care_instructions: string;
+  description: string;
+  inventory: number;
+  tags: string[];
+  status: boolean;
   weight: number;
 };
 
@@ -102,28 +126,22 @@ export type ReviewProps = {
   ];
   message: string;
 };
-export const FetchProducts = () => {
-  const { setListProducts, setListCategory } = useAuth();
-  useEffect(() => {
-    const getCategory = async () => {
-      try {
-        const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/get/category`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
 
-        const data: CategoryProps = await res.json();
-        return setListCategory(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCategory();
-    getProducts({ setListProducts });
-  }, [setListCategory, setListProducts]);
+export const getCategory = async (  setListCategory: React.Dispatch<React.SetStateAction<CategoryProps | null>>) => {
+  try {
+    const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/get/category`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data: CategoryProps = await res.json();
+    return setListCategory(data);
+  } catch (error) {
+    console.log(error);
+  }
 };

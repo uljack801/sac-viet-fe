@@ -56,7 +56,7 @@ export default function Checkout() {
                                 province: addressShip.address.split(",")[3],
                                 district: addressShip.address.split(",")[2],
                                 weight: order.products?.reduce((sum, product) => sum + product.weight, 0) || 0,
-                                value: order.products?.reduce((sum, product) => sum + product.price * product.quantity, 0) || 0,
+                                value: order.products?.reduce((sum, product) => sum + product.price * (product.quantity ? product.quantity : 1), 0) || 0,
                             },
                         });
                         const fee = res.data.fee.fee + res.data.fee.insurance_fee;
@@ -125,8 +125,7 @@ export default function Checkout() {
                         }, 2000);
 
                         if (accessToken) {
-                            const dataCart = await getCart(accessToken);
-                            setCart(dataCart);
+                           await getCart(accessToken , setCart);
                         }
                     }
                 }
@@ -138,7 +137,7 @@ export default function Checkout() {
     };
 
     return (
-        <div className="mt-32 2xl:mx-52 xl:mx-40 lg:mx-32 sm:mx-20">
+        <div className="mt-32 2xl:mx-72 xl:mx-40 lg:mx-32 sm:mx-20">
             <div className="relative">
                 <DeliveryAddress setUserAddress={setUserAddress} userAddress={userAddress} />
                 <div className="bg-white p-6 rounded-xl mt-4 mb-4 xl:text-sm">

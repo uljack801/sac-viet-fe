@@ -8,26 +8,14 @@ import { PiUserListLight } from "react-icons/pi";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { FetchUser } from "@/app/utils/fetchUser";
 import { useAuth } from "@/app/AuthContext";
 import { NEXT_PUBLIC_LOCAL } from "@/app/helper/constant";
 
 export const InfoUser = () => {
-  const { accessToken, setAccessToken, setDataUser, dataUser } = useAuth();
+  const { accessToken, setAccessToken, dataUser } = useAuth();
   const [checkLogin, setCheckLogin] = useState(false);
   const route = useRouter();
-  
-  const getData = async () => {
-    const data = await FetchUser();
-    if (data === null) {
-      return;
-    }
-    if (dataUser === null) {
-      setDataUser(data)
-    }
-    return;
-  }
-  getData();
+
 
   useEffect(() => {
     if (dataUser && !checkLogin) {

@@ -6,7 +6,7 @@ import { IoAddOutline, IoRemoveOutline } from "react-icons/io5";
 import { NEXT_PUBLIC_LOCAL } from "../helper/constant";
 import { useCallback, useEffect, useState } from "react";
 import { InfoSellerProps } from "../checkout/components/ProductChoisePay";
-import { ProductListProps } from "../utils/fetchProduct";
+import { ProductListProps } from "../utils/fetchCategory";
 import { Checkbox } from "@/components/ui/checkbox"
 import { useRouter } from "next/navigation";
 import { GiCardboardBox } from "react-icons/gi";

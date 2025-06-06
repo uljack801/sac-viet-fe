@@ -1,5 +1,5 @@
 import { NEXT_PUBLIC_LOCAL } from "../helper/constant";
-import { ProductProps } from "./fetchProduct";
+import { ProductProps } from "./fetchCategory";
 
 export const getProducts = async ({setListProducts}: {setListProducts: React.Dispatch<React.SetStateAction<ProductProps | null>>}) => {
   try {

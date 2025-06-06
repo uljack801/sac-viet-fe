@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ProductListInCategory } from "./components/ProductList";
-import { ProductProps } from "../utils/fetchProduct";
+import { ProductProps } from "../utils/fetchCategory";
 import { NEXT_PUBLIC_LOCAL } from "../helper/constant";
 import { useParams } from "next/navigation";
 import NotFound from "../not-found";

@@ -1,4 +1,4 @@
-import { ProductProps } from "@/app/utils/fetchProduct";
+import { ProductProps } from "@/app/utils/fetchCategory";
 import {
   Pagination,
   PaginationContent,

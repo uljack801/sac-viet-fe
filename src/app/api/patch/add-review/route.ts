@@ -18,7 +18,7 @@ export async function PATCH(req: NextRequest) {
     const token = auth.split(" ")[1];
     const decoded = jwt.verify(token, SECRET_KEY) as { id: string };
 
-    const { product_id, user_id, user_name, rating, comment, orderID } =
+    const { product_id, user_id, user_name, rating, comment, orderID , images} =
       await req.json();
     if (decoded.id === user_id) {
       await Review.create({
@@ -27,6 +27,7 @@ export async function PATCH(req: NextRequest) {
         user_name,
         rating,
         comment,
+        images
       });
       const updateOrder = await Order.findOne({ user: user_id });
 

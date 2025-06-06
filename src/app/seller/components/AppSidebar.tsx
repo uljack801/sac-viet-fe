@@ -36,7 +36,7 @@ export function AppSidebar() {
           <SidebarMenuButton onClick={() => route.push('/seller/add-product')}><IoAddCircleOutline  />Thêm sản phẩm</SidebarMenuButton>
           <SidebarMenuButton onClick={() => route.push('/seller/manager-orders')}><BsBoxSeam />Quản lý đơn hàng</SidebarMenuButton>
           <SidebarMenuButton onClick={() => route.push('/seller')}><LuMessageSquareMore />Phản hồi khách hàng</SidebarMenuButton>
-          <SidebarMenuButton onClick={() => route.push('/seller')}><IoSettingsOutline />Cài đặt shop</SidebarMenuButton>
+          <SidebarMenuButton onClick={() => route.push('/seller/setting')}><IoSettingsOutline />Cài đặt shop</SidebarMenuButton>
         </SidebarMenu>
         <SidebarGroup />
       </SidebarContent>

@@ -1,4 +1,4 @@
-import { ProductProps } from "@/app/utils/fetchProduct"
+import { ProductProps } from "@/app/utils/fetchCategory"
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 

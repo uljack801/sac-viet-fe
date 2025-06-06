@@ -1,5 +1,5 @@
 import { NEXT_PUBLIC_LOCAL } from "@/app/helper/constant"
-import { ReviewProps } from "@/app/utils/fetchProduct";
+import { ReviewProps } from "@/app/utils/fetchCategory";
 
 export const fetchReview = async (productId: string) => {
     try {

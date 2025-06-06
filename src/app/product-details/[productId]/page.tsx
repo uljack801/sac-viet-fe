@@ -2,7 +2,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { fetchProductDetail } from "./components/fetchProductDetail";
 import { useCallback, useEffect, useState } from "react";
-import { ProductProps, ReviewProps } from "@/app/utils/fetchProduct";
+import { ProductProps, ReviewProps } from "@/app/utils/fetchCategory";
 import Image from "next/image";
 import * as React from "react";
 

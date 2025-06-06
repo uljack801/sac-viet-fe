@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { useAuthSeller } from "../AuthContext";
 import { NEXT_PUBLIC_LOCAL } from "@/app/helper/constant";
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { uploadImage } from "@/app/helper/uploadImage";
 
 export default function AddProduct() {
   const { listCategory, accessToken } = useAuth();
@@ -128,18 +129,7 @@ export default function AddProduct() {
       heft
     );
   };
-  const uploadImage = async (file: File): Promise<string> => {
-    const formData = new FormData();
-    formData.append("file", file);
-    const res = await fetch(`/api/post/upload-image`, {
-      method: "POST",
-      body: formData,
-    });
-    if (!res.ok) throw new Error("Upload failed");
-    const data = await res.json();
-    return data.url;
-  };
-  
+ 
   const addproduct = async () => {
     if (!isDataProductValid()) {
       alert("Vui lòng nhập đầy đủ thông tin sản phẩm.");

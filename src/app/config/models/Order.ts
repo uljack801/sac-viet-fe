@@ -27,6 +27,7 @@ export type OrderProps = {
       is_review: boolean;
       cancelled_at: Date;
       note: string;
+      
     }
   ];
 };

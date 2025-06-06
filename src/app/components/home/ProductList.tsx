@@ -1,5 +1,5 @@
 "use client"
-import { ProductProps } from "@/app/utils/fetchProduct"
+import { ProductProps } from "@/app/utils/fetchCategory"
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";

@@ -15,18 +15,35 @@ export async function GET(req: NextRequest) {
       id: string;
       email: string;
       account: string;
-    };    
+    };
     if (decoded) {
       const { searchParams } = new URL(req.url);
       const page = parseInt(searchParams.get("page") || "1");
-      const sellerID = searchParams.get("seller-id")
+      const sellerID = searchParams.get("seller-id");
+      const option = searchParams.get("option");
       const limit = 10;
       const skip = (page - 1) * limit;
 
-      const products = await Product.find({ seller_id: sellerID})
+      const sortCondition: Record<string, 1 | -1> = {};
+      if (option === "best-seller") {
+        sortCondition.sold = -1;
+      } else if (option === "slow-seller") {
+        sortCondition.sold = 1;
+      } else if (option === "in-stock") {
+        sortCondition.inventory = -1;
+      } else if (option === "out-of-stock") {
+        sortCondition.inventory = 1;
+      }else if (option === "high-discount") {
+        sortCondition.discount_percentage = -1;
+      }else if (option === "low-discount") {
+        sortCondition.discount_percentage = 1;
+      }else{
+      }
+      const products = await Product.find({ seller_id: sellerID })
+        .sort(sortCondition)
         .skip(skip)
         .limit(limit);
-      
+
       const totalProducts = await Product.countDocuments({
         seller_id: sellerID,
       });
@@ -35,6 +52,7 @@ export async function GET(req: NextRequest) {
         {
           data: products,
           currentPage: page,
+          totalProducts: totalProducts,
           totalPages: Math.ceil(totalProducts / limit),
           message: "Success",
         },

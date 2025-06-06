@@ -8,6 +8,7 @@ export const CLIENT_ID = process.env.CLIENT_ID
 export const CLIENT_SECRET = process.env.CLIENT_SECRET
 export const GHTK_TOKEN = process.env.NEXT_PUBLIC_GHTK_TOKEN;
 
+export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const phoneRegex = /^(0[3|5|7|8|9][0-9]{8}|(\+84)[3|5|7|8|9][0-9]{8})$/;
 export const normalizeVietnamese = (str: string) => {
@@ -25,7 +26,7 @@ export const tabs = [
     { type: "Đang xử lý", slug: "2", status: "pending" },
     { type: "Vận chuyển", slug: "3", status: "shipped" },
     { type: "Hoàn thành", slug: "4", status: "delivered" },
-    { type: "Đã giao", slug: "5", status: "cancelled" },
+    { type: "Đã hủy", slug: "5", status: "cancelled" },
     { type: "Trả hàng/hoàn tiền", slug: "6", status: "returned" },
 ];
 

@@ -1,5 +1,5 @@
 import { NEXT_PUBLIC_LOCAL } from "@/app/helper/constant";
-import { ArticleProps } from "@/app/utils/fetchProduct";
+import { ArticleProps } from "@/app/utils/fetchCategory";
 import { articleProps } from "../article/page";
 
 export const getArticle = async () => {

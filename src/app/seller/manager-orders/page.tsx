@@ -13,7 +13,6 @@ import { fetchUserOrder } from "./components/fetchInfoUserOrder"
 import { UserData } from "@/app/components/type/user.type"
 import { fetchUserAddressOrder } from "./components/fetchUserAddressOrder"
 import { NEXT_PUBLIC_LOCAL } from "@/app/helper/constant"
-// import { getOrder } from "@/app/order/components/fetchAllOrder"
 
 export type ListOrderProps = {
     _id: string;
@@ -53,13 +52,14 @@ export default function ManagerOrders() {
     const { infoSeller } = useAuthSeller()
     const [dataOrder, setDataOrder] = useState<OrderProps[] | undefined>()
     useEffect(() => {
-        if (infoSeller && accessToken) {
+        if (!dataOrder && infoSeller && accessToken) {
             {
                 getAllOrder({ accessToken, sellerID: infoSeller.data._id, setDataOrder })
             }
         }
-    }, [accessToken, infoSeller])
+    }, [accessToken, infoSeller, dataOrder])
 
+    
 
     const handleCreateOrder = async (result: ListOrderProps, idOrderUser: string) => {
         if (accessToken && idOrderUser) {
@@ -178,7 +178,7 @@ export default function ManagerOrders() {
                                     <p className="flex justify-center items-center border-r text-xs h-full">{moment(result.order_at).utcOffset(7).format("DD/MM/YYYY HH:mm")}</p>
                                     <div className="col-span-6 items-center h-full ml-1">
                                         {listProducts?.data.map(product => (
-                                            result.products.map(value => {
+                                            result.products.map(value => {                                                
                                                 if (value.productID === product._id)
                                                     return (
                                                         <div key={product._id} className="flex justify-center  border-r py-1 ">

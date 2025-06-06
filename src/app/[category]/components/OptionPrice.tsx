@@ -1,7 +1,7 @@
 "use client"
 
 import { NEXT_PUBLIC_LOCAL } from "@/app/helper/constant"
-import { ProductProps } from "@/app/utils/fetchProduct"
+import { ProductProps } from "@/app/utils/fetchCategory"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@radix-ui/react-label"
 import { useParams, useRouter, useSearchParams } from "next/navigation"

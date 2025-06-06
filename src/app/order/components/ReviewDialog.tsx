@@ -102,27 +102,26 @@ export function ReviewDialog({
   const handleSubmit = () => {
     const review = Object.values(reviews);
     review.map(async items => {
-      if (accessToken) {
-        const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/patch/add-review`, {
-          method: "PATCH",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${accessToken}`
-          },
-          body: JSON.stringify({
-            product_id: items.product_id,
-            user_id: items.user_id,
-            user_name: items.user_name,
-            rating: items.rating,
-            comment: items.comment,
-            orderID: ordersID
+        if (accessToken ) {
+          const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/patch/add-review`, {
+            method: "PATCH",
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${accessToken}`
+            },
+            body: JSON.stringify({
+              product_id: items.product_id,
+              user_id: items.user_id,
+              user_name: items.user_name,
+              rating: items.rating,
+              comment: items.comment,
+              orderID: ordersID,
+            })
           })
-        })
-        if(res.status === 200){
-          route.refresh()
+          if (res.status === 200) {
+            route.refresh()
+          }
         }
-      }
-
     })
   };
 
@@ -162,7 +161,7 @@ export function ReviewDialog({
                           <div className="grid grid-cols-1 border p-2 m-1 rounded-sm items-center">
                             <div className="flex my-2">
                               <Image
-                                src={`/do-tho/${product.product?.img[0]}`}
+                                src={`${product.product?.img[0]}`}
                                 alt={`${product.product?.name}`}
                                 width={48}
                                 height={48}

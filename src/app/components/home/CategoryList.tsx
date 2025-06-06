@@ -1,5 +1,5 @@
 "use client"
-import { CategoryProps } from "@/app/utils/fetchProduct"
+import { CategoryProps } from "@/app/utils/fetchCategory"
 import { useRouter } from "next/navigation";
 
 export const CategoryList = ({listCategory}: {listCategory: CategoryProps | null}) => {

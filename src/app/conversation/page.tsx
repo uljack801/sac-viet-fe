@@ -27,7 +27,7 @@ import { AiFillLike } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { BsArrowRightCircleFill } from "react-icons/bs";
 import { ArticleList } from "../components/home/ArticleList";
-import { ArticleProps } from "../utils/fetchProduct";
+import { ArticleProps } from "../utils/fetchCategory";
 import { getArticle } from "./components/fetchArticle";
 
 

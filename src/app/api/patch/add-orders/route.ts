@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import { SECRET_KEY } from "@/app/helper/constant";
 import Order from "@/app/config/models/Order";
 import Cart, { ListProductProps } from "@/app/config/models/Cart";
+import Seller from "@/app/config/models/Seller";
+import Product from "@/app/config/models/Product";
 
 export async function PATCH(req: NextRequest) {
   try {
@@ -26,15 +28,24 @@ export async function PATCH(req: NextRequest) {
         { status: 404 }
       );
     }
-    const { products, payment_method, address_ship, total_money_ship , shipping_fees, seller_id, totalPay} =
-      await req.json();
-    
+    const {
+      products,
+      payment_method,
+      address_ship,
+      total_money_ship,
+      shipping_fees,
+      seller_id,
+      totalPay,
+    } = await req.json();
+
     if (
       !Array.isArray(products) ||
       !payment_method ||
       !address_ship ||
       !shipping_fees ||
-      !total_money_ship === undefined || !seller_id || !totalPay
+      !total_money_ship === undefined ||
+      !seller_id ||
+      !totalPay
     ) {
       return NextResponse.json(
         { message: "Missing required fields" },
@@ -49,20 +60,34 @@ export async function PATCH(req: NextRequest) {
       payment_method: payment_method,
       shipping_fees: shipping_fees,
       seller_id: seller_id,
-      totalPay: totalPay
+      totalPay: totalPay,
     });
 
     await findOrder.save();
-    
+
     const cart = await Cart.findOne({ user: decode.id });
 
     const validProductIDs = products.map((p) => p.productID);
-    
+
     cart.list_products = cart.list_products.filter(
       (item: ListProductProps) => !validProductIDs.includes(item.productID)
     );
     await cart.save();
-
+    await Seller.findByIdAndUpdate(
+      { _id: seller_id },
+      { $inc: { totalOrders: 1 } }
+    );    
+    products.map(async (p) => {
+      await Product.findOneAndUpdate(
+        { _id: p.productID },
+        {
+          $inc: {
+            inventory: -p.quantity,
+            sold: p.quantity,
+          },
+        }
+      );
+    });
     return NextResponse.json(
       {
         message: "Success!",
