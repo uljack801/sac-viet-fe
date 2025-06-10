@@ -191,11 +191,11 @@ export default function Card() {
                     <div className="bg-white min-h-screen mt-2 rounded-sm max-sm:m-2 shadow max-sm:p-2 max-lg:m-2 max-lg:p-6 max-xl:p-6 max-[1540px]:p-10 p-10">
                         {groupProduct?.map((group) => (
                             <div key={`seller-${group.seller?.data._id}`}>
-                                <div className="font-semibold max-lg:text-xl">
+                                <div className="font-semibold max-lg:text-xl max-sm:text-sm">
                                     <label>{group.seller?.data.nameShop}</label>
                                 </div>
                                 {group.products?.map((value) => (
-                                    <div key={`product-${value._id}`} className="flex justify-center items-center">
+                                    <div key={`product-${value._id}`} className="flex items-center">
                                         <Checkbox
                                             className="mr-2"
                                             checked={checkedProducts.includes(value._id)}
@@ -231,9 +231,9 @@ export default function Card() {
                                                 <p className="cursor-pointer mr-2" onClick={() => hanldedeleteProduct(value._id)}>x</p>
                                             </div>
                                         </div>
-                                        <div className="max-sm:block hidden">
+                                        <div className="max-sm:block hidden w-full">
                                             <div className="mt-4 border rounded-sm w-full">
-                                                <div className="flex items-center">
+                                                <div className="flex items-center justify-between w-full p-1">
                                                     <Image
                                                         src={`${value.img[0]}`}
                                                         alt="anh-san-pham"
@@ -241,7 +241,7 @@ export default function Card() {
                                                         height={60}
                                                         className="mx-1"
                                                     />
-                                                    <div>
+                                                    <div className="w-full">
                                                         <p className="text-xs line-clamp-2">{value.name}</p>
                                                         <div className="flex text-center justify-between items-end mt-1">
                                                             <div className="flex items-end">

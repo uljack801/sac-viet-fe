@@ -20,7 +20,7 @@ export const OtherProductsOfShop = ({ sellerID }: { sellerID: string | undefined
     return (
         <div >
             <div className="flex justify-between items-center bg-white my-3 rounded-sm shadow ">
-                <p className="font-medium  p-4 py-6 max-lg:text-lg max-xl:text-xl ">Các sản phẩm khác của Shop</p>
+                <p className="font-medium  p-4 py-6 max-sm:text-sm max-lg:text-lg max-xl:text-xl ">Các sản phẩm khác của Shop</p>
                 <p className="text-sm flex items-center mr-10 cursor-pointer">xem tất cả <MdNavigateNext className="ml-1" /></p>
             </div>
             <Carousel >
@@ -29,7 +29,7 @@ export const OtherProductsOfShop = ({ sellerID }: { sellerID: string | undefined
                         <CarouselItem key={`product -${value._id}`} className="max-sm:basis-1/2 max-lg:basis-1/4 max-xl:basis-1/5 basis-1/6 hover:scale-[1.03]" onClick={() => route.push(`/product-details/${value._id}`)}>
                             <Card className="p-0 rounded-sm  h-full ">
                                 <CardContent className="p-0 h-full">
-                                    <div className="relative p-1 h-full" >
+                                    <div className="relative p-1 h-full  min-h-56" >
                                         <div className="h-2/3 ">
                                             <Image
                                                 src={`${value.img[0]}`}
@@ -40,12 +40,12 @@ export const OtherProductsOfShop = ({ sellerID }: { sellerID: string | undefined
                                             />
                                         </div>
                                         <div className="h-1/3 flex flex-col justify-between">
-                                            <p className="line-clamp-2 text-[var(--color-text-root)] 2xl:text-sm lg:text-xs">{value.name}</p>
-                                                <div className="flex justify-between mx-1">
+                                            <p className="line-clamp-2 text-[var(--color-text-root)] max-sm:text-xs text-sm">{value.name}</p>
+                                                <div className="flex justify-between items-center mx-1">
                                                     <p className="text-[var(--color-text-root)] font-medium flex justify-center items-center 2xl:text-lg lg:text-sm">
                                                         {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price))}
                                                     </p>
-                                                    <p className="flex justify-center items-center text-sm text-[var(--color-text-root)]">đã bán {value.sold}</p>
+                                                    <p className="text-sm max-sm:text-xs text-[var(--color-text-root)]">đã bán {value.sold}</p>
                                                 </div>
                                         </div>
                                     </div>

@@ -145,7 +145,7 @@ export default function ProductID() {
         (product?.data.map((value) => {
           return (
             <div key={`product-${value._id}`}>
-              <div className="grid max-sm:grid-cols-1 max-lg:grid-cols-3 max-xl:grid-cols-3 grid-cols-3 p-10 bg-white rounded-sm max-lg:p-4 max-xl:p-10">
+              <div className="grid max-sm:grid-cols-1 max-lg:grid-cols-3 max-xl:grid-cols-3 grid-cols-3 p-10 bg-white rounded-sm max-sm:p-0 max-lg:p-4 max-xl:p-10">
                 <div className="col-span-1">
                   <Image
                     src={`${value.img[changeImg]}`}
@@ -189,7 +189,7 @@ export default function ProductID() {
                   </div>
                 </div>
                 <div className="col-span-2 ml-10 relative max-sm:hidden">
-                  <p className="max-lg:text-sm">{value.name}</p>
+                  <p className="max-lg:text-xl text-xl font-medium">{value.name}</p>
                   <div className="flex items-center mt-2">
                     <div className="flex justify-center items-center mr-4"><p className="border-b-1 mr-1">{review?.data?.length
                       ? (review.data.reduce((acc, value) => acc + value.rating, 0) / review.data.length).toFixed(1)
@@ -247,7 +247,7 @@ export default function ProductID() {
                     </div>
                     <div className="flex justify-center items-center"><p className="border-b-1 mr-1">{value.sold}</p> <span className="text-sm text-neutral-600">Lượt bán</span></div>
                   </div>
-                  <p className="text-sm line-clamp-2 m-2 ">{value.name}</p>
+                  <p className="text-lg font-medium line-clamp-2 m-2  ">{value.name}</p>
                   <div className="p-2">
                     <p className="mt-4 text-sm text-neutral-400">An tâm mua sắm cùng Sắc Việt</p>
                     <div className="grid-cols-6 mt-2 text-xs justify-between items-center">
@@ -292,7 +292,7 @@ export default function ProductID() {
               </div>
               <div className="p-4 bg-white rounded-sm mt-3">
                 <p className="font-medium mb-6 max-sm:text-xl text-2xl">Chi tiết sản phẩm</p>
-                <p className="font-medium mb-4 max-sm:text-sm">{value.name}</p>
+                <p className="font-medium mb-4 max-sm:text-lg">{value.name}</p>
                 <p dangerouslySetInnerHTML={{ __html: value.description }} className="max-sm:text-sm"></p>
                 <p>chiều cao: {value.dimensions}</p>
                 <p>{value.handmade && "Hàng thủ công"}</p>

@@ -39,7 +39,7 @@ export const TopProductsSold = ({ listProducts }: { listProducts: ProductProps |
                             onClick={() =>
                                 route.push(`/product-details/${value._id}`)
                             }
-                            className="relative col-span-1 p-1 rounded-sm shadow bg-white cursor-pointer hover:scale-[1.03]"
+                            className="relative col-span-1 p-1 rounded-sm shadow bg-white cursor-pointer hover:scale-[1.03] min-h-60"
                         >
                             <div className="h-2/3 w-full">
                                 <Image
@@ -51,13 +51,13 @@ export const TopProductsSold = ({ listProducts }: { listProducts: ProductProps |
                                 />
                             </div>
                             <div className="h-1/3 flex flex-col justify-between">
-                                <p className="line-clamp-2 text-[var(--color-text-root)] max-lg:text-sm">{value.name}</p>
+                                <p className="line-clamp-2 text-[var(--color-text-root)] max-sm:text-xs text-sm">{value.name}</p>
                                 <div>
-                                    <div className="flex justify-between mx-1">
+                                    <div className="flex justify-between items-center mx-1">
                                         <p className="text-[var(--color-text-root)] font-medium ">
                                             {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price))}
                                         </p>
-                                        <p className="text-sm">đã bán {value.sold}</p>
+                                        <p className="text-sm max-sm:text-xs">đã bán {value.sold}</p>
                                     </div>
                                 </div>
                             </div>
