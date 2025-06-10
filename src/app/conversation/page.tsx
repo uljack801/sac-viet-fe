@@ -227,8 +227,8 @@ export default function Conversation() {
         mutationPostReplyComment.mutate({ postID, commentID });
     }
     return (
-        <div className="mt-28 mb-10 shadow rounded-sm  min-h-screen bg-white  grid grid-cols-3 max-xl:mx-0 max-2xl:mx-36 mx-96">
-            <span  onClick={() => route.push('/')} className="flex text-xs items-center ml-2 mt-2 col-span-3 max-sm:block  max-xl:hidden max-2xl:hidden">
+        <div className="mt-28 mb-10 shadow rounded-sm  min-h-screen bg-white  grid grid-cols-3 max-xl:mx-0 max-[1540px]:mx-36 mx-96">
+            <span  onClick={() => route.push('/')} className="flex text-xs items-center ml-2 mt-2 col-span-3 max-sm:block  max-xl:hidden max-[1540px]:hidden">
                 Trang chủ / <strong className="ml-1">Tin tức</strong> 
             </span>
             <div className="col-span-2 p-10 max-sm:p-2 max-sm:col-span-3 max-sm:text-xs max-lg:col-span-3 max-lg:text-sm">

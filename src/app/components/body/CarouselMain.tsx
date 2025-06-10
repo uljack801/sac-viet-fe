@@ -32,7 +32,7 @@ export function CarouselMain() {
         {dataImg?.map((value, index) => (
           <CarouselItem key={index}>
             <div>
-              <Card className="p-0 mt-1 max-sm:h-1/2 max-lg:h-60 max-xl:h-80 max-2xl:h-80 h-96">
+              <Card className="p-0 mt-1 max-sm:h-1/2 max-lg:h-60 max-xl:h-80 max-[1540px]:h-80 h-96">
                 <CardContent className="max-sm:h-40 w-full">
                 <Image src={value}  alt={`Image ${index}`} fill className="object-contain  rounded-sm" />
                 </CardContent>

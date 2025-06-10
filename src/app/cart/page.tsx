@@ -176,7 +176,7 @@ export default function Card() {
     }
 
     return (
-        <div className=" mt-28 mb-10 max-lg:p-0 max-xl:p-10 max-2xl:px-36  max-2xl:py-10 px-96 py-10">
+        <div className=" mt-28 mb-10 max-lg:p-0 max-xl:p-10 max-[1540px]:px-36  max-[1540px]:py-10 px-96 py-10">
             <div className="grid grid-cols-2 bg-white p-6 items-center rounded-sm max-sm:hidden max-lg:hidden">
                 <p className="2xl:text-2xl font-medium xl:text-xl">Danh sách giỏ hàng</p>
                 <div className="grid grid-cols-4 text-neutral-400 text-center">
@@ -188,7 +188,7 @@ export default function Card() {
             </div>
             {groupProduct?.length ? (
                 <div>
-                    <div className="bg-white min-h-screen mt-2 rounded-sm max-sm:m-2 shadow max-sm:p-2 max-lg:m-2 max-lg:p-6 max-xl:p-6 max-2xl:p-10 p-10">
+                    <div className="bg-white min-h-screen mt-2 rounded-sm max-sm:m-2 shadow max-sm:p-2 max-lg:m-2 max-lg:p-6 max-xl:p-6 max-[1540px]:p-10 p-10">
                         {groupProduct?.map((group) => (
                             <div key={`seller-${group.seller?.data._id}`}>
                                 <div className="font-semibold max-lg:text-xl">

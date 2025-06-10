@@ -9,7 +9,7 @@ import { SidebarHeader } from "./SidebarHeader";
 export const Header = () => {
   return (
     <div className="fixed w-full z-999 bg-[var(--color-background-main)] ">
-      <div className="max-lg:mx-1 max-xl:mx-6 max-2xl:mx-36 mx-96">
+      <div className="max-lg:mx-1 max-xl:mx-6 max-[1540px]:mx-36 mx-96">
         <div className="flex justify-between items-center text-[var(--color-text-root)]">
           <div className="flex ml-2 text-sm">
             <RiFacebookFill onClick={() => window.open('https://www.facebook.com/profile.php?id=61576077887915', '_blank')} />

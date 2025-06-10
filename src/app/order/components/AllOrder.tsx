@@ -95,7 +95,7 @@ export const AllOrder = ({ dataOrder }: { dataOrder: OrderProps | undefined }) =
                             return (
                                 product.product && <div key={`order-${orders._id}-product-${product.product?._id}`} >
                                     <div className="border m-1 items-center rounded-sm" onClick={() => route.push(`/product-details/${product.product?._id}`)}>
-                                        <div className="flex my-2 max-lg:mx-2 max-xl:mx-2 max-2xl:mx-4">
+                                        <div className="flex my-2 max-lg:mx-2 max-xl:mx-2 max-[1540px]:mx-4">
                                             <Image src={`${product.product?.img[0]}`} alt={`${product.product?.name}`} width={48} height={48} className="max-xl:w-48" />
                                             <div className="flex flex-col justify-between">
                                                 <p className="text-ellipsis line-clamp-1 mx-2 max-sm:text-xs max-xl:text-sm text-sm">{product.product?.name}</p>

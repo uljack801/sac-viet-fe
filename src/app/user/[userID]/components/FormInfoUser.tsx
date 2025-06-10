@@ -102,7 +102,7 @@ export function InputFormInfoUser() {
   }, [dataUser, checkUpdate ,form]);
 
   return (
-    <div className="w-full max-xl:p-0 max-2xl:p-10 p-10">
+    <div className="w-full max-xl:p-0 max-[1540px]:p-10 p-10">
       <p className="max-sm:text-xl flex justify-center py-4 font-medium max-lg:text-2xl max-xl:text-3xl text-3xl">Chỉnh sửa thông tin</p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>

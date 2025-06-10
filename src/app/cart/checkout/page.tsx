@@ -137,7 +137,7 @@ export default function Checkout() {
     };
 
     return (
-        <div className="mt-28 max-sm:mx-0 max-lg:mx-10 max-lg:mb-10 max-xl:mx-20 max-2xl:mx-36 max-2xl:mb-10 mx-96 mb-10">
+        <div className="mt-28 max-sm:mx-0 max-lg:mx-10 max-lg:mb-10 max-xl:mx-20 max-[1540px]:mx-36 max-[1540px]:mb-10 mx-96 mb-10">
             <div className="relative">
                 <DeliveryAddress setUserAddress={setUserAddress} userAddress={userAddress} />
                 <div className="bg-white max-sm:p-2 rounded-sm max-sm:m-1 shadow max-lg:p-4 max-xl:p-6 p-10">

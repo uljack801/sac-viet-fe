@@ -11,7 +11,7 @@ export default function Index() {
   const params = useParams()
   const route = useRouter();
   return (
-    <div className="pt-20 max-xl:mx-0 max-2xl:mx-36 max-2xl:my-10 mx-96 my-10" >
+    <div className="pt-20 max-xl:mx-0 max-[1540px]:mx-36 max-[1540px]:my-10 mx-96 my-10" >
       <div className="grid grid-cols-12 text-sm pt-4">
         <div className="col-span-4 flex justify-center bg-white rounded-sm mr-5 max-sm:hidden max-lg:hidden max-xl:hidden border">
           <div className="">

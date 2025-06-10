@@ -22,7 +22,7 @@ export default function Order() {
 
 
     return (
-        <div className="max-sm:p-2 max-lg:p-4 max-xl:p-10 max-2xl:px-36 px-96">
+        <div className="max-sm:p-2 max-lg:p-4 max-xl:p-10 max-[1540px]:px-36 px-96">
             <div className="grid grid-cols-6 bg-white rounded-sm mt-28">
                 {tabs.map((label, index) => (
                     <p

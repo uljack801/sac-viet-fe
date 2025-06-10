@@ -5,8 +5,8 @@ import { IoChevronBackOutline } from "react-icons/io5";
 export default function About() {
   const route = useRouter()
   return (
-    <div className="text-[var(--color-text-root)] pt-28 max-sm:m-2 max-lg:m-4 max-xl:m-10 max-2xl:mx-36 max-2xl:my-10 mx-96 my-10">
-      <span onClick={() => route.push('/')} className="flex text-xs items-center ml-2 mb-4 max-lg:text-sm max-xl:hidden max-2xl:hidden">
+    <div className="text-[var(--color-text-root)] pt-28 max-sm:m-2 max-lg:m-4 max-xl:m-10 :mx-36 :my-10 mx-96 my-10">
+      <span onClick={() => route.push('/')} className="flex text-xs items-center ml-2 mb-4 max-lg:text-sm max-xl:hidden max-[1540px]:hidden">
         <IoChevronBackOutline className="text-sm" />
         Trang chủ /<strong className="ml-1"> Về chúng tôi</strong>
       </span>
