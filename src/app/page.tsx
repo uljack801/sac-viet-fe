@@ -9,7 +9,7 @@ import { TopProductsSold } from "./components/home/TopProductsSold";
 export default function Home() {
   const { listCategory, listProducts } = useAuth()
   return (
-    <div className="pt-28 max-xl:mx-0 max-2xl:mx-36 mx-96 ">
+    <div className="pt-28 max-xl:mx-0 max-[1540px]:mx-36 mx-96 ">
       <CarouselHome />
       <CategoryList listCategory={listCategory} />
       <TopProductsSold  listProducts={listProducts} />
