@@ -24,7 +24,7 @@ export function CarouselMain() {
   return (
     <Carousel
       plugins={[plugin.current]}
-      className="w-full relative "
+      className="w-full relative"
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
     >
@@ -32,9 +32,9 @@ export function CarouselMain() {
         {dataImg?.map((value, index) => (
           <CarouselItem key={index}>
             <div>
-              <Card className="p-0 mt-1">
-                <CardContent className=" relative h-80 w-full flex items-center justify-center">
-                <Image src={value}  alt={`Image ${index}`} fill className="object-cover rounded-sm" />
+              <Card className="p-0 mt-1 max-sm:h-1/2 max-lg:h-60 max-xl:h-80 max-2xl:h-80 h-96">
+                <CardContent className="max-sm:h-40 w-full">
+                <Image src={value}  alt={`Image ${index}`} fill className="object-contain  rounded-sm" />
                 </CardContent>
               </Card>
             </div>

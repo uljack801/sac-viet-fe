@@ -7,7 +7,7 @@ import { PiPercentBold } from "react-icons/pi";
 
 export const ServiceHighlights = () => {
     return (
-        <div className="grid grid-cols-4 gap-4 py-20 text-[var(--color-text-root)]">
+        <div className="grid max-sm:grid-cols-1 max-lg:grid-cols-2 max-lg:m-4 max-lg:py-10 max-xl:grid-cols-4 max-xl:py-10 max-xl:mx-2 grid-cols-4 py-10 gap-4 text-[var(--color-text-root)] ">
             <div className="bg-[var(--color-background-main)] flex flex-col justify-center items-center rounded-2xl py-4 ">
                 <MdLocalShipping className="text-4xl" />
                 <span className="p-4 text-sm font-medium text-center">Hỗ trợ <strong>giao hàng tận nhà</strong></span>

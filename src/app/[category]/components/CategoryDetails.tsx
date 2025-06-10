@@ -10,7 +10,7 @@ export default function CategoryDetails() {
     const route = useRouter();
     return (
         <div className="text-[var(--color-text-root)]">
-            <p className="2xl:text-2xl ml-1 font-medium mb-6 xl:text-xl">Danh mục sản phẩm</p>
+            <p className="max-lg:text-lg font-medium mb-4 mt-2">Danh mục sản phẩm</p>
             <div className="bg-white rounded-t-xl rounded-b-xl border xl:mr-2 ">
                 {listCategory?.data.map((category, idx) => {
                     const isLast = idx === listCategory.data.length - 1

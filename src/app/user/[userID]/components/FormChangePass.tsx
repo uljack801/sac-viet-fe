@@ -79,12 +79,12 @@ export function InputFormChangePass() {
   }
 
   return (
-    <div className="w-full flex flex-col justify-center items-center 2xl:min-h-96">
-      <p className="text-2xl mb-10 font-medium">Thay đổi mật khẩu</p>
+    <div className="w-full flex flex-col justify-center items-center max-sm:p-10 max-lg:p-10 max-xl:p-20 max-2xl:p-20 p-20">
+      <p className="text-xl mb-10 font-medium">Thay đổi mật khẩu</p>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-2/3"
+          className="w-full"
         >
           <FormField
             control={form.control}

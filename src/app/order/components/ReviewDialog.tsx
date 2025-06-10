@@ -130,7 +130,7 @@ export function ReviewDialog({
       <AlertDialogTrigger asChild>
         <Button
           variant="outline"
-          className="text-white hover:text-white px-10 py-5 bg-[var(--color-button)] hover:bg-[var(--color-hover-button)] mr-1"
+          className="text-white hover:text-white bg-[var(--color-button)] hover:bg-[var(--color-hover-button)] mr-1 max-sm:text-xs"
         >
           Đánh giá
         </Button>

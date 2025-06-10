@@ -102,16 +102,16 @@ export function InputFormInfoUser() {
   }, [dataUser, checkUpdate ,form]);
 
   return (
-    <div className="w-full 2xl:min-h-96">
-      <p className="mb-10 text-2xl font-medium">Chỉnh sửa thông tin</p>
+    <div className="w-full max-xl:p-0 max-2xl:p-10 p-10">
+      <p className="max-sm:text-xl flex justify-center py-4 font-medium max-lg:text-2xl max-xl:text-3xl text-3xl">Chỉnh sửa thông tin</p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="flex justify-between">
+          <div className="flex justify-between max-sm:flex-col max-sm:px-10 gap-2 max-lg:px-6 max-xl:px-10">
             <FormField
               control={form.control}
               name="account"
               render={({ field }) => (
-                <FormItem className="w-1/2 mr-10">
+                <FormItem className="w-1/2  max-sm:w-full">
                   <FormLabel>Tài khoản</FormLabel>
                   <FormControl>
                     <Input
@@ -129,7 +129,7 @@ export function InputFormInfoUser() {
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem className="w-1/2 mr-10">
+                <FormItem className="w-1/2  max-sm:w-full">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
@@ -144,12 +144,12 @@ export function InputFormInfoUser() {
               )}
             />
           </div>
-          <div className="flex justify-between mt-8">
+          <div className="flex justify-between mt-4 max-sm:flex-col max-sm:px-10 gap-2 max-lg:px-6 max-xl:px-10">
             <FormField
               control={form.control}
               name="fullname"
               render={({ field }) => (
-                <FormItem className="w-1/2 mr-10">
+                <FormItem className="w-1/2  max-sm:w-full">
                   <FormLabel>Họ và tên</FormLabel>
                   <FormControl>
                     <Input
@@ -166,7 +166,7 @@ export function InputFormInfoUser() {
               control={form.control}
               name="phoneNumber"
               render={({ field }) => (
-                <FormItem className="w-1/2 mr-10">
+                <FormItem className="w-1/2  max-sm:w-full">
                   <FormLabel>Số điện thoại</FormLabel>
                   <FormControl>
                     <Input
@@ -180,9 +180,9 @@ export function InputFormInfoUser() {
               )}
             />
           </div>
-          <div className="mt-8 flex">
-            <div className="w-1/2">
-              <div className="mr-10">
+          <div className="mt-8 grid grid-cols-2 max-sm:px-10 gap-2 max-lg:px-6 max-xl:px-10">
+            <div className="w-full">
+              <div className="mr-2">
                 <LocalizationProvider
                   dateAdapter={AdapterDayjs}
                   adapterLocale="vi"
@@ -200,7 +200,7 @@ export function InputFormInfoUser() {
                 </LocalizationProvider>
               </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-full">
               <FormField
                 control={form.control}
                 name="gender"
@@ -212,7 +212,7 @@ export function InputFormInfoUser() {
                       defaultValue={field.value}
                       disabled={checkUpdate}
                     >
-                      <FormControl className="w-1/3">
+                      <FormControl>
                         <SelectTrigger>
                           <SelectValue
                             placeholder={genderChoose(
@@ -233,7 +233,7 @@ export function InputFormInfoUser() {
               />
             </div>
           </div>
-          <div className="mt-10 flex justify-end mr-10">
+          <div className="flex justify-end m-10">
            { !checkUpdate && <Button
               type="button"
               className="mr-2 bg-inherit text-black border hover:bg-inherit"

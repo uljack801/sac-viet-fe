@@ -7,7 +7,7 @@ import { PaginationProducts } from "@/app/[category]/components/Pagination";
 export const ResultProductsSearch = ({ resultProducts, search }: { resultProducts: ProductProps | null, search: string | null }) => {
   const route = useRouter()
   return (
-    <div className="grid xl:grid-cols-6 lg:grid-cols-4 sm:grid-cols-2 gap-3 mt-10 ">
+    <div className="grid max-sm:grid-cols-2 max-lg:grid-cols-4 max-xl:grid-cols-5 grid-cols-6 gap-2">
       {
         resultProducts?.data.map((value) => {
           return (
@@ -44,7 +44,7 @@ export const ResultProductsSearch = ({ resultProducts, search }: { resultProduct
         })
       }
 
-      <div className="flex col-span-6 justify-center items-center my-10">
+      <div className="flex max-sm:col-span-2 max-lg:col-span-4 max-xl:col-span-5 col-span-6 justify-center items-center my-10">
         {resultProducts && resultProducts.totalPages > 1 && <PaginationProducts listProducts={resultProducts} search={search} />}
       </div>
     </div>

@@ -33,7 +33,7 @@ export function OptionPrice({setResultProducts} : {setResultProducts: React.Disp
   }, [param.category, paramPage, route ,selectedChoice, setResultProducts]);
 
   return (
-    <RadioGroup className="mt-4 xl:text-sm 2xl:text-lg" value={selectedChoice}
+    <RadioGroup className="max-sm:flex max-sm:text-xs m-2 gap-2 text-center" value={selectedChoice}
       onValueChange={(value) => setselectedChoice(value)}>
       <div className="flex items-center space-x-2">
         <RadioGroupItem value="price-up" id="price-up" />

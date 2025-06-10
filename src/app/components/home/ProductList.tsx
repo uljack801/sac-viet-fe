@@ -2,15 +2,33 @@
 import { ProductProps } from "@/app/utils/fetchCategory"
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 export const ProductList = ({ listProducts }: { listProducts: ProductProps | null }) => {
   const route = useRouter()
   const [addProducts, setAddProducts] = useState(36);
+  useEffect(() => {
+    const updateItemsShow = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setAddProducts(20)
+      } else if (width < 1024) {
+        setAddProducts(24)
+      } else if (width < 1280) {
+        setAddProducts(30)
+      } else (
+        setAddProducts(36)
+      )
+    }
+    updateItemsShow()
+    window.addEventListener('resize', updateItemsShow)
+    return () => window.removeEventListener('resize', updateItemsShow)
+  }, [])
+
   return (
     <div>
-      <div className="grid grid-cols-6 gap-2">
+      <div className="grid max-sm:grid-cols-2 max-lg:grid-cols-4 max-xl:grid-cols-5 grid-cols-6 gap-2 max-xl:mx-2">
         {listProducts?.data.sort(() => Math.random() - 0.5).slice(0, addProducts).map((value) => {
           return (
             <div
@@ -30,22 +48,19 @@ export const ProductList = ({ listProducts }: { listProducts: ProductProps | nul
                 />
               </div>
               <div className="h-1/3 flex flex-col justify-between">
-                <p className="line-clamp-2 text-[var(--color-text-root)] 2xl:text-sm lg:text-xs">{value.name}</p>
-
-                <div className="">
-                  <div className="flex justify-between mx-1">
-                    <p className="text-[var(--color-text-root)] font-medium flex justify-center items-center 2xl:text-lg lg:text-sm">
-                      {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price))}
-                    </p>
-                    <p className="flex justify-center items-center 2xl:text-xs xl:text-[10px]">đã bán {value.sold}</p>
-                  </div>
+                <p className="line-clamp-2 text-[var(--color-text-root)] text-sm">{value.name}</p>
+                <div className="flex justify-between mx-1">
+                  <p className="text-[var(--color-text-root)] font-medium">
+                    {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price))}
+                  </p>
+                  <p className="text-sm">đã bán {value.sold}</p>
                 </div>
               </div>
             </div>
           )
         })}
       </div>
-      <div className="flex items-center justify-center w-full">
+      <div className="text-center">
         <Button className="mt-10 bg-white text-[var(--color-text-root)] hover:text-[var(--color-text-root) hover:bg-neutral-100 p-6" onClick={() => setAddProducts(addProducts + 6)}>Xem thêm sản phẩm</Button>
       </div>
     </div>

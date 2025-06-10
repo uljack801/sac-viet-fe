@@ -74,7 +74,7 @@ export default function Index() {
         }
     }
     return (
-        <div className="2xl:mx-52 xl:mx-40 lg:mx-32 sm:mx-20 bg-white rounded-2xl mt-10">
+        <div className=" bg-white rounded-2xl mt-10">
             <div className="p-10 flex ">
                 <FaUserCircle className="w-60 h-60 text-neutral-400 " />
                 <div className=" ml-10 w-full" >

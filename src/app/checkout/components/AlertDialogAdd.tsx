@@ -11,10 +11,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useState } from "react";
+import { FaChevronRight } from "react-icons/fa6";
+
 export function AlertDialogAdd({
   userAddress,
   setUserAddress
@@ -29,37 +30,32 @@ export function AlertDialogAdd({
 
   const handleChangeAddress = async (selectedAddress: string | undefined) => {
     try {
-      if(selectedAddress){
-       const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/patch/change-address`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-          idAddress: selectedAddress,
-        }),
-      });
-      const data = await res.json();
-      if( res.status === 200){
-        setUserAddress(data.data)
+      if (selectedAddress) {
+        const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/patch/change-address`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            idAddress: selectedAddress,
+          }),
+        });
+        const data = await res.json();
+        if (res.status === 200) {
+          setUserAddress(data.data)
+        }
       }
-    }
     } catch (error) {
       console.log(error);
     }
-  
+
   };
-  
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button
-          variant="outline"
-          className="text-[var(--color-text-root)] hover:text-[var(--color-text-root)] ml-4 cursor-pointer text-xs py-2"
-        >
-          Thay đổi
-        </Button>
+        <FaChevronRight className="mr-1"/>
       </AlertDialogTrigger>
       <AlertDialogContent className="text-[var(--color-text-root)]">
         <AlertDialogHeader>
@@ -72,7 +68,7 @@ export function AlertDialogAdd({
               return (
                 <span key={value._id} className="flex items-center space-x-2">
                   <RadioGroupItem value={value._id} id={value._id} />
-                  <Label htmlFor={value._id}>
+                  <Label htmlFor={value._id} className="text-start">
                     {value.name}-{value.phone}-{value.address}
                   </Label>
                 </span>
@@ -80,7 +76,7 @@ export function AlertDialogAdd({
             })}
           </RadioGroup>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="grid grid-cols-2">
           <AlertDialogCancel>Hủy</AlertDialogCancel>
           <AlertDialogAction
             className="bg-[var(--color-button)] hover:bg-[var(--color-hover-button)]"

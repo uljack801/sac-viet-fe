@@ -22,12 +22,12 @@ export default function Order() {
 
 
     return (
-        <div className="2xl:mx-52 xl:mx-40 lg:mx-32 sm:mx-20">
+        <div className="max-sm:p-2 max-lg:p-4 max-xl:p-10 max-2xl:px-36 px-96">
             <div className="grid grid-cols-6 bg-white rounded-sm mt-28">
                 {tabs.map((label, index) => (
                     <p
                         key={label.slug}
-                        className={`col-span-1 2xl:p-6 xl:px-6 xl:py-2 xl:text-sm border flex justify-center items-center font-medium cursor-pointer ${slugSearch === label.slug && "bg-neutral-100"} ${index === 0 ? "rounded-l-sm" : index === tabs.length - 1 ? "rounded-r-sm" : ""}`}
+                        className={`max-sm:text-xs max-sm:p-1 max-lg:p-2 max-lg:text-sm max-xl:p-4 max-xl:text-sm p-4 text-sm col-span-1 border flex justify-center items-center text-center font-medium cursor-pointer ${slugSearch === label.slug && "bg-neutral-100"} ${index === 0 ? "rounded-l-sm" : index === tabs.length - 1 ? "rounded-r-sm" : ""}`}
                         onClick={() => route.push(`/order?slug=${label.slug}`)}
                     >
                         {label.type}

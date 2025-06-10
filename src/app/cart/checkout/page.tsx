@@ -96,7 +96,7 @@ export default function Checkout() {
                         weight: product.weight
                     }));
                     if (!allProducts) continue;
-
+                    
                     const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/patch/add-orders`, {
                         method: "PATCH",
                         headers: {
@@ -125,7 +125,7 @@ export default function Checkout() {
                         }, 2000);
 
                         if (accessToken) {
-                           await getCart(accessToken , setCart);
+                            await getCart(accessToken, setCart);
                         }
                     }
                 }
@@ -137,77 +137,81 @@ export default function Checkout() {
     };
 
     return (
-        <div className="mt-32 2xl:mx-72 xl:mx-40 lg:mx-32 sm:mx-20">
+        <div className="mt-28 max-sm:mx-0 max-lg:mx-10 max-lg:mb-10 max-xl:mx-20 max-2xl:mx-36 max-2xl:mb-10 mx-96 mb-10">
             <div className="relative">
                 <DeliveryAddress setUserAddress={setUserAddress} userAddress={userAddress} />
-                <div className="bg-white p-6 rounded-xl mt-4 mb-4 xl:text-sm">
-                    <div className="grid grid-cols-6">
+                <div className="bg-white max-sm:p-2 rounded-sm max-sm:m-1 shadow max-lg:p-4 max-xl:p-6 p-10">
+                    <div className="grid grid-cols-6  max-sm:hidden max-lg:pb-4 max-lg:border-b max-xl:pb-6 max-xl:border-b pb-6 border-b">
                         <div className="col-span-3">
                             <p className="text-xl font-medium xl:text-[16px]">Sản phẩm</p>
                         </div>
-                        <div className="col-span-1">
-                            <p>Đơn giá</p>
-                        </div>
-                        <div className="col-span-1">
-                            <p>Số lượng</p>
-                        </div>
-                        <div className="col-span-1">
-                            <p>Thành tiền</p>
-                        </div>
                     </div>
                     {selectedProducts?.map((group) => (
-                        <div key={`seller-${group.seller?.data._id}`} className={cn('mt-6 border-b ')}>
-                            <div className="font-semibold text-lg mb-2 grid grid-cols-6 ">
-                                <label className="flex items-center col-span-6 xl:text-sm">{group.seller?.data.nameShop} | <span className="flex items-center text-sm xl:text-xs" ><BsFillChatSquareTextFill className="mr-1 ml-4" />chat ngay</span></label>
+                        <div key={`seller-${group.seller?.data._id}`} className={cn('border-b ')}>
+                            <div className="font-semibold text-lg mb-2 grid grid-cols-6 max-sm:text-xs ">
+                                <label className="flex items-center col-span-6 ">{group.seller?.data.nameShop} | <span className="flex items-center" ><BsFillChatSquareTextFill className="mr-1 ml-4" />chat ngay</span></label>
                             </div>
                             {group.products?.map((value) => (
                                 <div key={`product-${value._id}`}>
                                     <div className="grid grid-cols-6 ">
-                                        <div className="col-span-3">
+                                        <div className="col-span-6">
                                             <div className="flex my-2">
-                                                <Image src={`${value.img[0]}`} alt={`${value.name}`} width={48} height={48} />
+                                                <Image
+                                                    src={`${value.img[0]}`}
+                                                    alt={`${value.name}`}
+                                                    width={48}
+                                                    height={48}
+                                                />
                                                 <div>
-                                                    <p className="text-ellipsis line-clamp-1 mx-2">{value.name}</p>
+                                                    <p className="text-ellipsis line-clamp-1 mx-2">
+                                                        {value.name}
+                                                    </p>
+                                                    <div className="flex justify-between mx-2">
+                                                        <div className="col-span-1">
+                                                            <div className=" mt-2">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price - (value.price * (value.discount_percentage / 100))))}</div>
+                                                        </div>
+                                                        <div className="col-span-1">
+                                                            <div className="flex items-center mt-2 text-xl w-auto ">
+                                                                <span className="flex justify-center items-center w-6 text-sm"> {value.quantity}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-span-1">
+                                                            <div className="mt-2">
+                                                                <p className="">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.quantity * (value.price - (value.price * (value.discount_percentage / 100)))))}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-span-1">
-                                            <div className=" mt-2">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price - (value.price * (value.discount_percentage / 100))))}</div>
-                                        </div>
-                                        <div className="col-span-1">
-                                            <div className="flex items-center mt-2 text-xl w-auto ">
-                                                <span className="flex justify-center items-center w-6 text-sm"> {value.quantity}</span>
-                                            </div>
-                                        </div>
-                                        <div className="col-span-1">
-                                            <div className="mt-2">
-                                                <p className="">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.quantity * (value.price - (value.price * (value.discount_percentage / 100)))))}</p>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                             ))}
-                            <div className="flex justify-end pr-16 mt-2 my-2 ">
+                            <p className="font-medium py-6 max-sm:text-xs text-xl">Chi phí đơn hàng</p>
+                            <div className="flex justify-between m-1 ">
                                 <p>
                                     Phí vận chuyển:
-                                    <span className="ml-2">
+                                </p>
+                                    <span className="ml-2 flex justify-end">
                                         {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(shippingFees[group.seller?.data._id || ""] || 0)}
                                     </span>
-                                </p>
                             </div>
-                            <div className="flex justify-end pr-16">
-                                <p>Tổng tiền hàng<span className="ml-2">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
+                            <div className="flex justify-between m-1 ">
+                                <p>Tổng tiền hàng:</p>
+                                <span className="ml-2 flex justify-end">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
                                     (group.products?.reduce((sum, product) => {
                                         return sum + ((product.price - (product.price * (product.discount_percentage / 100))) * product.quantity)
                                     }, 0) || 0)
                                 )
                                 }
-                                </span></p>
+                                </span>
                             </div>
-                            <div className="flex justify-end pr-16">
-                                <p className="my-4">
-                                    Tổng thanh toán:
-                                    <span className="ml-2 text-xl">
+                            <div className="flex justify-between m-1 ">
+                                <p>
+                                    Tổng đơn hàng:
+                                </p>
+                                    <span className="ml-2 flex justify-end">
                                         {
                                             new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
                                                 (group.products?.reduce((sum, product) => {
@@ -216,26 +220,11 @@ export default function Checkout() {
                                             )
                                         }
                                     </span>
-                                </p>
                             </div>
                         </div>
                     ))}
-                    <div className="flex justify-between items-center pr-16 border-b">
-                        <p className="text-xl font-medium py-6 xl:text-[16px]">Phương thức thanh toán </p>
-                        <Select defaultValue="cod" onValueChange={setTypePay}>
-                            <SelectTrigger className="w-auto">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent >
-                                <SelectGroup>
-                                    <SelectItem value="cod" >Thanh toán khi nhận hàng</SelectItem>
-                                    <SelectItem value="bank-transfer" hidden>Thanh toán chuyển khoản</SelectItem>
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <div className="flex justify-end pr-16">
-                        <div>
+                    <div className="flex justify-end max-sm:hidden max-lg:p-0 max-xl:p-0">
+                        <div className="text-end">
                             <p className="my-4">
                                 Tổng tiền hàng:
                                 <span className="ml-2">
@@ -265,13 +254,77 @@ export default function Checkout() {
                                     }
                                 </span>
                             </p>
+
+                        </div>
+                    </div>
+                    <div className="flex justify-between items-center border-b">
+                        <p className="font-medium py-6 max-sm:text-xs">Phương thức thanh toán </p>
+                        <Select defaultValue="cod" onValueChange={setTypePay}>
+                            <SelectTrigger className="w-auto text-xs">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup className="text-xs">
+                                    <SelectItem value="cod">Thanh toán khi nhận hàng</SelectItem>
+                                    <SelectItem value="bank-transfer" className="hidden">
+                                        Thanh toán chuyển khoản
+                                    </SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="w-full max-sm:block hidden ">
+                        <div className="w-full">
+                            <p className="font-medium mt-1">Chi tiết thanh toán</p>
+                            <div className="grid grid-cols-2 items-center">
+                                <p>
+                                    Tổng tiền hàng:{" "}
+                                </p>
+                                <span className="ml-2 flex justify-end">
+                                    {
+                                        new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
+                                            selectedProducts?.reduce((total, group) => {
+                                                return total + (group.products?.reduce((sum, product) => {
+                                                    return sum + ((product.price - (product.price * (product.discount_percentage / 100))) * product.quantity);
+                                                }, 0) || 0);
+                                            }, 0) || 0
+                                        )
+                                    }
+                                </span>
+                            </div>
+                            <div className="grid grid-cols-2 items-center">
+                                <p>Tổng tiền vận chuyển:</p>
+                                <span className="ml-2  flex justify-end">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((totalMoneyShip))}</span>
+                            </div>
+                            <div className="grid grid-cols-2 items-center">
+                                <p>
+                                    Tổng thanh toán:
+                                </p>
+                                <span className="ml-2 flex justify-end text-lg">
+                                    {
+                                        new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
+                                            totalMoneyShip + (selectedProducts?.reduce((total, group) => {
+                                                return total + (group.products?.reduce((sum, product) => {
+                                                    return sum + (product.price - (product.price * (product.discount_percentage / 100))) * product.quantity;
+                                                }, 0) || 0);
+                                            }, 0) || 0)
+                                        )
+                                    }
+                                </span>
+                            </div>
+
                         </div>
                     </div>
                 </div>
 
-                <div className="flex justify-between items-center border-t sticky bottom-0 p-6 pr-16 mb-10 bg-white rounded-sm">
-                    <p className="text-xs">Nhấn &quot;Đặt hàng&quot; đồng nghĩa với việc bạn đồng ý tuân theo Điều khoản Sắc Việt</p>
-                    <Button className="bg-[var(--color-button)] hover:bg-[var(--color-hover-button)] text-white w-32 rounded-sm" onClick={handleAllOrders}>Đặt hàng</Button>
+                <p className="text-xs px-2 mb-2">Nhấn &quot;Đặt hàng&quot; đồng nghĩa với việc bạn đồng ý tuân theo Điều khoản Sắc Việt</p>
+                <div className="flex justify-end items-center max-sm:sticky bottom-0 bg-white py-4 w-full px-2 max-lg:sticky max-lg:rounded-sm max-lg:border  max-xl:sticky max-xl:rounded-sm max-xl:border rounded-sm border sticky">
+                    <Button
+                        className="bg-[var(--color-button)] hover:bg-[var(--color-hover-button)] text-white w-32 rounded-sm"
+                        onClick={handleAllOrders}
+                    >
+                        Đặt hàng
+                    </Button>
                 </div>
                 {checkPay && <div className="absolute top-0 w-full h-full flex justify-center items-center bg-neutral-100/50">
                     <Image src="/logo_.png" alt="logo" width={120} height={120} />

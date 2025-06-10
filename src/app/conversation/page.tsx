@@ -227,10 +227,13 @@ export default function Conversation() {
         mutationPostReplyComment.mutate({ postID, commentID });
     }
     return (
-        <div className="mt-28 mb-10 shadow rounded-sm 2xl:mx-52 xl:mx-40 lg:mx-32 sm:mx-20 min-h-screen bg-white  grid grid-cols-3">
-            <div className="col-span-2 p-10">
+        <div className="mt-28 mb-10 shadow rounded-sm  min-h-screen bg-white  grid grid-cols-3 max-xl:mx-0 max-2xl:mx-36 mx-96">
+            <span  onClick={() => route.push('/')} className="flex text-xs items-center ml-2 mt-2 col-span-3 max-sm:block  max-xl:hidden max-2xl:hidden">
+                Trang chủ / <strong className="ml-1">Tin tức</strong> 
+            </span>
+            <div className="col-span-2 p-10 max-sm:p-2 max-sm:col-span-3 max-sm:text-xs max-lg:col-span-3 max-lg:text-sm">
                 {dataUser &&
-                    <div className="w-full bg-neutral-100/50 border p-10 pb-2 rounded-2xl ">
+                    <div className="w-full bg-neutral-100/50 border max-sm:p-4 p-10 pb-2 rounded-2xl ">
                         <div className="flex justify-center items-center">
                             <FaRegCircleUser className="w-8 h-8 text-gray-500" />
                             <AlertDialog open={openPost} onOpenChange={setOpenPost}>
@@ -287,13 +290,13 @@ export default function Conversation() {
                                 </AlertDialogContent>
                             </AlertDialog>
                         </div>
-                        <div className="flex justify-end items-center mt-4">
+                        <div className="flex justify-end items-center mt-4 max-sm:mt-1">
                             <div className="flex items-center cursor-pointer " onClick={() => (setOpenPost(true), setOpenPostImg(true))}>
                                 <Image src={`/iconImage.png`} alt="icon" height={24} width={24} />
                                 <span className="ml-2">Thêm ảnh</span>
                             </div>
                             <div className="flex items-center cursor-pointer ml-6" onClick={() => setOpenPost(true)}>
-                                <MdOutlineInsertComment />
+                                <MdOutlineInsertComment className="text-xl" />
                                 <span className="ml-2">Thêm nội dung</span>
                             </div>
                         </div>
@@ -316,7 +319,7 @@ export default function Conversation() {
                                             <span className="text-xs flex items-center">{dateCreateAt.toLocaleDateString()} {dateCreateAt.toLocaleTimeString()}<FaEarthAsia className="ml-2" /></span>
                                         </div>
                                     </div>
-                                    <p className="text-sm mb-4">{post.content}</p>
+                                    <p className="text-sm mb-4 max-sm:text-xs">{post.content}</p>
                                     <div className="flex w-full justify-center">
                                         {post.image[0].trim() !== '' &&
                                             <Image
@@ -434,16 +437,16 @@ export default function Conversation() {
                                 }
                             </div>
                         )
-                    
+
                     })
                     }
 
                 </div>
             </div>
-            <div className="col-span-1 pt-10 pr-10">
+            <div className="col-span-1 pt-10 pr-10 max-sm:hidden max-lg:hidden">
                 <div className=" bg-neutral-100/50 w-full min-h-screen shadow rounded-2xl ">
                     <p className="text-2xl font-medium flex justify-center p-4">Bài báo mới cập nhật</p>
-                    <ArticleList article={article}  />
+                    <ArticleList article={article} />
                 </div>
             </div>
         </div>

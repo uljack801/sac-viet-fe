@@ -13,14 +13,18 @@ export const ProductListInCategory = ({ resultProducts }: { resultProducts: Prod
   const [resultProduct, setResultProduct] = useState<ProductProps | null>(resultProducts)
   const param = useParams()
   return (
-    <div className="grid grid-cols-4 mt-10">
-      <div className="col-span-1 lg:mr-4 sm:mr-2">
+    <div className="grid grid-cols-4 m-2">
+      <div className="col-span-1 lg:mr-4 sm:mr-2 max-sm:hidden">
         <CategoryDetails />
-        <p className="2xl:text-xl font-medium mt-6 xl:text-[16px]">Sắp xếp theo:</p>
+        <p className="font-medium my-4 max-lg:text-xl">Sắp xếp theo:</p>
         <OptionPrice setResultProducts={setResultProduct} />
       </div>
-      <div className="col-span-3">
-        <div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-2 ">
+      <div className="col-span-3 max-sm:col-span-4">
+        <div className="hidden max-sm:block">
+          <p className="text-center font-medium">Danh sách sản phẩm</p>
+        <OptionPrice setResultProducts={setResultProduct}/>
+        </div>
+        <div className="grid max-sm:grid-cols-2 max-lg:grid-cols-3 max-xl:grid-cols-4 grid-cols-4 gap-2 m-2">
           {resultProduct?.data.length ?
             resultProduct?.data.map((value) => {
               return (
@@ -53,10 +57,9 @@ export const ProductListInCategory = ({ resultProducts }: { resultProducts: Prod
                     </div>
                   </div>
                 </div>
-
               )
             }) :
-            <div className="col-span-4 flex flex-col justify-center items-center mt-20">
+            <div className=" max-sm:col-span-2 max-lg:col-span-3 max-xl:col-span-4 col-span-4 flex flex-col justify-center items-center mt-20">
               <GiCardboardBox className="text-6xl" />
               <p>Chưa có sản phẩm nào trên sàn.</p>
               <p>Vui lòng chọn danh mục khác hoặc quay lại sau.</p>
@@ -66,7 +69,7 @@ export const ProductListInCategory = ({ resultProducts }: { resultProducts: Prod
 
         </div>
       </div>
-      <div className="flex col-span-4 justify-center items-center my-10">
+      <div className="flex max-sm:col-span-4 max-lg:col-span-4 max-xl:col-span-4 col-span-4 justify-center items-center my-10">
         {resultProducts && resultProducts.totalPages > 1 && <PaginationProducts listProducts={resultProducts} param={param.category} />}
       </div>
     </div>

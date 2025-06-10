@@ -77,7 +77,7 @@ export default function HomeSeller() {
     }, 0);
 
     return (
-        <div className="2xl:mx-52 xl:mx-40 lg:mx-32 sm:mx-20">
+        <div className="">
             <div className="grid grid-cols-3 mt-10 gap-4">
                 <div className="p-6 bg-white rounded-xl" onClick={() => route.push('/seller/manager-products')}>
                     <span className="flex items-center text-xl font-medium"><AiOutlineProduct className="text-4xl mr-2" /> Tổng số lượng sản phẩm </span>

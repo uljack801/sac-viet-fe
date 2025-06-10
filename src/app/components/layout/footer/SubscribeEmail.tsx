@@ -44,7 +44,7 @@ export function SubscribeEmail() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-72 2xl:w-60 relative">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-72 relative">
         <FormField
           control={form.control}
           name="inputEmail"

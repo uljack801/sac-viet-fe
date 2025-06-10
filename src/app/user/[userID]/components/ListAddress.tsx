@@ -3,10 +3,10 @@ import { FormUpdateAddress } from "./FormUpdateAddress";
 
 export function ListAddress() {
   return (
-    <div className="2xl:min-h-96 xl:min-h-80">
-      <p className="text-2xl mb-4 font-medium">Danh sách địa chỉ </p>
+    <div className="max-sm:p-10 max-lg:p-10 max-xl:p-20 max-2xl:p-20 p-20">
+      <p className="mb-4 font-medium text-center max-lg:text-xl max-xl:text-3xl text-3xl">Danh sách địa chỉ </p>
         <SelectFormAddress />
-        <div className="h-32 mt-10">
+        <div className="mt-10 flex justify-end">
         <FormUpdateAddress />
         </div>
     </div>

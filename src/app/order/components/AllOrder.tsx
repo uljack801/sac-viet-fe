@@ -77,98 +77,66 @@ export const AllOrder = ({ dataOrder }: { dataOrder: OrderProps | undefined }) =
 
     return (
         <div>
-            <div className="grid grid-cols-7 text-sm bg-white p-6 items-center rounded-sm mb-1 ">
-                <p className="col-span-3 text-2xl font-medium xl:text-xl">Danh sách đơn hàng</p>
-                <div className="col-span-1 text-neutral-400 text-center">
-                    <p>Đơn giá</p>
-                </div>
-                <div className="col-span-1 text-neutral-400 text-center">
-                    <p>Số lượng</p>
-                </div>  <div className="col-span-1 text-neutral-400 text-center">
-                    <p>Số tiền</p>
-                </div>
-                <div className="col-span-1 text-neutral-400 text-center">
-                    <p>Thao tác</p>
-                </div>
+            <div className="grid grid-cols-7 text-sm bg-white p-6 items-center rounded-sm mb-1 max-sm:hidden max-lg:hidden max-xl:text-sm border">
+                <p className="col-span-3 font-medium  ">Danh sách đơn hàng</p>
             </div>
             {mergedOrders?.map(orders => {
                 const totalOrderPrice = orders.products.reduce((acc, product) => {
-                    if (product.product) {                        
-                        return acc + (product.quantity * (product.product.price / 100) * (100 - product.product.discount_percentage)) ;
+                    if (product.product) {
+                        return acc + (product.quantity * (product.product.price / 100) * (100 - product.product.discount_percentage));
                     }
-                    return acc ;
+                    return acc;
                 }, 0);
 
                 return (
-                    <div key={orders._id} className="p-6 mb-1 pb-24 rounded-sm bg-white relative">
-                        <div className="flex justify-between mb-3">
-                            <p className="font-medium">{handleTag(orders.status)}</p>
-                        </div>
+                    <div key={orders._id} className="p-6 mb-1 rounded-sm bg-white relative max-sm:p-2 max-xl:p-4 border">
+                        <p className="font-medium max-sm:text-sm max-xl:text-lg">{handleTag(orders.status)}</p>
                         {orders.products.map(product => {
                             return (
-                                product.product && <div key={`order-${orders._id}-product-${product.product?._id}`}>
-                                    <div className="grid grid-cols-7 border p-2 m-1 rounded-xs items-center">
-                                        <div className="col-span-3">
-                                            <div className="flex my-2">
-                                                <Image src={`${product.product?.img[0]}`} alt={`${product.product?.name}`} width={48} height={48} />
-                                                <div className="flex items-center">
-                                                    <p className="text-ellipsis line-clamp-1 mx-2 ">{product.product?.name}</p>
+                                product.product && <div key={`order-${orders._id}-product-${product.product?._id}`} >
+                                    <div className="border m-1 items-center rounded-sm" onClick={() => route.push(`/product-details/${product.product?._id}`)}>
+                                        <div className="flex my-2 max-lg:mx-2 max-xl:mx-2 max-2xl:mx-4">
+                                            <Image src={`${product.product?.img[0]}`} alt={`${product.product?.name}`} width={48} height={48} className="max-xl:w-48" />
+                                            <div className="flex flex-col justify-between">
+                                                <p className="text-ellipsis line-clamp-1 mx-2 max-sm:text-xs max-xl:text-sm text-sm">{product.product?.name}</p>
+                                                <div className="flex items-center justify-end max-sm:text-sm max-xl:text-lg mr-1">
+                                                    <p>{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((product.product.price / 100) * (100 - product.product.discount_percentage))}</p>
+                                                    <p className="text-sm mx-2">SL:{product.quantity}</p>
+                                                    <p className="">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((product.product.price / 100) * (100 - product.product.discount_percentage) * product.quantity)}</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-span-1">
-                                            <div className=" mt-2 flex items-center justify-center">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((product.product.price / 100) * (100 - product.product.discount_percentage))}</div>
-                                        </div>
-                                        <div className="col-span-1">
-                                            <div className="flex items-center justify-center mt-2 text-xl w-auto ">
-                                                <span className="flex justify-center items-center w-6 text-sm"> {product.quantity}</span>
-                                            </div>
-                                        </div>
-                                        <div className="col-span-1">
-                                            <div className="mt-2 flex items-center justify-center">
-                                                <p className="">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((product.product.price / 100) * (100 - product.product.discount_percentage) * product.quantity)}</p>
-                                            </div>
-                                        </div>
-                                        <div className="col-span-1">
-                                            <div className="mt-2 flex items-center justify-center">
-                                                <p className="cursor-pointer font-medium" onClick={() => route.push(`/product-details/${product.product?._id}`)} >Mua lại</p>
-                                            </div>
-                                        </div>
                                     </div>
-                                    <div className="absolute bottom-0 right-0 mr-10 mb-6 flex gap-4">
-                                        {orders.status === "cancelled" && orders.is_review !== true && (
-                                            <ReviewDialog mergedOrders={mergedOrders} ordersID={orders._id} />
-                                        )}
-                                        {orders.is_review === true &&
-                                            <Button className="px-10 py-5 bg-white border text-[var(--color-button)] border-[var(--color-button)] hover:bg-neutral-100">
-                                                Đã đánh giá
-                                            </Button>
-                                        }
-                                        <Button className="px-10 py-5 bg-white border text-[var(--color-button)] border-[var(--color-button)] hover:bg-neutral-100">
-                                            Liên hệ người bán
-                                        </Button>
-                                    </div>
-
                                 </div>
                             )
                         })}
-                        <div className="flex justify-end items-center mr-2 mt-6">
-                            <p>Phí vận chuyển: <span className="text-xl xl:text-sm ml-2 font-medium">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(orders.total_money_ship)}</span></p>
-
+                        <div className="flex justify-end items-center max-sm:text-sm max-xl:text-lg">
+                            <p>Phí vận chuyển: <span className="ml-2 font-medium">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(orders.total_money_ship)}</span></p>
                         </div>
-                        <div className="flex justify-end items-center mr-2 mt-2">
+                        <div className="flex justify-end items-center max-sm:text-sm max-xl:text-lg">
                             <p>
                                 Thành tiền:
-                                <span className="text-2xl ml-2 font-medium xl:text-xl">
+                                <span className="ml-2 font-medium max-sm:text-lg">
                                     {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(totalOrderPrice + orders.total_money_ship)}
                                 </span>
                             </p>
                         </div>
-
+                        <div className="flex justify-end mt-2">
+                            {orders.status === "cancelled" && orders.is_review !== false && (
+                                <ReviewDialog mergedOrders={mergedOrders} ordersID={orders._id} />
+                            )}
+                            {orders.is_review === true &&
+                                <Button className="max-sm:text-xs mr-1 bg-white border text-[var(--color-button)] border-[var(--color-button)] hover:bg-neutral-100">
+                                    Đã đánh giá
+                                </Button>
+                            }
+                            <Button className="max-sm:text-xs bg-white border text-[var(--color-button)] border-[var(--color-button)] hover:bg-neutral-100">
+                                Liên hệ người bán
+                            </Button>
+                        </div>
                     </div>
                 )
             })}
-
         </div>
     )
 }

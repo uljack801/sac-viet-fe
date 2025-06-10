@@ -1,14 +1,21 @@
 "use client"
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { IoChevronBackOutline } from "react-icons/io5";
 export default function About() {
+  const route = useRouter()
   return (
-    <div className="text-[var(--color-text-root)] py-28 2xl:mx-52 xl:mx-40 lg:mx-32 sm:mx-20">
-      <p className="flex justify-center items-center text-4xl font-bold mb-10 xl:text-3xl">Ý nghĩa về logo Sắc Việt</p>
+    <div className="text-[var(--color-text-root)] pt-28 max-sm:m-2 max-lg:m-4 max-xl:m-10 max-2xl:mx-36 max-2xl:my-10 mx-96 my-10">
+      <span onClick={() => route.push('/')} className="flex text-xs items-center ml-2 mb-4 max-lg:text-sm max-xl:hidden max-2xl:hidden">
+        <IoChevronBackOutline className="text-sm" />
+        Trang chủ /<strong className="ml-1"> Về chúng tôi</strong>
+      </span>
+      <p className="text-center font-bold mb-10 max-sm:text-2xl max-lg:text-3xl max-xl:text-3xl text-3xl">Ý nghĩa về logo Sắc Việt</p>
       <div className="flex justify-center items-center pb-4">
         <div>
           <Image src="/logo_big.png" alt="logo" width={480} height={480} />
         </div>
-        <div className="xl:text-sm">
+        <div className="max-sm:text-xs">
           <p>Logo của <strong>Sắc Việt </strong>được thiết kế tinh tế với ý nghĩa sâu sắc, thể hiện rõ bản sắc văn hóa và giá trị của thương hiệu. Dưới đây là phân tích chi tiết:</p>
           <p className="font-medium">1. Hình dáng cô gái – Biểu tượng của bản sắc Việt</p>
           <ul className="list-disc ml-10">
@@ -24,14 +31,13 @@ export default function About() {
         </div>
       </div>
       <div className="bg-[url(/article_art.png)] bg-cover bg-center aspect-video my-4 rounded-sm">
-        <p className="flex justify-center items-center text-white text-5xl font-bold h-full">Kết nối tinh hoa hàng Việt</p>
+        <p className="max-sm:text-2xl  max-lg:text-3xl text-center flex items-center justify-center text-white font-bold h-full">Kết nối tinh hoa hàng Việt</p>
       </div>
-      <p className="text-4xl font-bold my-10 xl:text-3xl">Tầm nhìn & Sứ mệnh</p>
-      <div className="grid grid-cols-2 gap-4 xl:text-sm">
+      <p className="text-center font-bold my-10 max-sm:text-2xl max-lg:text-3xl max-xl:text-3xl text-3xl">Tầm nhìn & Sứ mệnh</p>
+      <div className="grid grid-cols-2 gap-2 max-sm:grid-cols-1 max-sm:text-xs">
         <p className="col-span-1 bg-white p-4 rounded-xl"><strong>Tầm nhìn:</strong> Trở thành sàn TMĐT uy tín nhất về thủ công mỹ nghệ Việt, tôn vinh văn hóa truyền thống qua công nghệ, kết nối nghệ nhân với khách hàng toàn cầu.</p>
         <p className="col-span-1  bg-white p-4 rounded-xl"><strong>Sứ mệnh:</strong> Với khát vọng tạo dựng một hệ sinh thái số hóa toàn diện cho ngành thủ công mỹ nghệ Việt Nam, giúp mỗi sản phẩm không chỉ là một món hàng mà còn là một câu chuyện văn hóa, một tác phẩm nghệ thuật mang đậm hồn Việt. Xây dựng hệ sinh thái số cho ngành thủ công mỹ nghệ, mang đến trải nghiệm mua sắm tiện lợi, hỗ trợ nghệ nhân mở rộng thị trường, kết nối cộng đồng yêu đồ thủ công và ứng dụng AI để nâng cao trải nghiệm.</p>
       </div>
-
     </div>
   );
 }

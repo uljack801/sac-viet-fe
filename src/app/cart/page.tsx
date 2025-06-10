@@ -176,8 +176,8 @@ export default function Card() {
     }
 
     return (
-        <div className=" mt-28 mb-10 2xl:mx-52 xl:mx-40 lg:mx-32 sm:mx-20">
-            <div className="grid grid-cols-2 bg-white p-6 items-center rounded-sm ">
+        <div className=" mt-28 mb-10 max-lg:p-0 max-xl:p-10 max-2xl:px-36  max-2xl:py-10 px-96 py-10">
+            <div className="grid grid-cols-2 bg-white p-6 items-center rounded-sm max-sm:hidden max-lg:hidden">
                 <p className="2xl:text-2xl font-medium xl:text-xl">Danh sách giỏ hàng</p>
                 <div className="grid grid-cols-4 text-neutral-400 text-center">
                     <p>Đơn giá</p>
@@ -188,10 +188,10 @@ export default function Card() {
             </div>
             {groupProduct?.length ? (
                 <div>
-                    <div className="bg-white min-h-screen p-6 mt-2 rounded-sm ">
+                    <div className="bg-white min-h-screen mt-2 rounded-sm max-sm:m-2 shadow max-sm:p-2 max-lg:m-2 max-lg:p-6 max-xl:p-6 max-2xl:p-10 p-10">
                         {groupProduct?.map((group) => (
-                            <div key={`seller-${group.seller?.data._id}`} className="mb-6">
-                                <div className="font-semibold text-lg mb-2 xl:text-sm">
+                            <div key={`seller-${group.seller?.data._id}`}>
+                                <div className="font-semibold max-lg:text-xl">
                                     <label>{group.seller?.data.nameShop}</label>
                                 </div>
                                 {group.products?.map((value) => (
@@ -201,7 +201,7 @@ export default function Card() {
                                             checked={checkedProducts.includes(value._id)}
                                             onCheckedChange={() => handleCheckSingle(value._id)}
                                         />
-                                        <div className="grid grid-cols-2 items-center mt-4 border rounded-sm py-1 w-full">
+                                        <div className="grid grid-cols-2 items-center mt-4 border rounded-sm py-1 w-full max-sm:hidden">
                                             <div className="flex items-center">
                                                 <Image
                                                     src={`${value.img[0]}`}
@@ -212,7 +212,7 @@ export default function Card() {
                                                 />
                                                 <p className="text-sm mx-2 line-clamp-2">{value.name}</p>
                                             </div>
-                                            <div className="grid grid-cols-4 text-center items-center">
+                                            <div className="flex justify-between text-center items-center">
                                                 <p>
                                                     {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price / 100) * (100 - value.discount_percentage))}
                                                 </p>
@@ -228,7 +228,46 @@ export default function Card() {
                                                 <p className="text-red-400">
                                                     {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price / 100) * (100 - value.discount_percentage) * value.quantity)}
                                                 </p>
-                                                <p className="cursor-pointer" onClick={() => hanldedeleteProduct(value._id)}>Xóa</p>
+                                                <p className="cursor-pointer mr-2" onClick={() => hanldedeleteProduct(value._id)}>x</p>
+                                            </div>
+                                        </div>
+                                        <div className="max-sm:block hidden">
+                                            <div className="mt-4 border rounded-sm w-full">
+                                                <div className="flex items-center">
+                                                    <Image
+                                                        src={`${value.img[0]}`}
+                                                        alt="anh-san-pham"
+                                                        width={60}
+                                                        height={60}
+                                                        className="mx-1"
+                                                    />
+                                                    <div>
+                                                        <p className="text-xs line-clamp-2">{value.name}</p>
+                                                        <div className="flex text-center justify-between items-end mt-1">
+                                                            <div className="flex items-end">
+                                                                {value.discount_percentage > 0 &&
+                                                                    <p className="text-red-400">
+                                                                        {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price / 100) * (100 - value.discount_percentage) * value.quantity)}
+                                                                    </p>}
+                                                                {value.discount_percentage > 0 &&
+                                                                    <p className="text-[10px] ml-2">
+                                                                        {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price))}
+                                                                    </p>}
+                                                                {value.discount_percentage === 0 &&
+                                                                    <p >
+                                                                        {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price))}
+                                                                    </p>}
+                                                            </div>
+                                                            <div className="flex justify-center items-center text-xs w-auto mr-2">
+                                                                <IoRemoveOutline onClick={() => handleChoisedown(value._id, value.quantity)} />
+                                                                <span className="flex justify-center items-center w-4 text-xs">{value.quantity}</span>
+                                                                <IoAddOutline onClick={() => handleChoiseUp(value._id, value.quantity, value.inventory)} />
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <Button className=" bg-neutral-200 mx-1" onClick={() => hanldedeleteProduct(value._id)}>x</Button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -236,7 +275,7 @@ export default function Card() {
                             </div>
                         ))}
                     </div>
-                    <div className="bg-white p-6 mt-2 flex items-center justify-between sticky bottom-0 z-10 border-t rounded-sm ">
+                    <div className="max-sm:p-2 max-lg:p-4 max-xl:p-6 max-lg:m-2 p-6  bg-white mt-2 flex items-center justify-between sticky bottom-0 z-10 shadow border-t rounded-sm ">
                         <div>
                             <Checkbox
                                 id="selectAll"
@@ -256,7 +295,7 @@ export default function Card() {
                     </div>
                 </div>
             ) : (
-                <div className="bg-white min-h-96 p-6 mt-2 rounded-sm flex justify-center items-center ">
+                <div className="bg-white min-h-96 p-6 mt-2 rounded-sm flex justify-center items-center max-lg:m-4">
                     <div className="flex flex-col items-center">
                         <GiCardboardBox className="text-6xl" />
                         <p>Chưa có sản phẩm nào trong giỏ hàng</p>

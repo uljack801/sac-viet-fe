@@ -75,12 +75,12 @@ export function FormDistrict({setValueDistrict, valueCapital , checkCapital}: {s
               <Select onValueChange={field.onChange} defaultValue={field.value} disabled={!checkCapital}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Chọn quận/huyện" className="w-full " />
+                    <SelectValue placeholder="Chọn quận/huyện" className="w-full" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
+                <SelectContent className="h-60">
                     {dataDistrict?.map(( value,idx) =>{ 
-                        if(valueCapital === value.parent_code){
+                        if(valueCapital === value.parent_code){ 
                             return(
                                 <SelectItem value={value.code} key={idx}>{value.name}</SelectItem>
                             )

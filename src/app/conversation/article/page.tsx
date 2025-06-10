@@ -25,7 +25,7 @@ export default function DetailArticle() {
 
     
     return (
-        <div className="mt-28 2xl:mx-52 xl:mx-40 lg:mx-32 sm:mx-20 bg-white rounded-2xl mb-10">
+        <div className="mt-28  bg-white rounded-2xl mb-10">
             {valueArticle && 
                 <div className="px-20 py-10">
                     <div className="flex justify-between">

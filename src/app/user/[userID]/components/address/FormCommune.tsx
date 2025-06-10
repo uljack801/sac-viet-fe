@@ -82,7 +82,7 @@ export function FormCommune({setValueCommnune, valueDistrict , checkDistrict}: {
                     <SelectValue placeholder="Chọn phường/xã" className="w-full" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
+                <SelectContent className=" h-60">
                     {dataCommune?.map(( value,idx) =>{ 
                         if(valueDistrict === value.parent_code){
                             return(

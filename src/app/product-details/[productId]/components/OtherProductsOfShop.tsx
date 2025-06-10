@@ -20,13 +20,13 @@ export const OtherProductsOfShop = ({ sellerID }: { sellerID: string | undefined
     return (
         <div >
             <div className="flex justify-between items-center bg-white my-3 rounded-sm shadow ">
-                <p className="font-medium 2xl:text-2xl p-4 py-6 xl:text-xl ">Các sản phẩm khác của Shop</p>
+                <p className="font-medium  p-4 py-6 max-lg:text-lg max-xl:text-xl ">Các sản phẩm khác của Shop</p>
                 <p className="text-sm flex items-center mr-10 cursor-pointer">xem tất cả <MdNavigateNext className="ml-1" /></p>
             </div>
             <Carousel >
                 <CarouselContent >
                     {otherProduct?.map((value) => (
-                        <CarouselItem key={`product -${value._id}`} className=" lg:basis-1/6 hover:scale-[1.03]" onClick={() => route.push(`/product-details/${value._id}`)}>
+                        <CarouselItem key={`product -${value._id}`} className="max-sm:basis-1/2 max-lg:basis-1/4 max-xl:basis-1/5 basis-1/6 hover:scale-[1.03]" onClick={() => route.push(`/product-details/${value._id}`)}>
                             <Card className="p-0 rounded-sm  h-full ">
                                 <CardContent className="p-0 h-full">
                                     <div className="relative p-1 h-full" >
@@ -45,7 +45,7 @@ export const OtherProductsOfShop = ({ sellerID }: { sellerID: string | undefined
                                                     <p className="text-[var(--color-text-root)] font-medium flex justify-center items-center 2xl:text-lg lg:text-sm">
                                                         {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price))}
                                                     </p>
-                                                    <p className="flex justify-center items-center 2xl:text-xs xl:text-[10px]">đã bán {value.sold}</p>
+                                                    <p className="flex justify-center items-center text-sm text-[var(--color-text-root)]">đã bán {value.sold}</p>
                                                 </div>
                                         </div>
                                     </div>
@@ -55,8 +55,8 @@ export const OtherProductsOfShop = ({ sellerID }: { sellerID: string | undefined
                     ))}
 
                 </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
+                <CarouselPrevious  className="max-sm:hidden max-lg:hidden max-xl:hidden"/>
+                <CarouselNext className="max-sm:hidden max-lg:hidden  max-xl:hidden" />
             </Carousel>
         </div>
 

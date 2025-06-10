@@ -73,12 +73,12 @@ export function FormCapital({setValueCapital}: {setValueCapital: React.Dispatch<
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
-                    <FormControl>
+                    <FormControl >
                       <SelectTrigger>
                         <SelectValue placeholder="Chọn thành phố" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className="w-full">
+                    <SelectContent  className="w-full h-60"  >
                       {dataCapital?.map((value, idx) => {
                         return (
                           <SelectItem value={value.code} key={idx}>

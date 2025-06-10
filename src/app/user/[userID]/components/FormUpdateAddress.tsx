@@ -31,28 +31,31 @@ export function FormUpdateAddress() {
     }
   }, [valueCapital, valueDistrict])
   
+  useEffect(() => {
+    if(valueCommune !== '' && open === false){
+      setValueCapital('')
+      setValueDistrict('')
+      setValueCommune('')
+    }
+  }, [open, valueCommune])
   return (
-    <div >
-      <div>
       <Dialog  open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button variant="outline" className="bg-[var(--color-button)] text-white hover:bg-[var(--color-hover-button)] hover:text-white">Cập nhật</Button>
+        <DialogTrigger asChild >
+          <Button variant="outline" className="bg-[var(--color-button)] text-white hover:bg-[var(--color-hover-button)] hover:text-white">Thêm mới</Button>
         </DialogTrigger>
-        <DialogContent className="p-10">
+        <DialogContent className="p-10 max-sm:p-4 max-sm:mt-12">
           <DialogHeader>
-            <DialogTitle className="text-2xl mb-10 font-medium">Cập nhật địa chỉ nhận hàng</DialogTitle>
+            <DialogTitle className="max-lg:text-2xl font-medium max-sm:m-0 max-sm:text-xl">Cập nhật địa chỉ nhận hàng</DialogTitle>
             <DialogDescription>
             </DialogDescription>
           </DialogHeader>
-          <div className="w-full flex">
+          <div className="w-full flex max-sm:flex-col max-sm:gap-2 max-lg:flex max-lg:flex-col max-lg:gap-2 max-xl:flex max-xl:flex-col flex-col gap-4 max-xl:gap-4 ">
             <FormCapital setValueCapital={setValueCapital} />
             <FormDistrict setValueDistrict={setValueDistrict} valueCapital={valueCapital} checkCapital={checkCapital} />
             <FormCommune checkDistrict={checkDistrict} setValueCommnune={setValueCommune} valueDistrict={valueDistrict} />
+            <InputFormDetail valueCommune={valueCommune} setOpen={setOpen}/>
           </div>
-          <InputFormDetail valueCommune={valueCommune} setOpen={setOpen}/>
         </DialogContent>
       </Dialog> 
-      </div>
-    </div>
   );
 }

@@ -13,9 +13,9 @@ export default function ForgetPass() {
   const route = useRouter();
   return (
     <div className="flex justify-center items-center h-full ">
-      <div className="bg-white rounded-sm shadow-2xl px-16 py-20 my-24">
+      <div className="bg-white rounded-sm shadow-2xl px-16 py-20 max-sm:p-10 my-24">
         <div className="2xl:w-80 ">
-          <div className="text-3xl font-medium flex justify-center items-center mb-10">
+          <div className="text-3xl max-sm:text-2xl font-medium flex justify-center items-center mb-10">
             <p>Quên mật khẩu</p>
           </div>
           {!checkFoget ? (

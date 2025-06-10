@@ -7,12 +7,12 @@ import { BreadCrumb } from "./components/BreadCrumb";
 
 export default function Contact() {
   return ( 
-    <div className="pt-20 flex flex-col justify-center 2xl:mx-52 xl:mx-40 lg:mx-32 sm:mx-20">
-      <div className="mt-10">
+    <div className="pt-20 flex flex-col justify-center max-sm:m-2 max-lg:m-10 max-lg:pt-0 max-xl:m-20 max-2xl:mx-36 max-2xl:mt-10 mx-96">
+      <div className="my-4">
        <BreadCrumb />
       </div>
       <div className="grid grid-cols-12 ">
-        <div className="col-span-4 bg-white my-10 mr-4 rounded-sm shadow-2xl p-10">
+        <div className="col-span-4 bg-white  mr-4 rounded-sm shadow-2xl p-10 max-sm:hidden max-lg:hidden max-xl:hidden max-2xl:my-10">
           <div className="text-xs">
             <div className="flex items-center">
               <BiSolidPhoneCall className="text-xl text-[#C95050] " />
@@ -38,7 +38,7 @@ export default function Contact() {
             </div>
           </div>
         </div>
-        <div className="col-span-8 px-10 bg-white my-10 rounded-sm shadow-2xl">
+        <div className="max-sm:col-span-12 max-lg:col-span-12 max-xl:col-span-12 col-span-8 px-10 bg-white rounded-sm shadow-2xl max-2xl:my-10">
           <FormContact />
         </div>
       </div>
