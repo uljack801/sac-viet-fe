@@ -20,8 +20,10 @@ import { ShowPassword } from "@/app/helper/ShowPassword";
 
 
 const FormSchema = z.object({
-  username: z.string().regex(/^[a-zA-Z0-9_]+$/, "Tài khoản không được chứa khoảng trắng hoặc ký tự có dấu!"),
-  password: z.string().regex(/^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/, "Mật khẩu không chứa khoảng trắng hoặc ký tự có dấu!")  ,
+  username: z.string().toLowerCase().trim().refine(val => /^[a-zA-Z0-9_]+$/.test(val) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
+    message: "Tài khoản phải là username (chỉ chữ, số, dấu _) hoặc email hợp lệ!",
+  }),
+  password: z.string().regex(/^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/, "Mật khẩu không chứa khoảng trắng hoặc ký tự có dấu!"),
 });
 
 export function LoginForm() {
@@ -30,7 +32,7 @@ export function LoginForm() {
   const [messagePassword, setMessagePassword] = useState("");
   const [messageAccount, setMessageAccount] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isWait , setIsWait] = useState(false)
+  const [isWait, setIsWait] = useState(false)
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -41,9 +43,9 @@ export function LoginForm() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      if(isWait) return
-       setIsWait(true);
-      const res = await fetchLogin({password: data.password, username: data.username})
+      if (isWait) return
+      setIsWait(true);
+      const res = await fetchLogin({ password: data.password, username: data.username })
       if (res.status === 200 && res.data?.access_token) {
         setAccessToken(res.data?.access_token);
         router.push("/");
@@ -72,7 +74,7 @@ export function LoginForm() {
           name="username"
           render={({ field }) => (
             <FormItem className="relative">
-              <FormLabel>Tài khoản</FormLabel>
+              <FormLabel>Tài khoản/Email</FormLabel>
               <FormControl>
                 <Input
                   placeholder="Nhập tài khoản"
@@ -82,9 +84,9 @@ export function LoginForm() {
                 />
               </FormControl>
               <div className="h-1">
-              <p className="text-red-500 text-xs absolute -bottom-3">
-                {messageAccount}
-              </p>
+                <p className="text-red-500 text-xs absolute -bottom-3">
+                  {messageAccount}
+                </p>
               </div>
             </FormItem>
           )}
@@ -111,9 +113,9 @@ export function LoginForm() {
                 />
               </div>
               <div className="h-1">
-              <p className="text-red-500 text-xs absolute -bottom-3">
-                {messagePassword}
-              </p>
+                <p className="text-red-500 text-xs absolute -bottom-3">
+                  {messagePassword}
+                </p>
               </div>
             </FormItem>
           )}

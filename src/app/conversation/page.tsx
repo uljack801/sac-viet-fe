@@ -29,7 +29,18 @@ import { BsArrowRightCircleFill } from "react-icons/bs";
 import { ArticleList } from "../components/home/ArticleList";
 import { ArticleProps } from "../utils/fetchCategory";
 import { getArticle } from "./components/fetchArticle";
-
+import {
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { GoKebabHorizontal } from "react-icons/go";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { Button } from "@/components/ui/button";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Conversation() {
     const { dataUser, accessToken } = useAuth();
@@ -226,10 +237,39 @@ export default function Conversation() {
         if (!accessToken) return route.push('/login');
         mutationPostReplyComment.mutate({ postID, commentID });
     }
+
+     const postDelete = async ({ postID, accessToken }: { postID: string;  accessToken: string | null }) => {
+        const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/post/delete-post`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`
+            },
+            body: JSON.stringify({
+                postID,
+            })
+        })
+        if (!res.ok) throw new Error("Xóa thất bại");
+        toast.success("Xóa bài viết thành công!", {
+            autoClose: 2000
+        })
+        return res.json();
+    }
+    const mutationPostDelete= useMutation({
+        mutationFn: ({ postID }: { postID: string }) => postDelete({ postID, accessToken }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['conversations'] })
+        }
+    })
+
+    const handleDeletePost = (postID: string) => {
+        mutationPostDelete.mutate({ postID });
+    }
+ 
     return (
         <div className="mt-28 mb-10 shadow rounded-sm  min-h-screen bg-white  grid grid-cols-3 max-xl:mx-0 max-[1540px]:mx-36 mx-96">
-            <span  onClick={() => route.push('/')} className="flex text-xs items-center ml-2 mt-2 col-span-3 max-sm:block  max-xl:hidden max-[1540px]:hidden">
-                Trang chủ / <strong className="ml-1">Tin tức</strong> 
+            <span onClick={() => route.push('/')} className="flex text-xs items-center ml-2 mt-2 col-span-3 max-sm:block  max-xl:hidden max-[1540px]:hidden">
+                Trang chủ / <strong className="ml-1">Tin tức</strong>
             </span>
             <div className="col-span-2 p-10 max-sm:p-2 max-sm:col-span-3 max-sm:text-xs max-lg:col-span-3 max-lg:text-sm">
                 {dataUser &&
@@ -312,12 +352,30 @@ export default function Conversation() {
                         return (
                             <div key={post._id} className="w-full p-4 bg-neutral-100/50 border mt-4 rounded-2xl">
                                 <div className="w-full flex flex-col justify-center">
-                                    <div className="flex items-center mb-4">
-                                        <FaRegCircleUser className="w-8 h-8 text-gray-500" />
-                                        <div className="ml-2">
-                                            <p className="text-lg font-medium">{post.name}</p>
-                                            <span className="text-xs flex items-center">{dateCreateAt.toLocaleDateString()} {dateCreateAt.toLocaleTimeString()}<FaEarthAsia className="ml-2" /></span>
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div className="flex items-center">
+                                            <FaRegCircleUser className="w-8 h-8 text-gray-500" />
+                                            <div className="ml-2">
+                                                <p className="text-lg font-medium">{post.name}</p>
+                                                <span className="text-xs flex items-center">{dateCreateAt.toLocaleDateString()} {dateCreateAt.toLocaleTimeString()}<FaEarthAsia className="ml-2" /></span>
+                                            </div>
                                         </div>
+                                        {post.user === dataUser?.data._id &&
+                                            <Dialog>
+                                                <DialogTrigger><GoKebabHorizontal /></DialogTrigger>
+                                                <DialogContent className="w-1/3">
+                                                    <DialogHeader>
+                                                        <DialogTitle>Chuyển vào thùng rác?</DialogTitle>
+                                                    </DialogHeader>
+                                                    <DialogFooter>
+                                                        <DialogClose asChild>
+                                                            <Button variant="outline">Hủy</Button>
+                                                        </DialogClose>
+                                                        <Button type="submit" onClick={() => handleDeletePost(post._id)} className="text-white bg-[var(--color-button)] hover:bg-[var(--color-button)] ">Xóa</Button>
+                                                    </DialogFooter>
+                                                </DialogContent>
+                                            </Dialog>
+                                        }
                                     </div>
                                     <p className="text-sm mb-4 max-sm:text-xs">{post.content}</p>
                                     <div className="flex w-full justify-center">
@@ -449,6 +507,7 @@ export default function Conversation() {
                     <ArticleList article={article} />
                 </div>
             </div>
+            <ToastContainer />
         </div>
     )
 }

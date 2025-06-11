@@ -17,13 +17,15 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    
-    const checkUser = await User.findOne({ account: username  })
+
+    const checkUser = await User.findOne({
+      $or: [{ account: username }, { email: username }],
+    });
 
     if (!checkUser || !checkUser.authenticated) {
-      return NextResponse.json( 
+      return NextResponse.json(
         { message: "Invalid credentials!" },
-        { status: 404  }
+        { status: 404 }
       );
     }
     const isMatch = await bcrypt.compare(password, checkUser.password);
@@ -35,12 +37,22 @@ export async function POST(req: NextRequest) {
       );
     }
     const refreshToken = jwt.sign(
-      { id: checkUser._id, account: checkUser.account, email: checkUser.email, role: checkUser.role },
+      {
+        id: checkUser._id,
+        account: checkUser.account,
+        email: checkUser.email,
+        role: checkUser.role,
+      },
       SECRET_KEY,
       { expiresIn: "7d" }
     );
     const access_token = jwt.sign(
-      { id: checkUser._id, account: checkUser.account, email: checkUser.email,  role: checkUser.role },
+      {
+        id: checkUser._id,
+        account: checkUser.account,
+        email: checkUser.email,
+        role: checkUser.role,
+      },
       SECRET_KEY,
       { expiresIn: "15m" }
     );

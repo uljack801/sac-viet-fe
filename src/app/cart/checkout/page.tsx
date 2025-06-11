@@ -41,10 +41,8 @@ export default function Checkout() {
     useEffect(() => {
         const getShippingFee = async () => {
             if (!selectedProducts || !addressShip) return;
-
             try {
                 const feeMap: { [sellerId: string]: number } = {};
-
                 await Promise.all(
                     selectedProducts.map(async (order) => {
                         const sellerId = order.seller?.data._id;
@@ -135,7 +133,7 @@ export default function Checkout() {
             setIsProcessing(false);
         }
     };
-
+    
     return (
         <div className="mt-28 max-sm:mx-0 max-lg:mx-10 max-lg:mb-10 max-xl:mx-20 max-[1540px]:mx-36 max-[1540px]:mb-10 mx-96 mb-10">
             <div className="relative">
