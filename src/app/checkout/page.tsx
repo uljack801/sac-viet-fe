@@ -30,6 +30,7 @@ export default function Checkout() {
     const route = useRouter();
     const [shippingFees, setShippingFees] = useState<{ [sellerId: string]: number }>({});
     const [ totalPay , setTotalPay ] = useState<number>(0)
+    const [checkAddress , setCheckAddress ] = useState(false)
    useEffect(() => {
         fetchAddress({ accessToken, setUserAddress })
 }, [accessToken, dataUser])
@@ -81,6 +82,7 @@ export default function Checkout() {
                         value: (product && quantityChoise * product.data[0].price),
                     },
                 });
+                setCheckAddress(true)
                 setTotalMoneyShip(res.data.fee.fee + res.data.fee.insurance_fee);
             } catch (error) {
                 console.error('Lỗi tính phí vận chuyển:', error);
@@ -92,7 +94,7 @@ export default function Checkout() {
     }, [product, addressShip, infoSeller, quantityChoise]);
 
 
-    const handlePay = async () => {
+    const handlePay = async (valueNote: string) => {
         const productALL = [{ productID: product?.data[0]._id, quantity: quantityChoise, productName: product?.data[0].name , weight: product?.data[0].weight }]
         try {
             const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/patch/add-orders`, {
@@ -108,7 +110,8 @@ export default function Checkout() {
                     address_ship: addressShip?._id,
                     total_money_ship: totalMoneyShip,
                     shipping_fees: shippingFees,
-                    totalPay: totalPay
+                    totalPay: totalPay,
+                    note: valueNote
                 })
             })
             if (res.status === 200) {
@@ -133,6 +136,7 @@ export default function Checkout() {
                 <ProductChoisePay
                     infoSeller={infoSeller}
                     product={product}
+                    checkAddress={checkAddress}
                     setQuantityChoise={setQuantityChoise}
                     quantityChoise={quantityChoise}
                     setTypePay={setTypePay}

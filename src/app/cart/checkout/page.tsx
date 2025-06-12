@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { getCart } from "@/app/utils/fetchCart";
 import axios from "axios";
 import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 
 export default function Checkout() {
     const { accessToken, setCart } = useAuth()
@@ -28,6 +29,8 @@ export default function Checkout() {
     const [shippingFees, setShippingFees] = useState<{ [sellerId: string]: number }>({});
     const [isProcessing, setIsProcessing] = useState(false);
     const [totalPay, setTotalPay] = useState(0)
+    const [checkAddress, setCheckAddress] = useState(false)
+    const [valueNotes, setValueNotes] = useState<{ [sellerID: string]: string }>({});    
     useEffect(() => {
         const data = localStorage.getItem("selectedProducts");
         if (data) {
@@ -57,6 +60,7 @@ export default function Checkout() {
                                 value: order.products?.reduce((sum, product) => sum + product.price * (product.quantity ? product.quantity : 1), 0) || 0,
                             },
                         });
+                        setCheckAddress(true)
                         const fee = res.data.fee.fee + res.data.fee.insurance_fee;
                         feeMap[sellerId] = fee;
                     })
@@ -94,7 +98,7 @@ export default function Checkout() {
                         weight: product.weight
                     }));
                     if (!allProducts) continue;
-                    
+
                     const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/patch/add-orders`, {
                         method: "PATCH",
                         headers: {
@@ -108,7 +112,8 @@ export default function Checkout() {
                             address_ship: addressShip?._id,
                             total_money_ship: shippingFees[value.seller?.data._id || ""],
                             shipping_fees: shippingFees,
-                            totalPay: totalPay
+                            totalPay: totalPay,
+                            note: valueNotes[value.seller?.data._id || ""] || "" 
                         })
                     });
 
@@ -133,7 +138,7 @@ export default function Checkout() {
             setIsProcessing(false);
         }
     };
-    
+
     return (
         <div className="mt-28 max-sm:mx-0 max-lg:mx-10 max-lg:mb-10 max-xl:mx-20 max-[1540px]:mx-36 max-[1540px]:mb-10 mx-96 mb-10">
             <div className="relative">
@@ -144,71 +149,85 @@ export default function Checkout() {
                             <p className="text-xl font-medium xl:text-[16px]">Sản phẩm</p>
                         </div>
                     </div>
-                    {selectedProducts?.map((group) => (
-                        <div key={`seller-${group.seller?.data._id}`} className={cn('border-b ')}>
-                            <div className="font-semibold text-lg mb-2 grid grid-cols-6 max-sm:text-xs ">
-                                <label className="flex items-center col-span-6 ">{group.seller?.data.nameShop} | <span className="flex items-center" ><BsFillChatSquareTextFill className="mr-1 ml-4" />chat ngay</span></label>
-                            </div>
-                            {group.products?.map((value) => (
-                                <div key={`product-${value._id}`}>
-                                    <div className="grid grid-cols-6 ">
-                                        <div className="col-span-6">
-                                            <div className="flex my-2">
-                                                <Image
-                                                    src={`${value.img[0]}`}
-                                                    alt={`${value.name}`}
-                                                    width={48}
-                                                    height={48}
-                                                />
-                                                <div>
-                                                    <p className="text-ellipsis line-clamp-1 mx-2">
-                                                        {value.name}
-                                                    </p>
-                                                    <div className="flex justify-between mx-2">
-                                                        <div className="col-span-1">
-                                                            <div className=" mt-2">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price - (value.price * (value.discount_percentage / 100))))}</div>
-                                                        </div>
-                                                        <div className="col-span-1">
-                                                            <div className="flex items-center mt-2 text-xl w-auto ">
-                                                                <span className="flex justify-center items-center w-6 text-sm"> {value.quantity}</span>
+                    {selectedProducts?.map((group) => {
+                        return (
+                            <div key={`seller-${group.seller?.data._id}`} className={cn('border-b mb-4 ')}>
+                                <div className="font-semibold text-lg mb-2 grid grid-cols-6 max-sm:text-xs ">
+                                    <label className="flex items-center col-span-6 ">{group.seller?.data.nameShop} | <span className="flex items-center" ><BsFillChatSquareTextFill className="mr-1 ml-4" />chat ngay</span></label>
+                                </div>
+                                {group.products?.map((value) => (
+                                    <div key={`product-${value._id}`} >
+                                        <div className="grid grid-cols-6 ">
+                                            <div className="col-span-6">
+                                                <div className="flex my-2">
+                                                    <Image
+                                                        src={`${value.img[0]}`}
+                                                        alt={`${value.name}`}
+                                                        width={48}
+                                                        height={48}
+                                                    />
+                                                    <div>
+                                                        <p className="text-ellipsis line-clamp-1 mx-2">
+                                                            {value.name}
+                                                        </p>
+                                                        <div className="flex justify-between mx-2">
+                                                            <div className="col-span-1">
+                                                                <div className=" mt-2">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.price - (value.price * (value.discount_percentage / 100))))}</div>
                                                             </div>
-                                                        </div>
-                                                        <div className="col-span-1">
-                                                            <div className="mt-2">
-                                                                <p className="">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.quantity * (value.price - (value.price * (value.discount_percentage / 100)))))}</p>
+                                                            <div className="col-span-1">
+                                                                <div className="flex items-center mt-2 text-xl w-auto ">
+                                                                    <span className="flex justify-center items-center w-6 text-sm"> {value.quantity}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-span-1">
+                                                                <div className="mt-2">
+                                                                    <p className="">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format((value.quantity * (value.price - (value.price * (value.discount_percentage / 100)))))}</p>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                            <p className="font-medium py-6 max-sm:text-xs text-xl">Chi phí đơn hàng</p>
-                            <div className="flex justify-between m-1 ">
-                                <p>
-                                    Phí vận chuyển:
-                                </p>
+                                ))}
+                                <div className="flex justify-between items-center mt-5 border-y">
+                                    <span className="font-medium">Lời nhắn:</span>
+                                    <Input
+                                        value={valueNotes[group.seller?.data._id || ""] || ""}
+                                        onChange={(e) => {
+                                            setValueNotes(prev => ({
+                                                ...prev,
+                                                [group.seller?.data._id || ""]: e.target.value
+                                            }))
+                                        }}
+                                        placeholder="Lưu ý cho người bán"
+                                        className="w-1/3 max-sm:w-1/2 text-sm my-2"
+                                    />                                </div>
+                                <p className="font-medium py-6 max-sm:text-xs text-xl">Chi phí đơn hàng</p>
+                                <div className="flex justify-between m-1 ">
+                                    <p>
+                                        Phí vận chuyển:
+                                    </p>
                                     <span className="ml-2 flex justify-end">
                                         {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(shippingFees[group.seller?.data._id || ""] || 0)}
                                     </span>
-                            </div>
-                            <div className="flex justify-between m-1 ">
-                                <p>Tổng tiền hàng:</p>
-                                <span className="ml-2 flex justify-end">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
-                                    (group.products?.reduce((sum, product) => {
-                                        return sum + ((product.price - (product.price * (product.discount_percentage / 100))) * product.quantity)
-                                    }, 0) || 0)
-                                )
-                                }
-                                </span>
-                            </div>
-                            <div className="flex justify-between m-1 ">
-                                <p>
-                                    Tổng đơn hàng:
-                                </p>
+                                </div>
+                                <div className="flex justify-between m-1 ">
+                                    <p>Tổng tiền hàng:</p>
+                                    <span className="ml-2 flex justify-end">{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
+                                        (group.products?.reduce((sum, product) => {
+                                            return sum + ((product.price - (product.price * (product.discount_percentage / 100))) * product.quantity)
+                                        }, 0) || 0)
+                                    )
+                                    }
+                                    </span>
+                                </div>
+                                <div className="flex justify-between m-1 ">
+                                    <p>
+                                        Tổng đơn hàng:
+                                    </p>
                                     <span className="ml-2 flex justify-end">
                                         {
                                             new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
@@ -218,9 +237,10 @@ export default function Checkout() {
                                             )
                                         }
                                     </span>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        )
+                    })}
                     <div className="flex justify-end max-sm:hidden max-lg:p-0 max-xl:p-0">
                         <div className="text-end">
                             <p className="my-4">
@@ -320,6 +340,7 @@ export default function Checkout() {
                     <Button
                         className="bg-[var(--color-button)] hover:bg-[var(--color-hover-button)] text-white w-32 rounded-sm"
                         onClick={handleAllOrders}
+                        disabled={!checkAddress}
                     >
                         Đặt hàng
                     </Button>

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     siteName: "Sắc Việt",
     images: [
       {
-        url: "/logo_.png", // logo của bạn
+        url: "/logo_.png", 
         width: 1200,
         height: 630,
       },

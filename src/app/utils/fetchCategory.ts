@@ -89,6 +89,7 @@ export type CategoryProps = {
       _id: string;
       name: string;
       slug: string;
+      icon: string;
       status: boolean;
     }
   ];

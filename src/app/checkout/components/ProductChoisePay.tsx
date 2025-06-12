@@ -13,6 +13,7 @@ import {
 import { BsFillChatSquareTextFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { ProductProps } from "@/app/utils/fetchCategory";
+import { Input } from "@/components/ui/input";
 
 export type InfoSellerProps = {
   data: {
@@ -52,6 +53,7 @@ export default function ProductChoisePay({
   totalMoneyShip,
   setTypePay,
   handlePay,
+  checkAddress,
   setTotalPay,
 }: {
   setQuantityChoise: React.Dispatch<React.SetStateAction<number>>;
@@ -61,9 +63,11 @@ export default function ProductChoisePay({
   infoSeller: InfoSellerProps | undefined;
   totalMoneyShip: number;
   setTotalPay: React.Dispatch<React.SetStateAction<number>>;
-  handlePay: () => void;
+  handlePay: (valueNote: string) => void;
+  checkAddress: boolean
 }) {
   const [priceAfterDiscount, setPriceAfterDiscount] = useState<number>(0)
+  const [valueNote, setValueNote] = useState('')
   const handleChoiseUp = () => {
     const inventory = product?.data[0].inventory;
     if (inventory) {
@@ -176,6 +180,9 @@ export default function ProductChoisePay({
               </SelectContent>
             </Select>
           </div>
+          <div className="flex justify-between items-center border-b">
+            <span className="font-medium">Lời nhắn:</span><Input value={valueNote} onChange={(e) => setValueNote(e.target.value)} placeholder="Lưu ý cho người bán" className="w-1/3 max-sm:w-1/2 text-sm my-2" />
+          </div>
           <div className="flex w-full">
             <div className="w-full">
               <p className="font-medium mt-1">Chi tiết thanh toán</p>
@@ -225,7 +232,8 @@ export default function ProductChoisePay({
         <div className="flex justify-end items-center max-sm:fixed bottom-0 bg-white py-4 w-full  max-lg:p-4 max-lg:border max-lg:rounded-sm max-xl:p-4 max-xl:border max-xl:rounded-sm p-4 border rounded-sm">
           <Button
             className="bg-[var(--color-button)] hover:bg-[var(--color-hover-button)] text-white w-32 rounded-sm"
-            onClick={handlePay}
+            onClick={() => handlePay(valueNote)}
+            disabled={!checkAddress}
           >
             Đặt hàng
           </Button>
