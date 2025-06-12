@@ -26,7 +26,16 @@ export async function GET(req: NextRequest) {
         { status: 401 }
       );
     }
-    const findOrder = await Order.find();
+
+    const { searchParams } = new URL(req.url);
+    const sellerID = searchParams.get("seller-id");
+    const option = searchParams.get("option");
+    
+
+    const query = option ? {"list_orders.status": option } : {};
+
+    const findOrder = await Order.find(query);
+
     if (!findOrder) {
       return NextResponse.json(
         {
@@ -35,19 +44,21 @@ export async function GET(req: NextRequest) {
         { status: 404 }
       );
     }
-    const { searchParams } = new URL(req.url);
-    const sellerID = searchParams.get("seller-id");
-    
-    const findOrderOfSeller = findOrder.map((order) =>{
-       const filteredListOrders = order.list_orders.filter((value: { seller_id: string | null; }) => value.seller_id === sellerID)
-       if(filteredListOrders.length > 0 ){
-        return{
-          ...order.toObject(),
-          list_orders: filteredListOrders
+
+    const findOrderOfSeller = findOrder
+      .map((order) => {
+        const filteredListOrders = order.list_orders.filter(
+          (value: { seller_id: string | null }) => value.seller_id === sellerID
+        );
+        if (filteredListOrders.length > 0) {
+          return {
+            ...order.toObject(),
+            list_orders: filteredListOrders,
+          };
         }
-       }
-           return null;
-    }).filter(order => order !== null);
+        return null;
+      })
+      .filter((order) => order !== null)
 
     return NextResponse.json(
       {

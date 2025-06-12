@@ -30,19 +30,20 @@ export async function PATCH(req: NextRequest) {
       if (findUserSeller.role.includes("seller")) {
         const { searchParams } = new URL(req.url);
         const orderID = searchParams.get("order-id");
+        const tracking = searchParams.get("tracking-id");
         const findOrder = await Order.find();
-
+        
         for (const order of findOrder) {
           let updated = false;
 
           for (const res of order.list_orders) {
             if (res._id.toString() === orderID) {
               res.status = "shipped";
+              res.tracking = tracking
               updated = true;
               break;
             }
-          }
-
+          }          
           if (updated) {
             await order.save();
             break;

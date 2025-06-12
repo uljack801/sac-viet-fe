@@ -19,11 +19,11 @@ export default function HomeSeller() {
     const [dataOrder, setDataOrder] = useState<OrderProps[] | undefined>()
     const [filterType, setFilterType] = useState('day');
     const route = useRouter()
-
+    const sortProduct = ''
     useEffect(() => {
         if (infoSeller && accessToken) {
             {
-                getAllOrder({ accessToken, sellerID: infoSeller.data._id, setDataOrder })
+                getAllOrder({ accessToken, sellerID: infoSeller.data._id, setDataOrder ,sortProduct})
             }
         }
     }, [accessToken, infoSeller])
@@ -77,7 +77,7 @@ export default function HomeSeller() {
     }, 0);
 
     return (
-        <div className="">
+        <div className="m-10">
             <div className="grid grid-cols-3 mt-10 gap-4">
                 <div className="p-6 bg-white rounded-xl" onClick={() => route.push('/seller/manager-products')}>
                     <span className="flex items-center text-xl font-medium"><AiOutlineProduct className="text-4xl mr-2" /> Tổng số lượng sản phẩm </span>

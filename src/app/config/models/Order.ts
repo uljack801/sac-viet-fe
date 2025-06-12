@@ -18,6 +18,7 @@ export type OrderProps = {
       totalPay: number;
       seller_id: string;
       order_at: Date;
+      tracking: string,
       address_ship: string;
       total_money_ship: number;
       status: string;
@@ -68,6 +69,7 @@ const OrderSchema = new mongoose.Schema(
           enum: ["cod", "bank-transfer", "credit_card", "paypal"],
           default: "cod",
         },
+        tracking: {type: String},
         is_paid: { type: Boolean, default: false },
         paid_at: { type: Date },
         is_review: { type: Boolean, default: false },
