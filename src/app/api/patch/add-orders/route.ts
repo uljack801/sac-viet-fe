@@ -36,7 +36,7 @@ export async function PATCH(req: NextRequest) {
       shipping_fees,
       seller_id,
       totalPay,
-      note, 
+      note,
     } = await req.json();
 
     if (
@@ -53,8 +53,7 @@ export async function PATCH(req: NextRequest) {
         { status: 400 }
       );
     }
-    console.log("sssssssssssssssssssss", note);
-    
+
     findOrder.list_orders.push({
       products: products,
       address_ship: address_ship,
@@ -63,7 +62,7 @@ export async function PATCH(req: NextRequest) {
       shipping_fees: shipping_fees,
       seller_id: seller_id,
       totalPay: totalPay,
-      note: note
+      note: note,
     });
 
     await findOrder.save();
@@ -79,7 +78,7 @@ export async function PATCH(req: NextRequest) {
     await Seller.findByIdAndUpdate(
       { _id: seller_id },
       { $inc: { totalOrders: 1 } }
-    );    
+    );
     products.map(async (p) => {
       await Product.findOneAndUpdate(
         { _id: p.productID },

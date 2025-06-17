@@ -43,6 +43,7 @@ export default function AddProduct() {
   const [heft, setHeft] = useState<number>(0)
   const [selectCategory, setSelectCategory] = useState('')
   const [alertAddDone, setAlertAddDone] = useState(false)
+  const [isWait, setIsWait] = useState(false);
 
   const handleAddLength = () => {
     if (lengthArrayImg.length < 10) {
@@ -129,12 +130,14 @@ export default function AddProduct() {
       heft
     );
   };
- 
+
   const addproduct = async () => {
     if (!isDataProductValid()) {
       alert("Vui lòng nhập đầy đủ thông tin sản phẩm.");
       return;
     }
+    if (isWait) return
+    setIsWait(true)
     try {
       const uploadUrls = await Promise.all(
         listImg
@@ -193,6 +196,8 @@ export default function AddProduct() {
 
     } catch (error) {
       console.error("Lỗi upload ảnh hoặc thêm sản phẩm:", error);
+    } finally {
+      setIsWait(false)
     }
   };
 

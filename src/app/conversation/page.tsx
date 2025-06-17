@@ -238,7 +238,7 @@ export default function Conversation() {
         mutationPostReplyComment.mutate({ postID, commentID });
     }
 
-     const postDelete = async ({ postID, accessToken }: { postID: string;  accessToken: string | null }) => {
+    const postDelete = async ({ postID, accessToken }: { postID: string; accessToken: string | null }) => {
         const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/post/delete-post`, {
             method: "POST",
             headers: {
@@ -255,7 +255,7 @@ export default function Conversation() {
         })
         return res.json();
     }
-    const mutationPostDelete= useMutation({
+    const mutationPostDelete = useMutation({
         mutationFn: ({ postID }: { postID: string }) => postDelete({ postID, accessToken }),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['conversations'] })
@@ -265,12 +265,14 @@ export default function Conversation() {
     const handleDeletePost = (postID: string) => {
         mutationPostDelete.mutate({ postID });
     }
- 
+
     return (
         <div className="mt-28 mb-10 shadow rounded-sm  min-h-screen bg-white  grid grid-cols-3 max-xl:mx-0 max-[1540px]:mx-36 mx-96">
-            <span onClick={() => route.push('/')} className="flex text-xs items-center ml-2 mt-2 col-span-3 max-sm:block  max-xl:hidden max-[1540px]:hidden">
-                Trang chủ / <strong className="ml-1">Tin tức</strong>
-            </span>
+            <div className="hidden  max-sm:block">
+                <span onClick={() => route.push('/')} className="flex text-xs items-center ml-2 mt-2 col-span-3">
+                    Trang chủ / <strong className="ml-1">Tin tức</strong>
+                </span>
+            </div>
             <div className="col-span-2 p-10 max-sm:p-2 max-sm:col-span-3 max-sm:text-xs max-lg:col-span-3 max-lg:text-sm">
                 {dataUser &&
                     <div className="w-full bg-neutral-100/50 border max-sm:p-4 p-10 pb-2 rounded-2xl ">

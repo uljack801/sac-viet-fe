@@ -6,10 +6,12 @@ export default function About() {
   const route = useRouter()
   return (
     <div className="text-[var(--color-text-root)] pt-28 max-sm:m-2 max-lg:m-4 max-xl:m-10 :mx-36 :my-10 mx-96 my-10">
-      <span onClick={() => route.push('/')} className="flex text-xs items-center ml-2 mb-4 max-lg:text-sm max-xl:hidden max-[1540px]:hidden">
+      <div className="hidden max-sm:block ">
+      <span onClick={() => route.push('/')} className="flex text-xs items-center ml-2 mb-4 ">
         <IoChevronBackOutline className="text-sm" />
         Trang chủ /<strong className="ml-1"> Về chúng tôi</strong>
       </span>
+      </div>
       <p className="text-center font-bold mb-10 max-sm:text-2xl max-lg:text-3xl max-xl:text-3xl text-3xl">Ý nghĩa về logo Sắc Việt</p>
       <div className="flex justify-center items-center pb-4">
         <div>

@@ -10,6 +10,7 @@ import { getNewAccessToken } from "./utils/getNewAccessToken";
 import { getProducts } from "./utils/fetchProducts";
 import { getCart } from "./utils/fetchCart";
 import { getUser } from "./utils/fetchUser";
+// import { Chatbox } from "./components/layout/chatbox/Chatbox";
 
 interface AuthContextType {
   accessToken: string | null;
@@ -65,6 +66,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         <div className="flex-1 flex items-center bg-[var(--color-bg-body)] ">
           <QueryClientProvider client={queryClient}>
             {children}
+            {/* <div className="fixed right-6 bottom-6">
+              <Chatbox/>
+            </div> */}
           </QueryClientProvider>
         </div>
         <div >
