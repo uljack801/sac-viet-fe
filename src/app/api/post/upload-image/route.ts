@@ -1,3 +1,4 @@
+import { slugifyFilename } from '@/app/helper/constant';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 const s3Client = new S3Client({
@@ -17,7 +18,7 @@ export async function POST(req: Request) {
   }
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
-  const fileKey = `uploads/${file.name}`;
+  const fileKey = `uploads/${slugifyFilename(file.name)}`;
   try {
     const command = new PutObjectCommand({
       Bucket: process.env.DO_SPACES_BUCKET!,

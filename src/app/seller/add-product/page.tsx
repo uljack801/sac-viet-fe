@@ -130,7 +130,7 @@ export default function AddProduct() {
       heft
     );
   };
-
+  
   const addproduct = async () => {
     if (!isDataProductValid()) {
       alert("Vui lòng nhập đầy đủ thông tin sản phẩm.");
@@ -143,7 +143,7 @@ export default function AddProduct() {
         listImg
           .filter((file): file is File => file !== null && file !== undefined)
           .map((file) => uploadImage(file))
-      );
+      );      
       const dataProduct = {
         seller_id: infoSeller?.data._id,
         category_id: selectCategory,

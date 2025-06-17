@@ -34,3 +34,19 @@ export const handleTag = (value: string): string | undefined => {
   const tab = tabs.find((v) => v.status === value);
   return tab?.type;
 };
+
+
+export function slugifyFilename(filename: string): string {
+  const nameWithoutExt = filename.substring(0, filename.lastIndexOf(".")) || filename;
+  const ext = filename.split(".").pop()?.toLowerCase() || "jpg";
+
+  const slug = nameWithoutExt
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "-") 
+    .replace(/-+/g, "-") 
+    .replace(/^-|-$/g, ""); 
+
+  return `${slug}-${Date.now()}.${ext}`;
+}

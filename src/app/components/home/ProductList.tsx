@@ -29,7 +29,7 @@ export const ProductList = ({ listProducts }: { listProducts: ProductProps | nul
   return (
     <div>
       <div className="grid max-sm:grid-cols-2 max-lg:grid-cols-4 max-xl:grid-cols-5 grid-cols-6 gap-2 max-xl:mx-2">
-        {listProducts?.data.sort(() => Math.random() - 0.5).slice(0, addProducts).map((value) => {
+        {listProducts?.data.sort(() => Math.random() - 0.5).slice(0, addProducts).map((value) => {          
           return (
             <div
               key={`product-${value._id}`}
@@ -44,6 +44,7 @@ export const ProductList = ({ listProducts }: { listProducts: ProductProps | nul
                   alt={value.name}
                   width={480}
                   height={480}
+                  loading="lazy"
                   className="object-cover w-full h-full rounded-xs"
                 />
               </div>
