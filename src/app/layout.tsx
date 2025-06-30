@@ -1,12 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import Script from "next/script";
 import { AuthProvider } from "@/app/AuthContext";
 
-/**
- * RootLayout – enhanced with richer SEO metadata for Google and social platforms
- * – Includes keywords, authors, icons, manifest, Twitter Card, viewport, theme‑color, and JSON‑LD schema.
- */
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.sacviet.info.vn"),
   title: {
@@ -79,15 +75,6 @@ export const metadata: Metadata = {
     maximumScale: 1,
   },
   themeColor: "#ffffff",
-  manifest: "/site.webmanifest",
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
-    other: [
-      { rel: "mask-icon", url: "/safari-pinned-tab.svg" },
-    ],
-  },
   category: "ecommerce",
 };
 
@@ -100,23 +87,6 @@ export default function RootLayout({
     <html lang="vi">
       <head />
       <body>
-        <Script
-          id="ld-json-org"
-          type="application/ld+json"
-          strategy="afterInteractive"
-        >
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "Sắc Việt",
-            url: "https://www.sacviet.info.vn",
-            logo: "https://www.sacviet.info.vn/logo_.png",
-            sameAs: [
-              "https://www.facebook.com/sacviet",
-              "https://www.instagram.com/sacviet",
-            ],
-          })}
-        </Script>
         <AuthProvider>
           <main className="w-full">{children}</main>
         </AuthProvider>

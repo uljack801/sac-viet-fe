@@ -176,7 +176,7 @@ export default function ProductID() {
                     alt="anh-san-pham"
                     width={300}
                     height={300}
-                    className="w-full rounded-sm"
+                    className="object-cover w-96 h-96 rounded-sm"
                   />
                   <div className="flex mt-1 ">
                     <Carousel
@@ -195,9 +195,9 @@ export default function ProductID() {
                                     <Image
                                       src={`${valueImg}`}
                                       alt="anh-san-pham"
-                                      width={48}
-                                      height={48}
-                                      className="mx-1 w-full h-full rounded-sm"
+                                      width={68}
+                                      height={68}
+                                      className="mx-1 w-16 h-16 object-cover rounded-sm z-10"
                                       onClick={() => setChangeImg(idx)}
                                     />
                                   </CardContent>
