@@ -2,8 +2,14 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  images: {
-    domains: ["localhost" , "sacviet.nyc3.digitaloceanspaces.com"],
+   images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'sacviet.nyc3.digitaloceanspaces.com',
+        pathname: '/uploads/**',
+      },
+    ],
   },
 };
 

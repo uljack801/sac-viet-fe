@@ -23,15 +23,16 @@ export const TopProductsSold = ({ listProducts }: { listProducts: ProductProps |
 
         return () => window.removeEventListener("resize", updateItemsShow);
     }, [])
-
+    
     const sortProducts = listProducts?.data.sort((a, b) => b.sold - a.sold)
+
     const route = useRouter()
     return (
         <div className="m-2">
             <p className="max-sm:text-xl max-sm:py-4 max-lg:text-2xl max-lg:py-6 max-xl:text-3xl max-xl:py-10 text-3xl py-10 font-medium text-[var(--color-text-root)] text-center">
                 Top sản phẩm bán chạy
             </p>
-            <div className="grid max-sm:grid-cols-2 max-lg:grid-cols-4 max-xl:grid-cols-5 grid-cols-6 gap-2">
+            <div className="grid max-sm:grid-cols-2 max-lg:grid-cols-4 max-xl:grid-cols-5 grid-cols-6 gap-2 ">
                 {sortProducts?.slice(0, itemsToShow).map((value) => {
                     return (
                         <div
@@ -39,14 +40,14 @@ export const TopProductsSold = ({ listProducts }: { listProducts: ProductProps |
                             onClick={() =>
                                 route.push(`/product-details/${value._id}`)
                             }
-                            className="relative col-span-1 p-1 rounded-sm shadow bg-white cursor-pointer hover:scale-[1.03] min-h-60"
+                            className="relative col-span-1 p-1 rounded-sm shadow bg-white cursor-pointer hover:scale-[1.03] max-h-60"
                         >
                             <div className="h-2/3 w-full">
                                 <Image
                                     src={`${value.img[0]}`}
                                     alt={value.name}
-                                    width={480}
-                                    height={480}
+                                    width={240}
+                                    height={240}
                                     className="object-cover w-full h-full rounded-xs"
                                 />
                             </div>

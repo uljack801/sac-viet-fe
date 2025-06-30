@@ -29,13 +29,13 @@ export const OtherProductsOfShop = ({ sellerID }: { sellerID: string | undefined
                         <CarouselItem key={`product -${value._id}`} className="max-sm:basis-1/2 max-lg:basis-1/4 max-xl:basis-1/5 basis-1/6 hover:scale-[1.03]" onClick={() => route.push(`/product-details/${value._id}`)}>
                             <Card className="p-0 rounded-sm  h-full ">
                                 <CardContent className="p-0 h-full">
-                                    <div className="relative p-1 h-full  min-h-56" >
+                                    <div className="relative p-1 h-full max-h-60" >
                                         <div className="h-2/3 ">
                                             <Image
                                                 src={`${value.img[0]}`}
                                                 alt={value.name}
-                                                width={480}
-                                                height={480}
+                                                width={240}
+                                                height={240}
                                                 className="object-cover w-full h-full rounded-xs"
                                             />
                                         </div>

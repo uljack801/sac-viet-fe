@@ -29,21 +29,21 @@ export const ProductList = ({ listProducts }: { listProducts: ProductProps | nul
   return (
     <div>
       <div className="grid max-sm:grid-cols-2 max-lg:grid-cols-4 max-xl:grid-cols-5 grid-cols-6 gap-2 max-xl:mx-2">
-        {listProducts?.data.sort(() => Math.random() - 0.5).slice(0, addProducts).map((value) => {          
+        {listProducts?.data.sort(() => Math.random() - 0.5).slice(0, addProducts).map((value) => {
           return (
             <div
               key={`product-${value._id}`}
               onClick={() =>
                 route.push(`/product-details/${value._id}`)
               }
-              className="relative col-span-1 p-1 rounded-sm shadow bg-white cursor-pointer hover:scale-[1.03]  min-h-60"
+              className="relative col-span-1 p-1 rounded-sm shadow bg-white cursor-pointer hover:scale-[1.03] max-h-60"
             >
               <div className="h-2/3 w-full">
                 <Image
                   src={`${value.img[0]}`}
                   alt={value.name}
-                  width={480}
-                  height={480}
+                  width={240}
+                  height={240}
                   loading="lazy"
                   className="object-cover w-full h-full rounded-xs"
                 />

@@ -15,13 +15,13 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { fetchReview } from "./components/fetchReviews";
-import { IoAddOutline  } from "react-icons/io5";
+import { IoAddOutline } from "react-icons/io5";
 import { IoRemoveOutline } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import { BsCartPlus } from "react-icons/bs";
 import { useAuth } from "@/app/AuthContext";
 import { NEXT_PUBLIC_LOCAL } from "@/app/helper/constant";
-import {  FaStar } from "react-icons/fa6";
+import { FaStar } from "react-icons/fa6";
 import { LuUserRound } from "react-icons/lu";
 import NotFound from "@/app/not-found";
 import { OtherProductsOfShop } from "./components/OtherProductsOfShop";
@@ -37,6 +37,8 @@ import {
 } from "@/components/ui/drawer"
 import { ToastContainer, toast } from "react-toastify";
 import { MdDone } from "react-icons/md";
+import { InfoSellerProps } from "@/app/checkout/components/ProductChoisePay";
+import { PiUserCircleThin } from "react-icons/pi";
 
 export default function ProductID() {
   const param = useParams();
@@ -46,9 +48,31 @@ export default function ProductID() {
   const [quantityChoise, setQuantityChoise] = useState<number>(1);
   const { setCart, accessToken, listProducts } = useAuth()
   const [checkProductDetail, setCheckProductDetail] = useState(true)
+  const [dataSeller, setDataSeller] = useState<InfoSellerProps | null>();
   const route = useRouter()
   const productId = param.productId;
 
+  const getInfoSeller = useCallback(async (paramSellerId: string) => {
+    try {
+      const res = await fetch(`${NEXT_PUBLIC_LOCAL}/api/get/info-seller?seller-id=${paramSellerId}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data: InfoSellerProps = await res.json();
+      if (res.status === 200) return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    const getData = async () => {
+      if (!product?.data[0].seller_id) return
+      const data = await getInfoSeller(product?.data[0].seller_id)
+      setDataSeller(data)
+    }
+    getData()
+  }, [getInfoSeller, product?.data])
   const getProductDetail = useCallback(async () => {
     if (typeof productId === "string" && productId) {
       try {
@@ -104,7 +128,7 @@ export default function ProductID() {
       })
       if (res.status === 200) {
         toast.success('', {
-          icon: <MdDone className="text-white rounded-full w-full h-full flex items-center justify-center ml-2"/>,
+          icon: <MdDone className="text-white rounded-full w-full h-full flex items-center justify-center ml-2" />,
           autoClose: 500
         })
         try {
@@ -269,17 +293,17 @@ export default function ProductID() {
                         <DrawerHeader>
                           <DrawerTitle>
                           </DrawerTitle>
-                            <div className="grid grid-cols-3">
-                              <div className="col-span-1">
-                                <p>Số lượng</p>
-                                <p className="text-xs text-neutral-400">({value.inventory} sản phẩm có sẵn)</p>
-                              </div>
-                              <div className="col-span-2 flex justify-end items-center">
-                                <Button onClick={() => handleChoisedown()} className="border mr-2 bg-white text-black hover:bg-white"><IoRemoveOutline /></Button>
-                                <span className="flex justify-center items-center w-6 text-sm"> {quantityChoise}</span>
-                                <Button onClick={() => handleChoiseUp()} className="border ml-2 bg-white text-black hover:bg-white"><IoAddOutline /></Button>
-                              </div>
+                          <div className="grid grid-cols-3">
+                            <div className="col-span-1">
+                              <p>Số lượng</p>
+                              <p className="text-xs text-neutral-400">({value.inventory} sản phẩm có sẵn)</p>
                             </div>
+                            <div className="col-span-2 flex justify-end items-center">
+                              <Button onClick={() => handleChoisedown()} className="border mr-2 bg-white text-black hover:bg-white"><IoRemoveOutline /></Button>
+                              <span className="flex justify-center items-center w-6 text-sm"> {quantityChoise}</span>
+                              <Button onClick={() => handleChoiseUp()} className="border ml-2 bg-white text-black hover:bg-white"><IoAddOutline /></Button>
+                            </div>
+                          </div>
                         </DrawerHeader>
                         <DrawerFooter>
                           <Button className="text-white bg-[var(--color-button)] shadow-0 border stringed-300 hover:bg-inherit px-10" onClick={() => handleAddProduct()}><BsCartPlus />Thêm vào giỏ hàng</Button>
@@ -289,6 +313,13 @@ export default function ProductID() {
                     <span className="col-span-2 flex flex-col items-center  justify-center text-sm bg-[var(--color-button)] text-white" onClick={() => handlePayNow()}>Mua ngay</span>
                   </div>
                 </div>
+              </div>
+              <div className="p-4 bg-white rounded-sm mt-3 flex justify-between items-center">
+                <div className="flex gap-2 items-center">
+                  <PiUserCircleThin className="h-10 w-10" />
+                  <p className="font-medium">{dataSeller?.data.nameShop}</p>
+                </div>
+                <p className="cursor-pointer text-sm">Xem shop</p>
               </div>
               <div className="p-4 bg-white rounded-sm mt-3">
                 <p className="font-medium mb-6 max-sm:text-xl text-2xl">Chi tiết sản phẩm</p>
