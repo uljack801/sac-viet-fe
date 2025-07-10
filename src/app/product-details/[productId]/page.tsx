@@ -319,7 +319,7 @@ export default function ProductID() {
                   <PiUserCircleThin className="h-10 w-10" />
                   <p className="font-medium">{dataSeller?.data.nameShop}</p>
                 </div>
-                <p className="cursor-pointer text-sm">Xem shop</p>
+                <p className="cursor-pointer text-sm" onClick={() => route.push(`/detail-shop/${product?.data[0].seller_id}`)}>Xem shop</p>
               </div>
               <div className="p-4 bg-white rounded-sm mt-3">
                 <p className="font-medium mb-6 max-sm:text-xl text-2xl">Chi tiết sản phẩm</p>

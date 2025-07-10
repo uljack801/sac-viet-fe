@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
         hostname: 'sacviet.nyc3.digitaloceanspaces.com',
         pathname: '/uploads/**',
       },
+       {
+        protocol: 'https',
+        hostname: 'sacviet.nyc3.cdn.digitaloceanspaces.com',
+        pathname: '/uploads/**',
+      },
     ],
   },
 };

@@ -26,7 +26,7 @@ import { GoCommentDiscussion } from "react-icons/go";
 import { AiFillLike } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { BsArrowRightCircleFill } from "react-icons/bs";
-import { ArticleList } from "../components/home/ArticleList";
+// import { ArticleList } from "../components/home/ArticleList";
 import { ArticleProps } from "../utils/fetchCategory";
 import { getArticle } from "./components/fetchArticle";
 import {
@@ -273,7 +273,7 @@ export default function Conversation() {
                     Trang chủ / <strong className="ml-1">Tin tức</strong>
                 </span>
             </div>
-            <div className="col-span-2 p-10 max-sm:p-2 max-sm:col-span-3 max-sm:text-xs max-lg:col-span-3 max-lg:text-sm">
+            <div className="col-span-3  p-10 px-24 max-sm:p-2 max-sm:col-span-3 max-sm:text-xs max-lg:col-span-3 max-lg:text-sm">
                 {dataUser &&
                     <div className="w-full bg-neutral-100/50 border max-sm:p-4 p-10 pb-2 rounded-2xl ">
                         <div className="flex justify-center items-center">
@@ -503,12 +503,12 @@ export default function Conversation() {
 
                 </div>
             </div>
-            <div className="col-span-1 pt-10 pr-10 max-sm:hidden max-lg:hidden">
+            {/* <div className="col-span-1 pt-10 pr-10 max-sm:hidden max-lg:hidden">
                 <div className=" bg-neutral-100/50 w-full min-h-screen shadow rounded-2xl ">
                     <p className="text-2xl font-medium flex justify-center p-4">Bài báo mới cập nhật</p>
                     <ArticleList article={article} />
                 </div>
-            </div>
+            </div> */}
             <ToastContainer />
         </div>
     )

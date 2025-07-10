@@ -1,8 +1,10 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { SubscribeEmail } from "./SubscribeEmail";
 import Image from "next/image";
 
 export const Footer = () => {
+  const route = useRouter()
   return (
     <div className="bg-white py-10 text-[#8B5A2B] max-sm:px-0 max-lg:px-4 max-xl:px-6 max-[1540px]:px-36 px-96 ">
       <div className="flex justify-between text-sm max-sm:flex-col items-center">
@@ -22,9 +24,9 @@ export const Footer = () => {
             <p>Tin tức đồ thủ công</p>
             <p>Câu hỏi thường gặp</p>
           </div>
-          <div className="mx-2">
-            <p className="max-sm:text-sm font-medium">Tài khoản của bạn</p>
-            <p>Chính sách bảo mật</p>
+          <div className="mx-2 cursor-pointer">
+            <p className="max-sm:text-sm font-medium ">Tài khoản của bạn</p>
+            <p onClick={() => route.push('/policy/privacy-policy')} >Chính sách bảo mật</p>
             <p>Điều khoản sử dụng</p>
             <p>Hướng dẫn và quy định</p>
           </div>

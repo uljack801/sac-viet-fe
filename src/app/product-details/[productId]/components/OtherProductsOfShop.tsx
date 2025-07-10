@@ -21,7 +21,7 @@ export const OtherProductsOfShop = ({ sellerID }: { sellerID: string | undefined
         <div >
             <div className="flex justify-between items-center bg-white my-3 rounded-sm shadow ">
                 <p className="font-medium  p-4 py-6 max-sm:text-sm max-lg:text-lg max-xl:text-xl ">Các sản phẩm khác của Shop</p>
-                <p className="text-sm flex items-center mr-10 cursor-pointer">xem tất cả <MdNavigateNext className="ml-1" /></p>
+                <p className="text-sm flex items-center mr-10 cursor-pointer"  onClick={() => route.push(`/detail-shop/${sellerID}`)}>xem tất cả <MdNavigateNext className="ml-1" /></p>
             </div>
             <Carousel >
                 <CarouselContent >
